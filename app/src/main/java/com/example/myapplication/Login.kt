@@ -1,26 +1,31 @@
 package com.example.myapplication
 
-import android.graphics.Typeface
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
-import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
 import android.widget.TextView
+import com.example.myapplication.databinding.ActivityLoginBinding
 
-class signup : AppCompatActivity() {
+class Login : AppCompatActivity() {
+    private val binding:ActivityLoginBinding by lazy {
+        ActivityLoginBinding.inflate(layoutInflater)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_signup)
+        setContentView(binding.root)
+        //To go on SignUp page through SignUp
+        binding.signUp.setOnClickListener{
+            val intent=Intent(this,SignUpPage::class.java)
+            startActivity(intent)
+        }
 
-        val textViewend = findViewById<TextView>(R.id.textView13)
-
-        val originalText = "Dont have an Account? Sign Up"
-
+        val textViewed = findViewById<TextView>(R.id.signUp)
+        val originalText = "Don't have an Account? Sign Up"
         val spannableString = SpannableString(originalText)
-
         val startIndex = originalText.indexOf("Sign Up")
         val endIndex = startIndex + "Sign Up".length
         spannableString.setSpan(
@@ -35,6 +40,6 @@ class signup : AppCompatActivity() {
             endIndex,
             Spannable.SPAN_INCLUSIVE_INCLUSIVE
         )
-        textViewend.text = spannableString
+        textViewed.text = spannableString
     }
 }

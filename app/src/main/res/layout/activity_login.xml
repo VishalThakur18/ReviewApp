@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FDFDFD"
-    tools:context=".signup">
+    tools:context=".Login">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -138,7 +138,7 @@
                 android:id="@+id/imageView8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@tools:sample/avatars"
+
                 app:srcCompat="@drawable/google_atr"
                 android:layout_marginTop="20dp"
                 android:layout_gravity="center"
@@ -147,8 +147,10 @@
                 android:outlineSpotShadowColor="@color/black"/>
 
             <TextView
-                android:id="@+id/textView13"
-                android:layout_width="match_parent"
+                android:id="@+id/signUp"
+                android:clickable="true"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="100dp"
                 android:layout_height="wrap_content"
                 android:text="Dont have an Account? Sign Up"
                 android:textColor="#575656"
