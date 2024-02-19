@@ -113,7 +113,7 @@
                 android:textColorHint="#575656"
                 android:textStyle="bold"
                 android:fontFamily="@font/realway_bold"
-                android:hint="Confirm Password"
+                android:hint="Confirm Password Not required"
                 android:textAlignment="center"
                 android:outlineSpotShadowColor="@color/black"
                 android:background="@drawable/button_back_login" />
