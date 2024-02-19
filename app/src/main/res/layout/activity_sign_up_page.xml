@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignUpPage">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:lottie_autoPlay="true"
+                app:lottie_fileName="Animation3.json"
+                app:lottie_speed="0.3"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Sign Up"
+                android:textColor="@color/black"
+                android:layout_marginTop="10dp"
+                android:textSize="40sp"
+                android:fontFamily="@font/realway_bold"
+                android:textAlignment="viewStart"
+                android:layout_marginStart="32dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Sign up to get Started!"
+                android:layout_marginTop="5dp"
+                android:textColor="#575656"
+                android:fontFamily="@font/realway_bold"
+                android:layout_marginStart="32dp"
+                android:textSize="15sp"/>
+            <EditText
+                android:id="@+id/fullname"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginTop="70dp"
+                android:ems="10"
+                android:inputType="text"
+                android:elevation="8dp"
+                android:textColor="@color/black"
+                android:textColorHint="#575656"
+                android:textStyle="bold"
+                android:fontFamily="@font/realway_bold"
+                android:hint="Full Name"
+                android:textAlignment="center"
+                android:outlineSpotShadowColor="@color/black"
+                android:background="@drawable/button_back_login" />
+            <EditText
+                android:id="@+id/emailaddsignup"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginTop="20dp"
+                android:ems="10"
+                android:inputType="textEmailAddress"
+                android:elevation="8dp"
+                android:textColor="@color/black"
+                android:textColorHint="#575656"
+                android:textStyle="bold"
+                android:fontFamily="@font/realway_bold"
+                android:hint="Email Address"
+                android:textAlignment="center"
+                android:outlineSpotShadowColor="@color/black"
+                android:background="@drawable/button_back_login" />
+
+            <EditText
+                android:id="@+id/passwordsignup"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginTop="20dp"
+                android:ems="10"
+                android:inputType="textPassword"
+                android:elevation="8dp"
+                android:textColor="@color/black"
+                android:textColorHint="#575656"
+                android:textStyle="bold"
+                android:fontFamily="@font/realway_bold"
+                android:hint="Password"
+                android:textAlignment="center"
+                android:outlineSpotShadowColor="@color/black"
+                android:background="@drawable/button_back_login" />
+
+            <EditText
+                android:id="@+id/confirmpasswordsignup"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginTop="20dp"
+                android:ems="10"
+                android:inputType="textPassword"
+                android:elevation="8dp"
+                android:textColor="@color/black"
+                android:textColorHint="#575656"
+                android:textStyle="bold"
+                android:fontFamily="@font/realway_bold"
+                android:hint="Confirm Password"
+                android:textAlignment="center"
+                android:outlineSpotShadowColor="@color/black"
+                android:background="@drawable/button_back_login" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/signupbutton"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:textAllCaps="false"
+                android:text="SIGN UP"
+                android:textSize="17sp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/realway_bold"
+                android:background="@drawable/button_login_black"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginTop="40dp"/>
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Already have an Account? Sign In"
+                android:textColor="#575656"
+                android:fontFamily="@font/realway_bold"
+                android:textSize="15sp"
+                android:textAlignment="center"
+                android:layout_marginTop="30dp"
+                />
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
