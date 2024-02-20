@@ -60,8 +60,18 @@ class SignUpPage : AppCompatActivity() {
     private fun createAccount(email: String, password: String) {
         auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener{ task ->
             if(task.isSuccessful){
-                Toast.makeText(this,"Account Created Successfully 👍" ,Toast.LENGTH_SHORT ).show()
-                saveUserData()
+
+                auth.currentUser?.sendEmailVerification()
+                    ?.addOnSuccessListener {
+                        Toast.makeText(this,"Please verify your email",Toast.LENGTH_SHORT).show()
+                        saveUserData()
+                    }
+                    ?.addOnFailureListener{
+                        Toast.makeText(this,"Authentication Failed",Toast.LENGTH_SHORT).show()
+                    }
+
+//              Toast.makeText(this,"Account Created Successfully 👍" ,Toast.LENGTH_SHORT ).show()
+
                 // If User is Created Successfully then redirect it to the login page
                 val intent= Intent(this,Login::class.java)
                 startActivity(intent)
@@ -80,9 +90,9 @@ class SignUpPage : AppCompatActivity() {
         email=binding.userEmail.text.toString().trim()
         password=binding.userPassword.text.toString().trim()
         val user=UserModel(userName,email,password)
-        val UserId = FirebaseAuth.getInstance().currentUser!!.uid
+        val userId = FirebaseAuth.getInstance().currentUser!!.uid
         //Save data in the Firebase
-        database.child("user").child(UserId).setValue(user)
+        database.child("user").child(userId).setValue(user)
 
     }
 }
