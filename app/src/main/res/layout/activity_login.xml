@@ -17,13 +17,15 @@
             android:orientation="vertical">
 
             <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottie1log"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 app:lottie_autoPlay="true"
-                app:lottie_fileName="Animation3.json"
-                app:lottie_speed="0.3"
+                app:lottie_fileName="loginanimation.json"
+                app:lottie_speed="1"
+                app:lottie_loop="true"
                 android:layout_marginTop="20dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 />
 
             <TextView
@@ -147,17 +149,17 @@
 
             <TextView
                 android:id="@+id/signUp"
-                android:clickable="true"
                 android:layout_width="wrap_content"
-                android:layout_marginLeft="100dp"
                 android:layout_height="wrap_content"
-                android:text="Don't have an Account? Sign Up"
-                android:textColor="#575656"
-                android:fontFamily="@font/realway_bold"
-                android:textSize="15sp"
-                android:textAlignment="center"
+                android:layout_marginLeft="100dp"
                 android:layout_marginTop="30dp"
-                />
+                android:clickable="true"
+                android:fontFamily="@font/realway_bold"
+                android:minHeight="48dp"
+                android:text="Don't have an Account? Sign Up"
+                android:textAlignment="center"
+                android:textColor="#575656"
+                android:textSize="15sp" />
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
