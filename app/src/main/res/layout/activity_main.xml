@@ -34,9 +34,10 @@
                     android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
+                    android:layout_gravity="center"
                     android:layout_marginStart="16dp"
                     android:layout_weight="1"
+                    android:textAlignment="center"
                     android:fontFamily="@font/realway_bold"
                     android:text="Hi, User"
                     android:textColor="@color/black"
@@ -46,7 +47,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_gravity="center_vertical"
-                    android:background="@drawable/background_cards"
+                    android:background="@drawable/background_cards_glass"
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:paddingStart="8dp"
@@ -69,7 +70,7 @@
                         android:layout_marginEnd="4dp"
                         android:text="100K"
                         android:fontFamily="@font/realway_bold"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/white" />
 
                     <ImageView
                         android:id="@+id/imageView3"
@@ -180,57 +181,30 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_margin="24dp"
-                android:background="@drawable/banner_backgrnd"
+                android:layout_height="420dp"
                 android:elevation="8dp"
                 android:outlineSpotShadowColor="@color/black">
 
-
-                <com.airbnb.lottie.LottieAnimationView
-                    android:id="@+id/imageView7"
-                    android:layout_width="210dp"
-                    android:layout_height="180dp"
-                    android:layout_marginStart="125dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:lottie_autoPlay="true"
-                    app:lottie_fileName="Animation2.json"
-                    app:lottie_repeatCount="5"
-                    app:lottie_speed="0.3" />
-
-                <Button
-                    android:id="@+id/exploreButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginBottom="44dp"
-                    android:backgroundTint="@color/black"
-                    android:text="Explore"
-                    android:fontFamily="@font/realway_bold"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:text="Here !"
-                    android:fontFamily="@font/realway_bold"
-                    android:textColor="#FED300"
-                    android:textSize="40sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
+            <androidx.viewpager2.widget.ViewPager2
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingEnd="60dp"
+                android:paddingStart="60dp"
+                app:layout_constraintTop_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/exploreButton"
+                android:layout_marginStart="48dp"
+                android:layout_marginEnd="48dp"
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="back to login"
+                android:background="@drawable/button_login_black"/>
         </LinearLayout>
     </ScrollView>
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -255,7 +229,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/black"
-            android:src="@drawable/btn1"
+            android:src="@drawable/adjust_24"
             app:layout_anchor="@+id/app_bar"
             app:maxImageSize="20dp"
             app:tint="@color/white" />

@@ -15,22 +15,34 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <com.airbnb.lottie.LottieAnimationView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                app:lottie_autoPlay="true"
-                app:lottie_fileName="Animation3.json"
-                app:lottie_speed="0.3"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="20dp"
-                />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/lottiesignup1"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.034"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    app:lottie_fileName="loginanimation.json"
+                    app:lottie_speed="1" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Sign Up"
                 android:textColor="@color/black"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:textSize="40sp"
                 android:fontFamily="@font/realway_bold"
                 android:textAlignment="viewStart"

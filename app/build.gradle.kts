@@ -57,4 +57,10 @@ dependencies {
     //lottie animation
     implementation ("com.airbnb.android:lottie:6.3.0")
 
+    //image loader tool -> Picasso
+    implementation("com.squareup.picasso:picasso:2.8")
+
+    //ken burns effect for zoom on image in homepage
+    implementation("com.flaviofaria:kenburnsview:1.0.7")
+
 }
