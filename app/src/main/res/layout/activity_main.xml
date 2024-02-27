@@ -194,17 +194,35 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                <Button
+                    android:id="@+id/exploreButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="44dp"
+                    android:backgroundTint="@color/black"
+                    android:text="Explore"
+                    android:fontFamily="@font/realway_bold"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/exploreButton"
-                android:layout_marginStart="48dp"
-                android:layout_marginEnd="48dp"
-                android:textColor="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="back to login"
-                android:background="@drawable/button_login_black"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="Here !"
+                    android:fontFamily="@font/realway_bold"
+                    android:textColor="#FED300"
+                    android:textSize="40sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </ScrollView>
     <androidx.coordinatorlayout.widget.CoordinatorLayout

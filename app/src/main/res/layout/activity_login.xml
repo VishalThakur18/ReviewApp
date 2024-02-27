@@ -136,16 +136,16 @@
                 android:layout_marginTop="15dp"/>
 
             <ImageView
-                android:id="@+id/imageView8"
+                android:id="@+id/google_signIn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                app:srcCompat="@drawable/google_atr"
-                android:layout_marginTop="20dp"
+                android:layout_height="21dp"
                 android:layout_gravity="center"
+                android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
+                android:clickable="true"
                 android:elevation="8dp"
-                android:outlineSpotShadowColor="@color/black"/>
+                android:outlineSpotShadowColor="@color/black"
+                app:srcCompat="@drawable/google_atr" />
 
             <TextView
                 android:id="@+id/signUp"
