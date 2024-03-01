@@ -75,6 +75,24 @@
                 android:outlineSpotShadowColor="@color/black"
                 android:background="@drawable/button_back_login" />
             <EditText
+                android:id="@+id/user_number"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginTop="20dp"
+                android:ems="10"
+                android:inputType="number"
+                android:elevation="8dp"
+                android:textColor="@color/black"
+                android:textColorHint="#575656"
+                android:textStyle="bold"
+                android:fontFamily="@font/realway_bold"
+                android:hint="Phone Number"
+                android:textAlignment="center"
+                android:outlineSpotShadowColor="@color/black"
+                android:background="@drawable/button_back_login" />
+            <EditText
                 android:id="@+id/user_email"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -112,24 +130,7 @@
                 android:outlineSpotShadowColor="@color/black"
                 android:background="@drawable/button_back_login" />
 
-            <EditText
-                android:id="@+id/confirmpasswordsignup"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginTop="20dp"
-                android:ems="10"
-                android:inputType="textPassword"
-                android:elevation="8dp"
-                android:textColor="@color/black"
-                android:textColorHint="#575656"
-                android:textStyle="bold"
-                android:fontFamily="@font/realway_bold"
-                android:hint="Confirm Password Not required"
-                android:textAlignment="center"
-                android:outlineSpotShadowColor="@color/black"
-                android:background="@drawable/button_back_login" />
+
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/signUpbutton"

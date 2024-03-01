@@ -5,7 +5,12 @@ import android.accounts.Account
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
+import android.text.style.UnderlineSpan
 import android.util.Log
+import android.widget.TextView
 import android.widget.Toast
 import com.example.myapplication.databinding.ActivitySignUpPageBinding
 import com.google.firebase.Firebase
@@ -19,6 +24,7 @@ class SignUpPage : AppCompatActivity() {
     private lateinit var auth : FirebaseAuth
     private lateinit var database : DatabaseReference
     private lateinit var userName : String
+    private lateinit var userNumber:String
     private lateinit var email : String
     private lateinit var password : String
     private val binding:ActivitySignUpPageBinding by lazy {
@@ -39,10 +45,11 @@ class SignUpPage : AppCompatActivity() {
         binding.signUpbutton.setOnClickListener{
             //get details from User
             userName=binding.userName.text.toString().trim()
+            userNumber=binding.userNumber.text.toString().trim()
             email=binding.userEmail.text.toString().trim()
             password=binding.userPassword.text.toString().trim()
 
-            if(userName.isBlank() || email.isBlank() || password.isBlank()){
+            if(userName.isBlank() || email.isBlank() || password.isBlank() || userNumber.isBlank()){
                 Toast.makeText(this,"Please fill all the details", Toast.LENGTH_SHORT).show()
             }else{
                 createAccount(email,password)
@@ -53,6 +60,25 @@ class SignUpPage : AppCompatActivity() {
             val intent= Intent(this,Login::class.java)
             startActivity(intent)
         }
+        // Highlighting the "Sign In " text
+        val textViewed = findViewById<TextView>(R.id.signIn)
+        val originalText = "Already have an Account? Sign In"
+        val spannableString = SpannableString(originalText)
+        val startIndex = originalText.indexOf("Sign In")
+        val endIndex = startIndex + "Sign In".length
+        spannableString.setSpan(
+            ForegroundColorSpan(resources.getColor(R.color.link)),
+            startIndex,
+            endIndex,
+            Spannable.SPAN_INCLUSIVE_INCLUSIVE
+        )
+        spannableString.setSpan(
+            UnderlineSpan(),
+            startIndex,
+            endIndex,
+            Spannable.SPAN_INCLUSIVE_INCLUSIVE
+        )
+        textViewed.text = spannableString
 
 
     }
@@ -87,9 +113,10 @@ class SignUpPage : AppCompatActivity() {
     //To Save the Users registration Data
     private fun saveUserData() {
         userName=binding.userName.text.toString().trim()
+        userNumber=binding.userNumber.text.toString().trim()
         email=binding.userEmail.text.toString().trim()
         password=binding.userPassword.text.toString().trim()
-        val user=UserModel(userName,email,password)
+        val user=UserModel(userName,userNumber ,email,password)
         val userId = FirebaseAuth.getInstance().currentUser!!.uid
         //Save data in the Firebase
         database.child("user").child(userId).setValue(user)
