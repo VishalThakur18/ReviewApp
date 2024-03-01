@@ -3,7 +3,12 @@ package com.example.myapplication
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.view.animation.Animation
+import android.view.animation.Animation.AnimationListener
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
@@ -29,8 +34,28 @@ class GetStarted : AppCompatActivity() {
         setCurrentIndicator(0)
 
         binding.buttongs.setOnClickListener{
-            val intent= Intent(this,Login::class.java)
-            startActivity(intent)
+            val scaleAnimation: Animation = AnimationUtils.loadAnimation(this,R.anim.bounce)
+            scaleAnimation.setAnimationListener(object :Animation.AnimationListener {
+                override fun onAnimationStart(animation: Animation?) {}
+
+                override fun onAnimationEnd(animation: Animation?) {
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        val intent = Intent(this@GetStarted,Login::class.java)
+                        startActivity(intent)
+
+                    },50)
+                }
+
+                override fun onAnimationRepeat(animation: Animation?) {}
+            })
+            binding.buttongs.startAnimation(scaleAnimation)
+//            previous one used for intent travel
+//            binding.buttongs.setOnClickListener{
+//                val scaleAnimation: Animation = AnimationUtils.loadAnimation(this,R.anim.bounce)
+//                binding.buttongs.startAnimation(scaleAnimation)
+//                val intent= Intent(this,Login::class.java)
+//                startActivity(intent)
+//            }
         }
 
     }

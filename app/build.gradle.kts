@@ -36,6 +36,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        dataBinding = true
     }
 }
 
@@ -64,5 +65,7 @@ dependencies {
 
     //ken burns effect for zoom on image in homepage
     implementation("com.flaviofaria:kenburnsview:1.0.7")
+    //meow animation nav bar at bottom main component
+    implementation ("com.etebarian:meow-bottom-navigation:1.2.0")
 
 }
