@@ -24,11 +24,12 @@
                 app:cardElevation="4dp">
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/profileOnUser"
+                android:transitionName="photu"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/person2" />
+                android:src="@drawable/profile" />
 
         </androidx.cardview.widget.CardView>
             <TextView
@@ -43,11 +44,14 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/backtobase"
-                android:layout_width="match_parent"
+                android:layout_width="100dp"
+                android:layout_gravity="center"
                 android:layout_height="wrap_content"
                 android:text="Back"
+                android:fontFamily="@font/realway_bold"
+                android:textSize="20sp"
                 android:textColor="@color/white"
-                android:layout_margin="22dp"
+                android:layout_margin="50dp"
                 android:background="@drawable/button_login_black"/>
 
         </LinearLayout>
