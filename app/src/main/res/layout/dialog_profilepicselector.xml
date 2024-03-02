@@ -47,6 +47,7 @@
             android:fontFamily="@font/realway_bold"
             android:text="But U Look So Good 😍!"
             android:textSize="18sp"
+            android:textColor="#8F8F8F"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -81,6 +82,7 @@
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/userImg_Dialog"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:background="@drawable/circular_bg"

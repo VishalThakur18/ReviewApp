@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageButton
+import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.databinding.ActivityUserProfileBinding
@@ -73,7 +74,16 @@ class UserProfile : AppCompatActivity() {
             .setCancelable(true)
             .create()
         alertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        // Fetch and display user's profile picture in the dialog
+        val currentUser = mAuth.currentUser
+        currentUser?.photoUrl?.let { url ->
+            val profilePicDialog = dialogView.findViewById<ImageView>(R.id.userImg_Dialog)
+            Picasso.get().load(url).into(profilePicDialog)
+        }
+
         alertDialog.show()
+
         val cross = alertDialog.findViewById<ImageButton>(R.id.cancelID)
         if (cross != null) {
             cross.setOnClickListener {
@@ -81,4 +91,6 @@ class UserProfile : AppCompatActivity() {
             }
         }
     }
+
+
 }
