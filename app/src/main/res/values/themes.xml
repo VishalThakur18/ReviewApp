@@ -7,17 +7,3 @@
 
     <style name="Theme.MyApplication" parent="Base.Theme.MyApplication" />
 </resources>
-
-
-<!--<resources xmlns:tools="http://schemas.android.com/tools">-->
-<!-- Base application theme. -->
-<!--<style name="Base.Theme.Weatherapp" parent="Theme.MaterialComponents.DayNight.NoActionBar">-->
-<!--    &lt;!&ndash; Customize your light theme here. &ndash;&gt;-->
-<!--    &lt;!&ndash;         <item name="colorPrimary">@color/background.color</item>&ndash;&gt;-->
-<!--    <item name="colorPrimaryDark">#8AD9E6</item>-->
-<!--    <item name="colorPrimaryVariant">#8AD9E6</item>-->
-<!--    &lt;!&ndash;        <item name="android:windowFullscreen">true</item>&ndash;&gt;-->
-<!--</style>-->
-
-<!--<style name="Theme.Weatherapp" parent="Base.Theme.Weatherapp" />-->
-<!--</resources>-->

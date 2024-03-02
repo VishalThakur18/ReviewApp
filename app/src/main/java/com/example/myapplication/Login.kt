@@ -1,17 +1,20 @@
 package com.example.myapplication
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.text.style.UnderlineSpan
+import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.databinding.ActivityLoginBinding
+import com.example.myapplication.databinding.ResetDialogeBoxBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -28,10 +31,10 @@ import com.google.firebase.database.database
 class Login : AppCompatActivity() {
 
     private lateinit var email:String
+    private lateinit var resetEmail:String
     private lateinit var password:String
     private lateinit var auth:FirebaseAuth
     private lateinit var database:DatabaseReference
-
     private val binding:ActivityLoginBinding by lazy {
         ActivityLoginBinding.inflate(layoutInflater)
     }
@@ -68,6 +71,14 @@ class Login : AppCompatActivity() {
             }
         }
 
+
+
+        //Forget Password
+        val reset:TextView=findViewById<TextView>(R.id.passwordResetButton)
+        reset.setOnClickListener{
+            resetPasswordCustom()
+        }
+
             binding.signUp.setOnClickListener{
             //To go on SignUp page through SignUp
             val intent=Intent(this,SignUpPage::class.java)
@@ -95,7 +106,49 @@ class Login : AppCompatActivity() {
             Spannable.SPAN_INCLUSIVE_INCLUSIVE
         )
         textViewed.text = spannableString
+
+
     }
+
+    //Password reset Dialog
+        private fun resetPasswordCustom() {
+            // Inflate dialog layout using view binding
+            val dialogBinding = ResetDialogeBoxBinding.inflate(layoutInflater)
+
+            // Set up AlertDialog using the inflated dialog view from binding
+            val resetBox = AlertDialog.Builder(this)
+                .setView(dialogBinding.root)
+                .setCancelable(true)
+                .create()
+
+            // Show the dialog
+            resetBox.window?.setBackgroundDrawableResource(android.R.color.transparent)
+            resetBox.show()
+
+            // Set onClickListener for the button inside the dialog
+            dialogBinding.resetButton.setOnClickListener {
+                resetEmail = dialogBinding.userResetEmail.text.toString().trim()
+                auth.sendPasswordResetEmail(resetEmail)
+                    .addOnSuccessListener {
+                        Toast.makeText(
+                            applicationContext,
+                            "Check your Email",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        resetBox.dismiss() // Dismiss the dialog after success
+                    }
+                    .addOnFailureListener { exception ->
+                        Toast.makeText(
+                            applicationContext,
+                            "Password reset email failed: ${exception.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        Log.e("ResetPassword", "Password reset email failed", exception)
+                        // You may choose whether to dismiss the dialog on failure as well
+                        resetBox.dismiss() // Dismiss the dialog after failure as well
+                    }
+            }
+        }
 
     private fun createUSerAccount(email: String, password: String) {
         auth.signInWithEmailAndPassword(email,password).addOnCompleteListener{ task->
@@ -139,7 +192,8 @@ class Login : AppCompatActivity() {
             if (account!=null){
                 updateUIGoogle(account)
             }
-        }else{
+        }
+        else{
             Toast.makeText(this,"SignIn Failed , Try Again Later",Toast.LENGTH_SHORT).show()
         }
 
@@ -150,6 +204,8 @@ class Login : AppCompatActivity() {
         auth.signInWithCredential(credential).addOnCompleteListener {
             if (it.isSuccessful) {
                 val intent = Intent(this, MainActivity::class.java)
+                intent.putExtra("email",account.email)
+                intent.putExtra("name",account.displayName)
                 startActivity(intent)
             }
             else
@@ -157,9 +213,5 @@ class Login : AppCompatActivity() {
                 Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
             }
         }
-
-
     }
-
-
 }

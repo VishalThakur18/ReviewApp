@@ -3,43 +3,68 @@ package com.example.myapplication.fragments
 import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import androidx.core.util.Pair
+import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.example.myapplication.Login
 import com.example.myapplication.R
 import com.example.myapplication.UserProfile
+import com.example.myapplication.databinding.FragmentHomeBinding
+import com.google.firebase.auth.FirebaseAuth
 
 
 class HomeFragment : Fragment() {
+
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        val view= inflater.inflate(R.layout.fragment_home, container, false)
-        val toProfile: ImageView = view.findViewById(R.id.profilePic)
 
-        toProfile.setOnClickListener {
-            val intent1 = Intent(requireContext(),UserProfile::class.java)
-            val pairs : Array<android.util.Pair<View,String>?> = arrayOfNulls(2)
-            pairs[0] = android.util.Pair<View,String>(toProfile,"photu")
-            pairs[1] = android.util.Pair<View,String>(toProfile,"photu2")
-            val options = ActivityOptions.makeSceneTransitionAnimation(activity,*pairs)
-            startActivity(intent1,options.toBundle())
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        auth = FirebaseAuth.getInstance()
+        val currentUser = auth.currentUser
+
+        // Fetching only the first name from the user's display name
+        val displayName = currentUser?.displayName ?: ""
+        val firstName = displayName.split(" ").firstOrNull() ?: ""
+
+        // Setting the user name
+        binding.userName.text = "Hi $firstName"
+        // Setting up the profile picture
+        Glide.with(requireContext())
+            .load(currentUser?.photoUrl)
+            .circleCrop()
+            .placeholder(R.drawable.circular_bg)
+            .into(binding.profilePic)
+
+        // Click listener for profile picture
+        binding.profilePic.setOnClickListener {
+            val intent1 = Intent(requireContext(), UserProfile::class.java)
+            val options = ActivityOptions.makeSceneTransitionAnimation(
+                requireActivity(),
+                binding.profilePic,
+                "photu"
+            )
+            startActivity(intent1, options.toBundle())
         }
-        val backtolgin: Button = view.findViewById(R.id.exploreButton)
-        backtolgin.setOnClickListener {
-            val intent = Intent(activity, Login::class.java)
+
+        // Click listener for back to login button
+        binding.exploreButton.setOnClickListener {
+            val intent = Intent(requireActivity(), Login::class.java)
             startActivity(intent)
         }
-        return view
+
+        return binding.root
     }
 
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

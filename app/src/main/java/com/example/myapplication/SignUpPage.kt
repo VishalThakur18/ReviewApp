@@ -1,9 +1,7 @@
 package com.example.myapplication
 
 import Model.UserModel
-import android.accounts.Account
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
@@ -12,6 +10,7 @@ import android.text.style.UnderlineSpan
 import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.databinding.ActivitySignUpPageBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -79,8 +78,6 @@ class SignUpPage : AppCompatActivity() {
             Spannable.SPAN_INCLUSIVE_INCLUSIVE
         )
         textViewed.text = spannableString
-
-
     }
 
     private fun createAccount(email: String, password: String) {
@@ -116,7 +113,7 @@ class SignUpPage : AppCompatActivity() {
         userNumber=binding.userNumber.text.toString().trim()
         email=binding.userEmail.text.toString().trim()
         password=binding.userPassword.text.toString().trim()
-        val user=UserModel(userName,userNumber ,email,password)
+        val user=UserModel(userName,userNumber,email,password)
         val userId = FirebaseAuth.getInstance().currentUser!!.uid
         //Save data in the Firebase
         database.child("user").child(userId).setValue(user)
