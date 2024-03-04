@@ -162,7 +162,8 @@
                 android:text="Don't have an Account? Sign Up"
                 android:textAlignment="center"
                 android:textColor="#575656"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                tools:ignore="TouchTargetSizeCheck" />
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

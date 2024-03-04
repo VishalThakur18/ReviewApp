@@ -1,13 +1,17 @@
 package com.example.myapplication
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
+import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.databinding.ActivityUserProfileBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -71,9 +75,12 @@ class UserProfile : AppCompatActivity() {
         val dialogView: View = LayoutInflater.from(this).inflate(R.layout.dialog_profilepicselector, null)
         val alertDialog = AlertDialog.Builder(this)
             .setView(dialogView)
-            .setCancelable(true)
+            .setCancelable(false)
             .create()
         alertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        val bounceAnimation = ObjectAnimator.ofFloat(dialogView, "translationY", 0f, -50f, 0f)
+        bounceAnimation.duration = 500 // Adjust the duration as needed
+        bounceAnimation.start()
 
         // Fetch and display user's profile picture in the dialog
         val currentUser = mAuth.currentUser

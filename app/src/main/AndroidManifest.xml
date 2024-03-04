@@ -19,6 +19,7 @@
             android:name=".GetStarted"
             android:exported="false">
 
+
         </activity>
         <activity
             android:name=".SignUpPage"
@@ -34,6 +35,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
     </application>
 

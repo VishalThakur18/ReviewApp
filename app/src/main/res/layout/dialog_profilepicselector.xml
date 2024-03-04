@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="60dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/dialog_bg"
         android:elevation="8dp"
@@ -45,9 +45,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fontFamily="@font/realway_bold"
+            android:textColor="#8F8F8F"
             android:text="But U Look So Good 😍!"
             android:textSize="18sp"
-            android:textColor="#8F8F8F"
+
             android:textStyle="bold" />
 
         <LinearLayout
@@ -85,11 +86,13 @@
         android:id="@+id/userImg_Dialog"
         android:layout_width="60dp"
         android:layout_height="60dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/circular_bg"
         android:elevation="8dp"
-        android:padding="15dp"
+        android:padding="5dp"
         android:src="@drawable/profile"
         app:layout_constraintEnd_toEndOf="@+id/topLiLa"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="@+id/topLiLa"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
