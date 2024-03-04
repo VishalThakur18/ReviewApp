@@ -1,22 +1,20 @@
 package com.example.myapplication
 
-import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
-import android.animation.ValueAnimator
-import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.databinding.ActivityUserProfileBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.squareup.picasso.Picasso
+import jp.wasabeef.picasso.transformations.CropCircleTransformation
 
 class UserProfile : AppCompatActivity() {
 
@@ -35,7 +33,10 @@ class UserProfile : AppCompatActivity() {
         currentUser?.let { user ->
             // Set profile picture
             user.photoUrl?.let { url ->
-                Picasso.get().load(url).into(binding.profileOnUser)
+                Picasso.get()
+                    .load(url)
+                    .transform(CropCircleTransformation())
+                    .into(binding.profileOnUser)
             }
             // Set user name
             binding.userNameProfile.text = user.displayName
@@ -86,7 +87,7 @@ class UserProfile : AppCompatActivity() {
         val currentUser = mAuth.currentUser
         currentUser?.photoUrl?.let { url ->
             val profilePicDialog = dialogView.findViewById<ImageView>(R.id.userImg_Dialog)
-            Picasso.get().load(url).into(profilePicDialog)
+            Picasso.get().load(url) .transform(CropCircleTransformation()).into(profilePicDialog)
         }
 
         alertDialog.show()

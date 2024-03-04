@@ -68,5 +68,7 @@ dependencies {
     implementation("com.flaviofaria:kenburnsview:1.0.7")
     //meow animation nav bar at bottom main component
     implementation ("com.etebarian:meow-bottom-navigation:1.2.0")
+    implementation ("jp.wasabeef:picasso-transformations:2.2.1")
+
 
 }

@@ -97,30 +97,3 @@
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@id/topLiLa"-->
-<!--        android:layout_marginLeft="20dp"-->
-<!--        android:layout_marginTop="20dp"-->
-<!--        android:weightSum="0.5"-->
-<!--        android:layout_marginRight="20dp"-->
-<!--        android:orientation="horizontal">-->
-
-<!--        <ImageButton-->
-<!--            android:id="@+id/cameraicon"-->
-<!--            android:background="@color/white"-->
-<!--            android:layout_width="140dp"-->
-<!--            android:layout_height="140dp"-->
-<!--            android:src="@drawable/gallery_profile" />-->
-
-<!--        <ImageButton-->
-<!--            android:id="@+id/albumicon"-->
-<!--            android:layout_width="140dp"-->
-<!--            android:layout_height="140dp"-->
-<!--            android:layout_gravity="right"-->
-<!--            android:background="@color/white"-->
-<!--            android:src="@drawable/camera_profile" />-->
-
-<!--    </LinearLayout>-->
-

@@ -16,13 +16,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-<!--            <androidx.cardview.widget.CardView-->
-<!--                android:layout_width="150dp"-->
-<!--                android:layout_height="150dp"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:layout_margin="22dp"-->
-<!--                app:cardCornerRadius="75dp"-->
-<!--                app:cardElevation="4dp">-->
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -41,12 +35,11 @@
 
                 <ImageView
                     android:id="@+id/profileOnUser"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
                     android:layout_gravity="center"
                     android:layout_margin="22dp"
-                    android:elevation="8dp"
-                    android:scaleType="centerCrop"
+                    android:background="@drawable/circular_bg"
                     android:src="@drawable/profile"
                     android:transitionName="photu"
                     app:layout_constraintBottom_toBottomOf="parent"
