@@ -1,9 +1,10 @@
 package com.example.myapplication
-
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -22,6 +23,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.Task
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.auth
@@ -51,7 +54,7 @@ class Login : AppCompatActivity() {
         //Initializing database
         database =Firebase.database.reference
 
-        //Google SignIn
+       //Google SignIn
         val gso=GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString((R.string.web_client_id)))
             .requestEmail()
@@ -79,7 +82,7 @@ class Login : AppCompatActivity() {
             resetPasswordCustom()
         }
 
-        binding.signUp.setOnClickListener{
+            binding.signUp.setOnClickListener{
             //To go on SignUp page through SignUp
             val intent=Intent(this,SignUpPage::class.java)
             startActivity(intent)
@@ -128,46 +131,69 @@ class Login : AppCompatActivity() {
         // Set onClickListener for the button inside the dialog
         dialogBinding.resetButton.setOnClickListener {
             resetEmail = dialogBinding.userResetEmail.text.toString().trim()
-            auth.sendPasswordResetEmail(resetEmail)
-                .addOnSuccessListener {
-                    Toast.makeText(
-                        applicationContext,
-                        "Check your Email",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    resetBox.dismiss() // Dismiss the dialog after success
-                }
-                .addOnFailureListener { exception ->
-                    Toast.makeText(
-                        applicationContext,
-                        "Password reset email failed: ${exception.message}",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    Log.e("ResetPassword", "Password reset email failed", exception)
-                    // You may choose whether to dismiss the dialog on failure as well
-                    resetBox.dismiss() // Dismiss the dialog after failure as well
-                }
+            if (resetEmail.isBlank()) {
+                Toast.makeText(this, "Please Enter your Email to reset Password", Toast.LENGTH_SHORT).show()
+            } else {
+                auth.sendPasswordResetEmail(resetEmail)
+                    .addOnSuccessListener {
+                        Toast.makeText(
+                            applicationContext,
+                            "Check your Email",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        resetBox.dismiss() // Dismiss the dialog after success
+                    }
+                    .addOnFailureListener { exception ->
+                        Toast.makeText(
+                            applicationContext,
+                            "Password reset email failed: ${exception.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        Log.e("ResetPassword", "Password reset email failed", exception)
+                        // You may choose whether to dismiss the dialog on failure as well
+                        resetBox.dismiss() // Dismiss the dialog after failure as well
+                    }
+            }
         }
     }
+
 
     private fun createUSerAccount(email: String, password: String) {
-        auth.signInWithEmailAndPassword(email,password).addOnCompleteListener{ task->
-            if(task.isSuccessful){
-                val verification= auth.currentUser?.isEmailVerified
-                if(verification==true) {
-                    val user: FirebaseUser? = auth.currentUser
-                    updateUI(user)
-                }else{
-                    Toast.makeText(this,"Verify your Email before Login",Toast.LENGTH_SHORT).show()
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val verification = auth.currentUser?.isEmailVerified
+                    if (verification == true) {
+                        val user: FirebaseUser? = auth.currentUser
+                        updateUI(user)
+                    } else {
+                        Toast.makeText(this, "Verify your Email before Login", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "signInWithEmail:failure", task.exception)
+                    if (task.exception is FirebaseAuthInvalidUserException || task.exception is FirebaseAuthInvalidCredentialsException) {
+                        // Display toast message for incorrect password
+                        Toast.makeText(this, "Password incorrect", Toast.LENGTH_SHORT).show()
+                        // Change border color of password field to red
+                        changePasswordFieldOutlineColor(R.drawable.edit_text_red_border)
+                        // Apply fade animation to the password field's background
+                        val handler = Handler()
+                        handler.postDelayed({
+                            // Revert back to the original background (assuming you have the original drawable)
+                            binding.userPassword.setBackgroundResource(R.drawable.button_back_login)
+                        }, 1500) // Delay in milliseconds (e.g., 2000 ms = 2 seconds)
+                    } else {
+                        // Handle other errors
+                        Toast.makeText(this, "Authentication failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                    }
                 }
-            }else{
-                Toast.makeText(this,"Account Not Found",Toast.LENGTH_SHORT).show()
-
             }
-
-        }
     }
-
+    private fun changePasswordFieldOutlineColor(drawableResId: Int) {
+        // Set the custom drawable as the background of the password field
+        binding.userPassword.setBackgroundResource(drawableResId)
+    }
     private fun updateUI(user: FirebaseUser?) {
         startActivity(Intent(this,MainActivity::class.java))
         finish()
@@ -178,7 +204,7 @@ class Login : AppCompatActivity() {
         launcher.launch(signInIntent)
     }
     private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-            result->
+        result->
         if (result.resultCode== Activity.RESULT_OK){
             val task=GoogleSignIn.getSignedInAccountFromIntent(result.data)
             handleResult(task)
