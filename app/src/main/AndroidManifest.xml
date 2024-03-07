@@ -13,6 +13,7 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
+            android:theme="@style/Base.Theme.profile"
             android:name=".UserProfile"
             android:exported="false" />
         <activity
@@ -23,9 +24,11 @@
         </activity>
         <activity
             android:name=".SignUpPage"
+            android:theme="@style/Base.Theme.register"
             android:exported="false" />
         <activity
             android:name=".Login"
+            android:theme="@style/Base.Theme.register"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

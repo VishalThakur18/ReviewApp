@@ -2,7 +2,15 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.MyApplication" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-         <item name="colorPrimaryDark">#ECEFEF</item>
+         <item name="colorPrimaryDark">#EBEEEE</item>
+    </style>
+    <style name="Base.Theme.profile" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <item name="colorPrimaryDark">#E6E6E6</item>
+    </style>
+    <style name="Base.Theme.register" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <item name="colorPrimaryDark">#FDFDFD</item>
     </style>
 
     <style name="Theme.MyApplication" parent="Base.Theme.MyApplication" />

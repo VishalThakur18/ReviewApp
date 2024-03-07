@@ -138,6 +138,7 @@
                 android:layout_height="50dp"
                 android:textAllCaps="false"
                 android:text="SIGN UP"
+                android:elevation="8dp"
                 android:textSize="17sp"
                 android:textColor="@color/white"
                 android:fontFamily="@font/realway_bold"

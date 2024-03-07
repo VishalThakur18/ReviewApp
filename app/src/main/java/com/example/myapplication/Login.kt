@@ -51,7 +51,7 @@ class Login : AppCompatActivity() {
         //Initializing database
         database =Firebase.database.reference
 
-       //Google SignIn
+        //Google SignIn
         val gso=GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString((R.string.web_client_id)))
             .requestEmail()
@@ -79,7 +79,7 @@ class Login : AppCompatActivity() {
             resetPasswordCustom()
         }
 
-            binding.signUp.setOnClickListener{
+        binding.signUp.setOnClickListener{
             //To go on SignUp page through SignUp
             val intent=Intent(this,SignUpPage::class.java)
             startActivity(intent)
@@ -111,49 +111,49 @@ class Login : AppCompatActivity() {
     }
 
     //Password reset Dialog
-        private fun resetPasswordCustom() {
-            // Inflate dialog layout using view binding
-            val dialogBinding = ResetDialogeBoxBinding.inflate(layoutInflater)
+    private fun resetPasswordCustom() {
+        // Inflate dialog layout using view binding
+        val dialogBinding = ResetDialogeBoxBinding.inflate(layoutInflater)
 
-            // Set up AlertDialog using the inflated dialog view from binding
-            val resetBox = AlertDialog.Builder(this)
-                .setView(dialogBinding.root)
-                .setCancelable(true)
-                .create()
+        // Set up AlertDialog using the inflated dialog view from binding
+        val resetBox = AlertDialog.Builder(this)
+            .setView(dialogBinding.root)
+            .setCancelable(true)
+            .create()
 
-            // Show the dialog
-            resetBox.window?.setBackgroundDrawableResource(android.R.color.transparent)
-            resetBox.show()
+        // Show the dialog
+        resetBox.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        resetBox.show()
 
-            // Set onClickListener for the button inside the dialog
-            dialogBinding.resetButton.setOnClickListener {
-                resetEmail = dialogBinding.userResetEmail.text.toString().trim()
-                auth.sendPasswordResetEmail(resetEmail)
-                    .addOnSuccessListener {
-                        Toast.makeText(
-                            applicationContext,
-                            "Check your Email",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        resetBox.dismiss() // Dismiss the dialog after success
-                    }
-                    .addOnFailureListener { exception ->
-                        Toast.makeText(
-                            applicationContext,
-                            "Password reset email failed: ${exception.message}",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        Log.e("ResetPassword", "Password reset email failed", exception)
-                        // You may choose whether to dismiss the dialog on failure as well
-                        resetBox.dismiss() // Dismiss the dialog after failure as well
-                    }
-            }
+        // Set onClickListener for the button inside the dialog
+        dialogBinding.resetButton.setOnClickListener {
+            resetEmail = dialogBinding.userResetEmail.text.toString().trim()
+            auth.sendPasswordResetEmail(resetEmail)
+                .addOnSuccessListener {
+                    Toast.makeText(
+                        applicationContext,
+                        "Check your Email",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    resetBox.dismiss() // Dismiss the dialog after success
+                }
+                .addOnFailureListener { exception ->
+                    Toast.makeText(
+                        applicationContext,
+                        "Password reset email failed: ${exception.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    Log.e("ResetPassword", "Password reset email failed", exception)
+                    // You may choose whether to dismiss the dialog on failure as well
+                    resetBox.dismiss() // Dismiss the dialog after failure as well
+                }
         }
+    }
 
     private fun createUSerAccount(email: String, password: String) {
         auth.signInWithEmailAndPassword(email,password).addOnCompleteListener{ task->
             if(task.isSuccessful){
-               val verification= auth.currentUser?.isEmailVerified
+                val verification= auth.currentUser?.isEmailVerified
                 if(verification==true) {
                     val user: FirebaseUser? = auth.currentUser
                     updateUI(user)
@@ -178,7 +178,7 @@ class Login : AppCompatActivity() {
         launcher.launch(signInIntent)
     }
     private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-        result->
+            result->
         if (result.resultCode== Activity.RESULT_OK){
             val task=GoogleSignIn.getSignedInAccountFromIntent(result.data)
             handleResult(task)

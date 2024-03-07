@@ -4,4 +4,13 @@
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
     </style>
+    <style name="Base.Theme.profile" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your dark theme here. -->
+         <item name="colorPrimaryDark">#E6E6E6</item>
+    </style>
+    <style name="Base.Theme.register" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <item name="colorPrimaryDark">#FDFDFD</item>
+    </style>
+
 </resources>

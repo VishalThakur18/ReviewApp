@@ -5,10 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.viewpager2.widget.ViewPager2
 import com.example.myapplication.R
+import com.example.myapplication.feedFragmentAdapter
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
 
 class FeedFragment : Fragment() {
+    private lateinit var tabLayout: TabLayout
+    private lateinit var viewPager2: ViewPager2
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -16,7 +22,18 @@ class FeedFragment : Fragment() {
 
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_feed, container, false)
+        val view =  inflater.inflate(R.layout.fragment_feed, container, false)
+        val tabLayout:TabLayout = view.findViewById(R.id.tablout)
+        val viewPager2:ViewPager2 = view.findViewById(R.id.pager_feed)
+
+        viewPager2.adapter = feedFragmentAdapter(this)
+        TabLayoutMediator(tabLayout, viewPager2) { tab, position ->
+            when(position) {
+                0 -> tab.text = "Dishes"
+                1 -> tab.text = "Restraunts"
+            }
+        }.attach()
+    return view
     }
 
 }
