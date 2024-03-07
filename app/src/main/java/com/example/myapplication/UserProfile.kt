@@ -1,8 +1,10 @@
 package com.example.myapplication
 
+import Model.UserModel
 import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageButton
@@ -13,6 +15,10 @@ import com.example.myapplication.databinding.ActivityUserProfileBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 
@@ -38,8 +44,34 @@ class UserProfile : AppCompatActivity() {
                     .transform(CropCircleTransformation())
                     .into(binding.profileOnUser)
             }
+
             // Set user name
-            binding.userNameProfile.text = user.displayName
+            val userName = user.displayName ?: ""
+            binding.userNameProfile.text = userName
+
+            // Set user email
+            binding.userEmailProfile.text = user.email
+        }
+
+        // Fetch and display user's phone number
+        val userId = mAuth.currentUser?.uid
+        userId?.let { uid ->
+            // Fetch user data from the database
+            val databaseRef = FirebaseDatabase.getInstance().reference.child("user").child(uid)
+            databaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val userModel = snapshot.getValue(UserModel::class.java)
+                    userModel?.let { user ->
+                        // Set user phone number
+                        binding.userPhoneProfile.text = user.phone
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    // Handle database error
+                    Log.e("UserProfile", "Error fetching user data: ${error.message}")
+                }
+            })
         }
 
         // Click listener for profile picture
@@ -87,18 +119,14 @@ class UserProfile : AppCompatActivity() {
         val currentUser = mAuth.currentUser
         currentUser?.photoUrl?.let { url ->
             val profilePicDialog = dialogView.findViewById<ImageView>(R.id.userImg_Dialog)
-            Picasso.get().load(url) .transform(CropCircleTransformation()).into(profilePicDialog)
+            Picasso.get().load(url).transform(CropCircleTransformation()).into(profilePicDialog)
         }
 
         alertDialog.show()
 
         val cross = alertDialog.findViewById<ImageButton>(R.id.cancelID)
-        if (cross != null) {
-            cross.setOnClickListener {
-                alertDialog.dismiss()
-            }
+        cross?.setOnClickListener {
+            alertDialog.dismiss()
         }
     }
-
-
 }

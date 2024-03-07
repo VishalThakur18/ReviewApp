@@ -67,7 +67,7 @@
                 android:id="@+id/userNameProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="AYUSH RAJ"
+                tools:text="User Name"
                 android:fontFamily="@font/realway_bold"
                 android:textSize="28sp"
                 android:layout_margin="10dp"
@@ -102,18 +102,18 @@
                             android:id="@+id/imageView3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="0"
+                            android:layout_marginStart="5dp"
                             app:srcCompat="@drawable/phoneno_profile" />
 
                         <TextView
-                            android:id="@+id/textView4"
+                            android:id="@+id/userPhoneProfile"
                             android:layout_width="110dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:textSize="20sp"
-                            android:gravity="center"
+                            android:layout_marginStart="10dp"
                             android:textColor="@color/black"
-                            android:textAlignment="center"
                             android:fontFamily="@font/realway_bold"
                             android:text="7985419494 🚫" />
                     </LinearLayout>
@@ -130,18 +130,17 @@
                             android:id="@+id/gmailuser"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="0"
+                            android:layout_marginStart="5dp"
                             app:srcCompat="@drawable/email_circle_svgrepo_com" />
-
                         <TextView
-                            android:id="@+id/gmailofuser"
-                            android:layout_width="110dp"
+                            android:id="@+id/userEmailProfile"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:textSize="20sp"
-                            android:gravity="center"
+                            android:layout_marginStart="10dp"
                             android:textColor="@color/black"
-                            android:textAlignment="center"
                             android:fontFamily="@font/realway_bold"
                             android:text="vishal0010@gmail.com" />
                     </LinearLayout>

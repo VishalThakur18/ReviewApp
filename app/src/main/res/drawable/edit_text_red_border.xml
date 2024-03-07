@@ -1,0 +1,9 @@
+<!-- res/drawable/edit_text_red_border.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@android:color/transparent" />
+    <stroke
+        android:width="2dp"
+        android:color="#FF0000" /> <!-- Use the red color code directly -->
+     <corners android:radius="20dp"/>
+</shape>

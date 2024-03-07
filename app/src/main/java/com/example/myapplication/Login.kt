@@ -1,9 +1,10 @@
 package com.example.myapplication
-
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -22,6 +23,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.Task
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.auth
@@ -111,23 +114,26 @@ class Login : AppCompatActivity() {
     }
 
     //Password reset Dialog
-        private fun resetPasswordCustom() {
-            // Inflate dialog layout using view binding
-            val dialogBinding = ResetDialogeBoxBinding.inflate(layoutInflater)
+    private fun resetPasswordCustom() {
+        // Inflate dialog layout using view binding
+        val dialogBinding = ResetDialogeBoxBinding.inflate(layoutInflater)
 
-            // Set up AlertDialog using the inflated dialog view from binding
-            val resetBox = AlertDialog.Builder(this)
-                .setView(dialogBinding.root)
-                .setCancelable(true)
-                .create()
+        // Set up AlertDialog using the inflated dialog view from binding
+        val resetBox = AlertDialog.Builder(this)
+            .setView(dialogBinding.root)
+            .setCancelable(true)
+            .create()
 
-            // Show the dialog
-            resetBox.window?.setBackgroundDrawableResource(android.R.color.transparent)
-            resetBox.show()
+        // Show the dialog
+        resetBox.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        resetBox.show()
 
-            // Set onClickListener for the button inside the dialog
-            dialogBinding.resetButton.setOnClickListener {
-                resetEmail = dialogBinding.userResetEmail.text.toString().trim()
+        // Set onClickListener for the button inside the dialog
+        dialogBinding.resetButton.setOnClickListener {
+            resetEmail = dialogBinding.userResetEmail.text.toString().trim()
+            if (resetEmail.isBlank()) {
+                Toast.makeText(this, "Please Enter your Email to reset Password", Toast.LENGTH_SHORT).show()
+            } else {
                 auth.sendPasswordResetEmail(resetEmail)
                     .addOnSuccessListener {
                         Toast.makeText(
@@ -149,25 +155,45 @@ class Login : AppCompatActivity() {
                     }
             }
         }
-
-    private fun createUSerAccount(email: String, password: String) {
-        auth.signInWithEmailAndPassword(email,password).addOnCompleteListener{ task->
-            if(task.isSuccessful){
-               val verification= auth.currentUser?.isEmailVerified
-                if(verification==true) {
-                    val user: FirebaseUser? = auth.currentUser
-                    updateUI(user)
-                }else{
-                    Toast.makeText(this,"Verify your Email before Login",Toast.LENGTH_SHORT).show()
-                }
-            }else{
-                Toast.makeText(this,"Account Not Found",Toast.LENGTH_SHORT).show()
-
-            }
-
-        }
     }
 
+
+    private fun createUSerAccount(email: String, password: String) {
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val verification = auth.currentUser?.isEmailVerified
+                    if (verification == true) {
+                        val user: FirebaseUser? = auth.currentUser
+                        updateUI(user)
+                    } else {
+                        Toast.makeText(this, "Verify your Email before Login", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "signInWithEmail:failure", task.exception)
+                    if (task.exception is FirebaseAuthInvalidUserException || task.exception is FirebaseAuthInvalidCredentialsException) {
+                        // Display toast message for incorrect password
+                        Toast.makeText(this, "Password incorrect", Toast.LENGTH_SHORT).show()
+                        // Change border color of password field to red
+                        changePasswordFieldOutlineColor(R.drawable.edit_text_red_border)
+                        // Apply fade animation to the password field's background
+                        val handler = Handler()
+                        handler.postDelayed({
+                            // Revert back to the original background (assuming you have the original drawable)
+                            binding.userPassword.setBackgroundResource(R.drawable.button_back_login)
+                        }, 1500) // Delay in milliseconds (e.g., 2000 ms = 2 seconds)
+                    } else {
+                        // Handle other errors
+                        Toast.makeText(this, "Authentication failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+    }
+    private fun changePasswordFieldOutlineColor(drawableResId: Int) {
+        // Set the custom drawable as the background of the password field
+        binding.userPassword.setBackgroundResource(drawableResId)
+    }
     private fun updateUI(user: FirebaseUser?) {
         startActivity(Intent(this,MainActivity::class.java))
         finish()
