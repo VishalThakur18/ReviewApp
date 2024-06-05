@@ -1,41 +1,39 @@
 package com.example.myapplication
 
-import Model.UserModel
-import android.animation.ObjectAnimator
+import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.widget.ImageButton
-import android.widget.ImageView
-import androidx.appcompat.app.AlertDialog
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.databinding.ActivityUserProfileBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import com.squareup.picasso.Picasso
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 
 class UserProfile : AppCompatActivity() {
 
+    companion object {
+        const val REQUEST_IMAGE_GALLERY = 2
+    }
+
+    private lateinit var selectedImageUri: Uri
     private lateinit var binding: ActivityUserProfileBinding
-    private lateinit var mAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUserProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        mAuth = FirebaseAuth.getInstance()
-
         // Fetch and display user's profile picture and name
-        val currentUser = mAuth.currentUser
+        val currentUser = FirebaseAuth.getInstance().currentUser
         currentUser?.let { user ->
             // Set profile picture
             user.photoUrl?.let { url ->
@@ -53,27 +51,6 @@ class UserProfile : AppCompatActivity() {
             binding.userEmailProfile.text = user.email
         }
 
-        // Fetch and display user's phone number
-        val userId = mAuth.currentUser?.uid
-        userId?.let { uid ->
-            // Fetch user data from the database
-            val databaseRef = FirebaseDatabase.getInstance().reference.child("user").child(uid)
-            databaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val userModel = snapshot.getValue(UserModel::class.java)
-                    userModel?.let { user ->
-                        // Set user phone number
-                        binding.userPhoneProfile.text = user.phone
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    // Handle database error
-                    Log.e("UserProfile", "Error fetching user data: ${error.message}")
-                }
-            })
-        }
-
         // Click listener for profile picture
         binding.profileOnUser.setOnClickListener {
             showCustomDialog()
@@ -86,7 +63,7 @@ class UserProfile : AppCompatActivity() {
 
         // Click listener for log out button
         binding.logOutBtn.setOnClickListener {
-            mAuth.signOut()
+            FirebaseAuth.getInstance().signOut()
 
             // Sign out from Google also
             val googleSignInClient = GoogleSignIn.getClient(
@@ -96,37 +73,91 @@ class UserProfile : AppCompatActivity() {
                     .requestEmail()
                     .build()
             )
-            googleSignInClient.signOut()
-            val intent = Intent(this@UserProfile, Login::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            startActivity(intent)
-            finish()
+            googleSignInClient.signOut().addOnCompleteListener {
+                val intent = Intent(this@UserProfile, Login::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                startActivity(intent)
+                finish()
+            }
         }
     }
 
     private fun showCustomDialog() {
-        val dialogView: View = LayoutInflater.from(this).inflate(R.layout.dialog_profilepicselector, null)
-        val alertDialog = AlertDialog.Builder(this)
-            .setView(dialogView)
-            .setCancelable(false)
-            .create()
-        alertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-        val bounceAnimation = ObjectAnimator.ofFloat(dialogView, "translationY", 0f, -50f, 0f)
-        bounceAnimation.duration = 500 // Adjust the duration as needed
-        bounceAnimation.start()
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "image/*"
+        startActivityForResult(intent, REQUEST_IMAGE_GALLERY)
+    }
 
-        // Fetch and display user's profile picture in the dialog
-        val currentUser = mAuth.currentUser
-        currentUser?.photoUrl?.let { url ->
-            val profilePicDialog = dialogView.findViewById<ImageView>(R.id.userImg_Dialog)
-            Picasso.get().load(url).transform(CropCircleTransformation()).into(profilePicDialog)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                REQUEST_IMAGE_GALLERY -> {
+                    data?.data?.let { imageUri ->
+                        selectedImageUri = imageUri
+                        startCropActivity(imageUri)
+                    }
+                }
+
+                CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
+                    val result = CropImage.getActivityResult(data)
+                    if (result.error != null) {
+                        val error = result.error
+                        // Handle crop error
+                        Toast.makeText(this, "Crop error: ${error.message}", Toast.LENGTH_SHORT).show()
+                    } else {
+                        result.uri?.let { uri ->
+                            selectedImageUri = uri // Save the cropped image URI
+
+                            // Upload the image to Firebase Storage
+                            uploadImageToFirebase(selectedImageUri)
+                        }
+                    }
+                }
+            }
         }
+    }
 
-        alertDialog.show()
+    private fun startCropActivity(uri: Uri) {
+        CropImage.activity(uri)
+            .setGuidelines(CropImageView.Guidelines.ON)
+            .setAspectRatio(1, 1)
+            .setCropShape(CropImageView.CropShape.OVAL)
+            .start(this)
+    }
 
-        val cross = alertDialog.findViewById<ImageButton>(R.id.cancelID)
-        cross?.setOnClickListener {
-            alertDialog.dismiss()
+    private fun uploadImageToFirebase(uri: Uri) {
+        val storageRef = Firebase.storage.reference
+        val imagesRef = storageRef.child("profile_pictures/${FirebaseAuth.getInstance().currentUser?.uid}.jpg")
+
+        val uploadTask = imagesRef.putFile(uri)
+        uploadTask.addOnSuccessListener { taskSnapshot ->
+            imagesRef.downloadUrl.addOnSuccessListener { downloadUri ->
+                // Update the profile picture in Firebase Authentication
+                val currentUser = FirebaseAuth.getInstance().currentUser
+                val profileUpdates = UserProfileChangeRequest.Builder()
+                    .setPhotoUri(downloadUri)
+                    .build()
+
+                currentUser?.updateProfile(profileUpdates)
+                    ?.addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            // Profile picture updated successfully
+                            Toast.makeText(this, "Profile picture updated", Toast.LENGTH_SHORT).show()
+
+                            // Update the profile picture in the UI
+                            Picasso.get().load(downloadUri)
+                                .transform(CropCircleTransformation())
+                                .into(binding.profileOnUser)
+                        } else {
+                            // Profile picture update failed
+                            Toast.makeText(this, "Failed to update profile picture", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+            }
+        }.addOnFailureListener { exception ->
+            // Handle unsuccessful uploads
+            Toast.makeText(this, "Failed to upload image", Toast.LENGTH_SHORT).show()
         }
     }
 }

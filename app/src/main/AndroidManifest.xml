@@ -13,29 +13,35 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
-            android:theme="@style/Base.Theme.profile"
-            android:name=".UserProfile"
+            android:name=".ProfileImageHolder"
             android:exported="false" />
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" />
+        <activity
+            android:name=".UserProfile"
+            android:exported="false"
+            android:theme="@style/Base.Theme.profile" />
         <activity
             android:name=".GetStarted"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".SignUpPage"
-            android:theme="@style/Base.Theme.register"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Base.Theme.register" />
         <activity
             android:name=".Login"
-            android:theme="@style/Base.Theme.register"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Base.Theme.register" />
         <activity
             android:name=".MainActivity"
-            android:exported="false">
-
-        </activity>
+            android:exported="false"></activity>
     </application>
+
 </manifest>

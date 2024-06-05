@@ -14,7 +14,6 @@ import com.example.myapplication.UserProfile
 import com.example.myapplication.databinding.FragmentHomeBinding
 import com.google.firebase.auth.FirebaseAuth
 
-
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
@@ -25,7 +24,6 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         auth = FirebaseAuth.getInstance()
         val currentUser = auth.currentUser

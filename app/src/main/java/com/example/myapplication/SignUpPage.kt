@@ -1,4 +1,5 @@
 package com.example.myapplication
+
 import Model.UserModel
 import android.content.Intent
 import android.os.Bundle
@@ -14,33 +15,31 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.myapplication.databinding.ActivitySignUpPageBinding
-import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
-import com.google.firebase.auth.auth
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.database
+import com.google.firebase.database.FirebaseDatabase
+
 class SignUpPage : AppCompatActivity() {
 
-    private lateinit var auth : FirebaseAuth
-    private lateinit var database : DatabaseReference
-    private lateinit var userName : String
-    private lateinit var userNumber:String
-    private lateinit var email : String
-    private lateinit var password : String
-    private val binding:ActivitySignUpPageBinding by lazy {
+    private lateinit var auth: FirebaseAuth
+    private lateinit var database: DatabaseReference
+    private lateinit var userName: String
+    private lateinit var userNumber: String
+    private lateinit var email: String
+    private lateinit var password: String
+    private val binding: ActivitySignUpPageBinding by lazy {
         ActivitySignUpPageBinding.inflate(layoutInflater)
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
         // Initializing Firebase Authentication
-        auth= Firebase.auth
-        // Initialing Firebase Database
-        database=Firebase.database.reference
+        auth = FirebaseAuth.getInstance()
+        // Initializing Firebase Database
+        database = FirebaseDatabase.getInstance().reference
 
         // Password text change listener
         binding.userPassword.addTextChangedListener(object : TextWatcher {
@@ -61,26 +60,26 @@ class SignUpPage : AppCompatActivity() {
             }
         }
 
-        //Redirecting to the Login page after successfully  registration
-        binding.signUpbutton.setOnClickListener{
-            //get details from User
-            userName=binding.userName.text.toString().trim()
-            userNumber=binding.userNumber.text.toString().trim()
-            email=binding.userEmail.text.toString().trim()
-            password=binding.userPassword.text.toString().trim()
+        // Redirecting to the Login page after successful registration
+        binding.signUpbutton.setOnClickListener {
+            // Get details from User
+            userName = binding.userName.text.toString().trim()
+            userNumber = binding.userNumber.text.toString().trim()
+            email = binding.userEmail.text.toString().trim()
+            password = binding.userPassword.text.toString().trim()
 
-            if(userName.isBlank() || email.isBlank() || password.isBlank() || userNumber.isBlank()){
-                Toast.makeText(this,"Please fill all the details", Toast.LENGTH_SHORT).show()
-            }else{
-                createAccount(email,password)
+            if (userName.isBlank() || email.isBlank() || password.isBlank() || userNumber.isBlank()) {
+                Toast.makeText(this, "Please fill all the details", Toast.LENGTH_SHORT).show()
+            } else {
+                createAccount(email, password)
             }
         }
-        //Redirecting to the Login Page if already have an account
-        binding.signIn.setOnClickListener{
-            val intent= Intent(this,Login::class.java)
+        // Redirecting to the Login Page if already have an account
+        binding.signIn.setOnClickListener {
+            val intent = Intent(this, Login::class.java)
             startActivity(intent)
         }
-        // Highlighting the "Sign In " text
+        // Highlighting the "Sign In" text
         val textViewed = findViewById<TextView>(R.id.signIn)
         val originalText = "Already have an Account? Sign In"
         val spannableString = SpannableString(originalText)
@@ -129,7 +128,7 @@ class SignUpPage : AppCompatActivity() {
                             Toast.makeText(this, "Authentication Failed", Toast.LENGTH_SHORT).show()
                         }
 
-                    // If User is Created Successfully then redirect it to the login page
+                    // If User is Created Successfully then redirect to the login page
                     val intent = Intent(this, Login::class.java)
                     startActivity(intent)
                     finish()
@@ -140,18 +139,22 @@ class SignUpPage : AppCompatActivity() {
             }
     }
 
-
-    //To Save the Users registration Data
+    // To Save the User's registration Data
     private fun saveUserData() {
-        userName=binding.userName.text.toString().trim()
-        userNumber=binding.userNumber.text.toString().trim()
-        email=binding.userEmail.text.toString().trim()
-        password=binding.userPassword.text.toString().trim()
-        val user=UserModel(userName,userNumber,email,password)
+        userName = binding.userName.text.toString().trim()
+        userNumber = binding.userNumber.text.toString().trim()
+        email = binding.userEmail.text.toString().trim()
+        password = binding.userPassword.text.toString().trim()
+        val user = UserModel(userName, userNumber, email, password)
         val userId = FirebaseAuth.getInstance().currentUser!!.uid
-        //Save data in the Firebase
+        // Save data in the Firebase
         database.child("user").child(userId).setValue(user)
-
+            .addOnSuccessListener {
+                Log.d("SignUpPage", "User data saved successfully")
+            }
+            .addOnFailureListener { e ->
+                Log.e("SignUpPage", "Failed to save user data", e)
+            }
     }
 
     // Function to check if the password is valid

@@ -81,16 +81,17 @@ class Login : AppCompatActivity() {
         reset.setOnClickListener{
             resetPasswordCustom()
         }
-
+        //To go on SignUp page through SignUp
             binding.signUp.setOnClickListener{
-            //To go on SignUp page through SignUp
             val intent=Intent(this,SignUpPage::class.java)
             startActivity(intent)
         }
+        //Google SingIn Binding
         binding.googleSignIn.setOnClickListener{
             signInWithGoogle()
         }
 
+        // Highlighting the "SinUp" text
         val textViewed = findViewById<TextView>(R.id.signUp)
         val originalText = "Don't have an Account? Sign Up"
         val spannableString = SpannableString(originalText)
@@ -117,7 +118,6 @@ class Login : AppCompatActivity() {
     private fun resetPasswordCustom() {
         // Inflate dialog layout using view binding
         val dialogBinding = ResetDialogeBoxBinding.inflate(layoutInflater)
-
         // Set up AlertDialog using the inflated dialog view from binding
         val resetBox = AlertDialog.Builder(this)
             .setView(dialogBinding.root)
