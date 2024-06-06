@@ -1,31 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.HomeFragment">
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#F9EDDF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+
+            android:clipChildren="false"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="24dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="24dp"
-                android:layout_marginStart="24dp"
+                android:clipChildren="false"
                 android:orientation="horizontal">
+
                 <ImageView
                     android:id="@+id/profilePic"
-                    android:transitionName="photu"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:background="@drawable/circular_bg"
-                    tools:src="@drawable/profile"/>
+                    android:transitionName="photu"
+                    tools:src="@drawable/profile" />
+
                 <TextView
                     android:id="@+id/userName"
                     android:layout_width="wrap_content"
@@ -33,58 +48,197 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="16dp"
                     android:layout_weight="1"
+                    android:fontFamily="@font/monserat2"
                     android:textAlignment="center"
-                    android:fontFamily="@font/realway_bold"
-                    tools:text="User Name"
                     android:textColor="@color/black"
-                    android:textSize="20sp" />
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="48dp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    tools:text="User Name" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_gravity="center_vertical"
-                    android:background="@drawable/background_cards_glass"
+                    android:background="@drawable/circular_bg"
+                    android:clipChildren="false"
+                    android:elevation="8dp"
                     android:gravity="center"
                     android:orientation="horizontal"
+                    android:outlineSpotShadowColor="@color/black"
                     android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:elevation="8dp"
-                    android:outlineSpotShadowColor="@color/black">
+                    android:paddingEnd="8dp">
 
                     <ImageView
                         android:id="@+id/imageView2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/adjust_24" />
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/notification_bing" />
+
+                    <ImageView
+                        android:id="@+id/redNotif"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        app:layout_constraintBottom_toBottomOf="@id/imageView2"
+                        app:layout_constraintEnd_toEndOf="@id/imageView2"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toStartOf="@id/imageView2"
+                        app:layout_constraintTop_toTopOf="@id/imageView2"
+                        app:layout_constraintVertical_bias="0.0"
+                        app:srcCompat="@drawable/red_notification_dot" />
 
                     <TextView
-                        android:id="@+id/textView2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginEnd="4dp"
-                        android:text="100K"
-                        android:fontFamily="@font/realway_bold"
-                        android:textColor="@color/white" />
+                        android:gravity="center"
+                        android:text="2"
+                        android:textColor="@color/white"
+                        android:textSize="10sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@id/redNotif"
+                        app:layout_constraintEnd_toEndOf="@id/redNotif"
+                        app:layout_constraintStart_toStartOf="@id/redNotif"
+                        app:layout_constraintTop_toTopOf="@id/redNotif" />
 
-                </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="125dp"
-                android:layout_margin="24dp"
-                android:orientation="horizontal">
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
             </LinearLayout>
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/exploreButton"
-                android:layout_marginStart="48dp"
-                android:layout_marginEnd="48dp"
-                android:textColor="@color/white"
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="back to login"
-                android:background="@drawable/button_login_black"/>
+                android:layout_height="wrap_content">
+
+                <ViewFlipper
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:layout_margin="10dp"
+                    android:autoStart="true"
+                    android:flipInterval="4000"
+                    android:inAnimation="@android:anim/slide_in_left"
+                    android:outAnimation="@android:anim/slide_out_right"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.5">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/advertisementCard1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:cardCornerRadius="30dp">
+
+                        <ImageView
+                            android:layout_width="366dp"
+                            android:layout_height="match_parent"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/imgoff2" />
+
+
+                    </androidx.cardview.widget.CardView>
+                </ViewFlipper>
+
+                <!--                <androidx.viewpager2.widget.ViewPager2-->
+                <!--                    android:id="@+id/viewPagerHome"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="180dp"-->
+                <!--                    app:layout_constraintBottom_toTopOf="@id/dots_indicator"-->
+                <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+                <!--                    app:layout_constraintStart_toStartOf="parent"-->
+                <!--                    app:layout_constraintTop_toTopOf="parent" />-->
+
+                <!--                <com.tbuonomo.viewpagerdotsindicator.DotsIndicator-->
+                <!--                    android:id="@+id/dots_indicator"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_margin="10dp"-->
+                <!--                    app:dotsColor="#BFBDBD"-->
+                <!--                    app:dotsCornerRadius="8dp"-->
+                <!--                    app:dotsSize="8dp"-->
+                <!--                    app:dotsSpacing="3dp"-->
+                <!--                    app:dotsWidthFactor="2.5"-->
+                <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+                <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+                <!--                    app:layout_constraintHorizontal_bias="0.5"-->
+                <!--                    app:layout_constraintStart_toStartOf="parent"-->
+                <!--                    app:layout_constraintTop_toBottomOf="@id/viewPagerHome"-->
+                <!--                    app:progressMode="true"-->
+                <!--                    app:selectedDotColor="@color/black" />-->
+
+                <!--                <ProgressBar-->
+                <!--                    android:id="@+id/progressBar"-->
+                <!--                    style="?android:attr/progressBarStyle"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:visibility="gone"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:progress="@integer/material_motion_duration_long_2"-->
+                <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+                <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+                <!--                    app:layout_constraintStart_toStartOf="parent"-->
+                <!--                    app:layout_constraintTop_toTopOf="parent" />-->
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--            <TextView-->
+<!--                android:id="@+id/textView"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="20dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:fontFamily="@font/monserat2"-->
+<!--                android:text="Dishes"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="32sp" />-->
+
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="20dp"-->
+<!--                android:layout_marginBottom="10dp"-->
+<!--                android:fontFamily="@font/monserat2"-->
+<!--                android:text="Of the Day."-->
+<!--                android:textColor="#787878"-->
+<!--                android:textSize="18sp" />-->
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerHome"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:clipChildren="false"
+                android:orientation="horizontal" />
+
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="30dp"
+                android:elevation="8dp"
+                android:src="@drawable/plus_sign"
+                android:clickable="true"
+                />
+<!--            <androidx.appcompat.widget.AppCompatButton-->
+<!--                android:id="@+id/main_button"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:textAllCaps="false"-->
+<!--                android:elevation="8dp"-->
+<!--                android:text="Login"-->
+<!--                android:textSize="17sp"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:fontFamily="@font/realway_bold"-->
+<!--                android:background="@drawable/button_login_black"-->
+<!--                android:layout_marginStart="32dp"-->
+<!--                android:layout_marginEnd="32dp"-->
+<!--                android:layout_marginTop="20dp"/>-->
+
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

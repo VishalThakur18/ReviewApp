@@ -7,16 +7,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myapplication.Login
 import com.example.myapplication.R
 import com.example.myapplication.UserProfile
 import com.example.myapplication.databinding.FragmentHomeBinding
+import com.example.myapplication.homeCards
 import com.google.firebase.auth.FirebaseAuth
+import homeAdapter
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
+    private lateinit var backgroundId : Array<Int>
+    lateinit var title: Array<String>
+    lateinit var description: Array<String>
+    private lateinit var newRecyclerView: RecyclerView
     private val binding get() = _binding!!
     private lateinit var auth: FirebaseAuth
 
@@ -52,11 +60,38 @@ class HomeFragment : Fragment() {
             startActivity(intent1, options.toBundle())
         }
 
-        // Click listener for back to login button
-        binding.exploreButton.setOnClickListener {
-            val intent = Intent(requireActivity(), Login::class.java)
-            startActivity(intent)
+
+
+        //Recycler view on home page....................................
+        backgroundId = arrayOf(
+            R.drawable.homechoice_bg,
+            R.drawable.homechoice_bg_blue,
+            R.drawable.homechoice_bg_yellow,
+            R.drawable.homechoice_bg
+        )
+        title = arrayOf(
+            "Noodles",
+            "RiceBowls",
+            "Sandwiches",
+            "Juices"
+        )
+        description = arrayOf(
+            "Chinese Chataka",
+            "Fullfilling",
+            "Tangy & Tasty",
+            "Rehy-date"
+        )
+        newRecyclerView = binding.recyclerHome
+        newRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL,false)
+
+//        newRecyclerView = view.findViewById(R.id.recyclerHome)
+//        newRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        val items = mutableListOf<homeCards>()
+        for (i in backgroundId.indices) {
+            items.add(homeCards(backgroundId[i], title[i], description[i]))
         }
+        val adapter = homeAdapter(items)
+        newRecyclerView.adapter = adapter
 
         return binding.root
     }

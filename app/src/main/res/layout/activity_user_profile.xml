@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="#E6E6E6"
+    android:background="@color/white"
     android:layout_height="match_parent"
     tools:context=".UserProfile">
 
@@ -81,13 +81,13 @@
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/userNameProfile"
-                    app:layout_constraintVertical_bias="0.893">
+                    app:layout_constraintVertical_bias="0.818">
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="100dp"
-                        android:layout_marginTop="12dp"
                         android:layout_marginStart="15dp"
+                        android:layout_marginTop="12dp"
                         android:layout_marginEnd="12dp"
                         android:layout_marginBottom="12dp"
                         android:layout_weight="1"
@@ -127,8 +127,8 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="100dp"
-                        android:layout_marginTop="12dp"
                         android:layout_marginStart="15dp"
+                        android:layout_marginTop="12dp"
                         android:layout_marginEnd="12dp"
                         android:layout_marginBottom="12dp"
                         android:layout_weight="1"
@@ -168,8 +168,8 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="100dp"
-                        android:layout_marginTop="12dp"
                         android:layout_marginStart="15dp"
+                        android:layout_marginTop="12dp"
                         android:layout_marginEnd="12dp"
                         android:layout_marginBottom="12dp"
                         android:layout_weight="1"

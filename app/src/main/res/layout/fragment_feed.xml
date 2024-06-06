@@ -49,6 +49,7 @@
         app:tabIndicatorColor="@null"
         app:tabIndicatorFullWidth="true"
         app:tabGravity="fill"
+        android:elevation="8dp"
         app:tabTextColor="@color/black"
         android:background="@drawable/tablayout_bg_feed"
         app:tabIndicatorGravity="stretch"
