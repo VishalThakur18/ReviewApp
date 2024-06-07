@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import Model.UserModel
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -11,6 +12,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.squareup.picasso.Picasso
@@ -26,6 +31,7 @@ class UserProfile : AppCompatActivity() {
 
     private lateinit var selectedImageUri: Uri
     private lateinit var binding: ActivityUserProfileBinding
+    private val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +39,7 @@ class UserProfile : AppCompatActivity() {
         setContentView(binding.root)
 
         // Fetch and display user's profile picture and name
-        val currentUser = FirebaseAuth.getInstance().currentUser
+        val currentUser = mAuth.currentUser
         currentUser?.let { user ->
             // Set profile picture
             user.photoUrl?.let { url ->
@@ -49,6 +55,23 @@ class UserProfile : AppCompatActivity() {
 
             // Set user email
             binding.userEmailProfile.text = user.email
+
+            // Fetch and display user's phone number
+            val userId = user.uid
+            val databaseRef = FirebaseDatabase.getInstance().reference.child("users").child(userId)
+            databaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val userModel = snapshot.getValue(UserModel::class.java)
+                    userModel?.let { user ->
+                        // Set user phone number
+                        binding.userPhoneProfile.text = user.phone
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(this@UserProfile, "Failed to load phone number", Toast.LENGTH_SHORT).show()
+                }
+            })
         }
 
         // Click listener for profile picture
@@ -63,7 +86,7 @@ class UserProfile : AppCompatActivity() {
 
         // Click listener for log out button
         binding.logOutBtn.setOnClickListener {
-            FirebaseAuth.getInstance().signOut()
+            mAuth.signOut()
 
             // Sign out from Google also
             val googleSignInClient = GoogleSignIn.getClient(
