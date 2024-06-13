@@ -215,15 +215,16 @@
                 android:orientation="horizontal" />
 
             <ImageView
+                android:id="@+id/add_reviews"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="30dp"
-                android:elevation="8dp"
-                android:src="@drawable/plus_sign"
                 android:clickable="true"
-                />
+                android:contentDescription="@string/app_name"
+                android:elevation="8dp"
+                android:src="@drawable/plus_sign" />
 <!--            <androidx.appcompat.widget.AppCompatButton-->
 <!--                android:id="@+id/main_button"-->
 <!--                android:layout_width="match_parent"-->

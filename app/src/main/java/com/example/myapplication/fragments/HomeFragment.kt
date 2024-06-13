@@ -1,11 +1,15 @@
 package com.example.myapplication.fragments
 
 import android.app.ActivityOptions
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +19,8 @@ import com.example.myapplication.R
 import com.example.myapplication.UserProfile
 import com.example.myapplication.databinding.FragmentHomeBinding
 import com.example.myapplication.homeCards
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
 import homeAdapter
 
@@ -93,8 +99,51 @@ class HomeFragment : Fragment() {
         val adapter = homeAdapter(items)
         newRecyclerView.adapter = adapter
 
+        //adding review functionaltiy
+        val addReviewsImageView: ImageView = binding.root.findViewById(R.id.add_reviews)
+        addReviewsImageView.setOnClickListener {
+            showBottomSheet(requireContext())
+        }
+
         return binding.root
     }
+
+    private fun showBottomSheet(context: Context) {
+        val bottomSheetView = layoutInflater.inflate(R.layout.bottomsheethome, null)
+        val bottomSheetDialog = BottomSheetDialog(context, R.style.BottomSheetDialogTheme)
+        bottomSheetDialog.setContentView(bottomSheetView)
+
+        // Apply slide-in animation
+        val slideIn = AnimationUtils.loadAnimation(context, R.anim.slide_in_bottom)
+        bottomSheetView.startAnimation(slideIn)
+
+        // Get the BottomSheetBehavior
+        val bottomSheet = bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+        val behavior = BottomSheetBehavior.from(bottomSheet!!)
+
+        // Disable drag and set expanded state
+        behavior.isDraggable = false
+        behavior.state = BottomSheetBehavior.STATE_EXPANDED
+
+        // Handle dismiss with slide-out animation
+        bottomSheetDialog.setOnDismissListener {
+            val slideOut = AnimationUtils.loadAnimation(context, R.anim.slide_out_bottom)
+            slideOut.setAnimationListener(object : Animation.AnimationListener {
+                override fun onAnimationStart(animation: Animation) {}
+
+                override fun onAnimationEnd(animation: Animation) {
+                    bottomSheetDialog.dismiss()
+                }
+
+                override fun onAnimationRepeat(animation: Animation) {}
+            })
+            bottomSheetView.startAnimation(slideOut)
+        }
+
+        bottomSheetDialog.show()
+    }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()
