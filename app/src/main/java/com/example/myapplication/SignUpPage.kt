@@ -141,20 +141,26 @@ class SignUpPage : AppCompatActivity() {
 
     // To Save the User's registration Data
     private fun saveUserData() {
-        userName = binding.userName.text.toString().trim()
-        userNumber = binding.userNumber.text.toString().trim()
-        email = binding.userEmail.text.toString().trim()
-        password = binding.userPassword.text.toString().trim()
-        val user = UserModel(userName, userNumber, email, password)
-        val userId = FirebaseAuth.getInstance().currentUser!!.uid
-        // Save data in the Firebase
-        database.child("user").child(userId).setValue(user)
-            .addOnSuccessListener {
-                Log.d("SignUpPage", "User data saved successfully")
-            }
-            .addOnFailureListener { e ->
-                Log.e("SignUpPage", "Failed to save user data", e)
-            }
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        if (currentUser != null) {
+            userName = binding.userName.text.toString().trim()
+            userNumber = binding.userNumber.text.toString().trim()
+            email = binding.userEmail.text.toString().trim()
+            password = binding.userPassword.text.toString().trim()
+            val user = UserModel(userName, userNumber, email, password)
+            val userId = currentUser.uid
+            // Save data in the Firebase
+            database.child("users").child(userId).setValue(user)
+                .addOnSuccessListener {
+                    Log.d("SignUpPage", "User data saved successfully")
+                }
+                .addOnFailureListener { e ->
+                    Log.e("SignUpPage", "Failed to save user data", e)
+                }
+        } else {
+            Log.e("SignUpPage", "User is not authenticated")
+            Toast.makeText(this, "User is not authenticated. Data saving failed.", Toast.LENGTH_SHORT).show()
+        }
     }
 
     // Function to check if the password is valid

@@ -46,7 +46,7 @@
                     android:id="@+id/backtobase"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:background="@drawable/cards_on_profile"
+                    android:background="@drawable/cards_on_profile_2"
                     android:contentDescription="@string/app_name"
                     android:elevation="8dp"
                     android:src="@drawable/back_rounded_arrow"
@@ -64,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="30dp"
                     android:fontFamily="@font/realway_bold"
-                    android:text="AYUSH RAJ"
+                    android:text="User Name"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="32sp"
@@ -237,8 +237,8 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/realway_bold"
                     android:textSize="15sp"
-                    android:textColor="#DC0606"
-                    android:text="9936882402" />
+                    android:textColor="@color/black"
+                    android:text="Phone Number" />
             </LinearLayout>
 
             <LinearLayout
@@ -271,7 +271,7 @@
                     android:layout_weight="1"
                     android:textSize="15sp"
                     android:textColor="@color/black"
-                    android:text="vishalLL221@gmail.com" />
+                    android:text="User Email" />
             </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatButton
