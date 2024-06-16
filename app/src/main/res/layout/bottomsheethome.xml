@@ -8,6 +8,7 @@
     android:orientation="vertical">
 
     <LinearLayout
+            android:elevation="8dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -85,7 +86,7 @@
                             android:layout_weight="2.7"
                             android:fontFamily="@font/manropesemibold"
                             android:text="Review Image :"
-                            android:textColor="#7C7C7C"
+                            android:textColor="@color/black"
                             android:textSize="12sp" />
 
                         <ImageView
@@ -144,10 +145,11 @@
                             android:layout_marginStart="10dp"
                             android:layout_weight="3"
                             android:fontFamily="@font/manropesemibold"
-                            android:text="Enter Food Name:"
-                            android:textColor="#7C7C7C"
+                            android:text="Enter Dish Name:"
+                            android:textColor="@color/black"
                             android:textSize="12sp" />
                     </LinearLayout>
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -161,6 +163,49 @@
                             android:layout_width="match_parent"
                             android:layout_height="35dp"
                             android:layout_gravity=""
+                            android:paddingStart="7dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:background="@drawable/textfield_bg_home_plus"
+                            android:fontFamily="@font/manropesemibold"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            tools:ignore="SpeakableTextPresentCheck" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="20dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="10dp"
+                            android:layout_weight="3"
+                            android:fontFamily="@font/manropesemibold"
+                            android:text="Enter Restaurants Name:"
+                            android:textColor="@color/black"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="20dp"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:layout_gravity=""
+                            android:paddingStart="7dp"
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
                             android:background="@drawable/textfield_bg_home_plus"
@@ -186,7 +231,7 @@
                             android:layout_weight="3"
                             android:fontFamily="@font/manropesemibold"
                             android:text="Enter Price:"
-                            android:textColor="#7C7C7C"
+                            android:textColor="@color/black"
                             android:textSize="12sp" />
                     </LinearLayout>
 
@@ -201,52 +246,11 @@
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="35dp"
+                            android:paddingStart="7dp"
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
                             android:background="@drawable/textfield_bg_home_plus"
                             android:fontFamily="@font/manropesemibold"
-                            android:textColor="@color/black"
-                            android:textSize="12sp"
-                            tools:ignore="SpeakableTextPresentCheck" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="20dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginStart="10dp"
-                            android:layout_weight="3"
-                            android:fontFamily="@font/manropesemibold"
-                            android:text="Enter Review ( 20 to 50 Character max )"
-                            android:textColor="#7C7C7C"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginEnd="20dp"
-                        android:orientation="horizontal">
-
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="100dp"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:background="@drawable/textfield_bg_home_plus"
-                            android:fontFamily="@font/manropesemibold"
-                            android:hint="Short and Sweet. U Never know who might read this"
-                            android:textAlignment="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
                             tools:ignore="SpeakableTextPresentCheck" />
@@ -269,8 +273,33 @@
                             android:fontFamily="@font/manropesemibold"
                             android:text="Enter Location of Restaurant"
                             android:textAlignment="center"
-                            android:textColor="#7C7C7C"
+                            android:textColor="@color/black"
                             android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="20dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_gravity="right"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/location_feedcard" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="2.7"
+                            android:fontFamily="@font/manropesemibold"
+                            android:text="Current googleLocation"
+                            android:textColor="#17671A"
+                            android:textSize="12sp" />
+
                     </LinearLayout>
 
                     <LinearLayout
@@ -279,21 +308,45 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="20dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="10dp"
+                            android:layout_weight="3"
+                            android:fontFamily="@font/manropesemibold"
+                            android:text="Enter Review ( 20 to 50 Character max )"
+                            android:textColor="@color/black"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="20dp"
                         android:layout_marginBottom="30dp"
                         android:orientation="horizontal">
 
-                        <ImageView
+                        <EditText
                             android:layout_width="match_parent"
-                            android:layout_height="15dp"
-                            android:src="@drawable/location_feedcard"
-                            android:layout_weight="1"/>
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="15dp"
-                            android:src="@drawable/location_feedcard"
-                            android:layout_weight="1"/>
-
+                            android:layout_height="100dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:padding="7dp"
+                            android:background="@drawable/textfield_bg_home_plus"
+                            android:fontFamily="@font/manropesemibold"
+                            android:hint="Short and Sweet. U Never know who might read this"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            tools:ignore="SpeakableTextPresentCheck" />
                     </LinearLayout>
+
+
 
                 </LinearLayout>
 
@@ -326,7 +379,7 @@
                         android:text="Cancel"
                         android:textAllCaps="false"
                         android:textColor="#7C7C7C"
-                        android:textSize="14sp"
+                        android:textSize="15sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/appCompatButton"
                         app:layout_constraintHorizontal_bias="0.838"
@@ -345,7 +398,7 @@
                         android:text="Post"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
-                        android:textSize="14sp"
+                        android:textSize="15sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.943"

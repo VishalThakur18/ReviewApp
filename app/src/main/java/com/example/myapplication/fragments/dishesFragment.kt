@@ -36,10 +36,18 @@ class dishesFragment : Fragment() {
             R.drawable.place_holder,
             R.drawable.biryani_plahol,
             R.drawable.burger_plahol,
+            R.drawable.pizza_plahol,
+            R.drawable.place_holder,
+            R.drawable.biryani_plahol,
+            R.drawable.burger_plahol,
             R.drawable.pizza_plahol
         )
 
         title = arrayOf(
+            "Food in General",
+            "Biryani",
+            "Burger",
+            "Pizza",
             "Food in General",
             "Biryani",
             "Burger",
@@ -50,15 +58,27 @@ class dishesFragment : Fragment() {
             "150",
             "110",
             "55",
+            "320",
+            "150",
+            "110",
+            "55",
             "320"
         )
         likes = arrayOf(
-            "0 k",
-            "32",
-            "21",
-            "17"
+            "3.5",
+            "4.0",
+            "5",
+            "4.1",
+            "3.5",
+            "4.0",
+            "5",
+            "4.1"
         )
         dislikes = arrayOf(
+            "0 k",
+            "3",
+            "2",
+            "1",
             "0 k",
             "3",
             "2",

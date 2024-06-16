@@ -1,6 +1,7 @@
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
@@ -12,6 +13,8 @@ class homeAdapter(private val cardList: MutableList<homeCards>) : RecyclerView.A
         val backgroundId: View = itemView.findViewById(R.id.cardBack)
         val cardTitle: TextView = itemView.findViewById(R.id.choiceName)
         val cardDescription: TextView = itemView.findViewById(R.id.choiceLocation)
+        val frontgroundId: View = itemView.findViewById(R.id.cardFront)
+        val dishImage: ImageView = itemView.findViewById(R.id.dishImage)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -28,5 +31,7 @@ class homeAdapter(private val cardList: MutableList<homeCards>) : RecyclerView.A
         holder.backgroundId.setBackgroundResource(currentItem.backgroundId) // Use setBackgroundColor to set background color
         holder.cardTitle.text = currentItem.cardTitle // Use title instead of cardTitle
         holder.cardDescription.text = currentItem.cardDescription // Use description instead of cardDescription
+        holder.dishImage.setImageResource(currentItem.dishImage)
+        holder.frontgroundId.setBackgroundResource(currentItem.frontgroundId)
     }
 }

@@ -3,13 +3,16 @@ package com.example.myapplication.fragments
 import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.provider.CalendarContract.Colors
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,6 +31,8 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private lateinit var backgroundId : Array<Int>
+    private lateinit var frontgroundId : Array<Int>
+    private lateinit var dishImage : Array<Int>
     lateinit var title: Array<String>
     lateinit var description: Array<String>
     private lateinit var newRecyclerView: RecyclerView
@@ -81,11 +86,23 @@ class HomeFragment : Fragment() {
             "Sandwiches",
             "Juices"
         )
+        dishImage = arrayOf(
+            R.drawable.visphotu,
+            R.drawable.visphotu,
+            R.drawable.visphotu,
+            R.drawable.visphotu
+        )
         description = arrayOf(
             "Chinese Chataka",
             "Fullfilling",
             "Tangy & Tasty",
             "Rehy-date"
+        )
+        frontgroundId = arrayOf(
+            R.drawable.untitled,
+            R.drawable.untitled,
+            R.drawable.untitled,
+            R.drawable.untitled
         )
         newRecyclerView = binding.recyclerHome
         newRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL,false)
@@ -94,7 +111,7 @@ class HomeFragment : Fragment() {
 //        newRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         val items = mutableListOf<homeCards>()
         for (i in backgroundId.indices) {
-            items.add(homeCards(backgroundId[i], title[i], description[i]))
+            items.add(homeCards(backgroundId[i], dishImage[i], frontgroundId[i], title[i], description[i]))
         }
         val adapter = homeAdapter(items)
         newRecyclerView.adapter = adapter
@@ -119,6 +136,13 @@ class HomeFragment : Fragment() {
 
         // Get the BottomSheetBehavior
         val bottomSheet = bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+        if (bottomSheet != null) {
+            bottomSheet.setBackgroundColor(Color.TRANSPARENT) // Make the bottom sheet background transparent
+        }
+
+        // Apply custom background with curved edges to the inflated view
+        bottomSheetView.background = ContextCompat.getDrawable(context, R.drawable.dialog_home_bg_newitem)
+
         val behavior = BottomSheetBehavior.from(bottomSheet!!)
 
         // Disable drag and set expanded state
@@ -126,22 +150,32 @@ class HomeFragment : Fragment() {
         behavior.state = BottomSheetBehavior.STATE_EXPANDED
 
         // Handle dismiss with slide-out animation
-        bottomSheetDialog.setOnDismissListener {
-            val slideOut = AnimationUtils.loadAnimation(context, R.anim.slide_out_bottom)
-            slideOut.setAnimationListener(object : Animation.AnimationListener {
-                override fun onAnimationStart(animation: Animation) {}
+        val slideOut = AnimationUtils.loadAnimation(context, R.anim.slide_out_bottom)
+        slideOut.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(animation: Animation) {}
 
-                override fun onAnimationEnd(animation: Animation) {
-                    bottomSheetDialog.dismiss()
+            override fun onAnimationEnd(animation: Animation) {
+                bottomSheetDialog.dismiss()
+            }
+
+            override fun onAnimationRepeat(animation: Animation) {}
+        })
+
+        // Set BottomSheetCallback to handle state changes
+        behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                if (newState == BottomSheetBehavior.STATE_HIDDEN) {
+                    bottomSheetView.startAnimation(slideOut)
                 }
+            }
 
-                override fun onAnimationRepeat(animation: Animation) {}
-            })
-            bottomSheetView.startAnimation(slideOut)
-        }
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {}
+        })
 
         bottomSheetDialog.show()
     }
+
+
 
 
 
@@ -150,3 +184,5 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 }
+
+

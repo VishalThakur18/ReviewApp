@@ -26,14 +26,14 @@ class feedAdapter (private val cardList: ArrayList<feedCards>) : RecyclerView.Ad
         holder.cardImage.setImageResource(currentItem.cardImage)
         holder.cardTitle.text = currentItem.cardTitle
 //        holder.cardDislikes.text = currentItem.cardDislikes
-//        holder.cardLikes.text = currentItem.cardLikes
+        holder.cardLikes.text = currentItem.cardLikes
         holder.cardPrice.text = currentItem.cardPrice
     }
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val cardImage : ImageView = itemView.findViewById(R.id.imageOnCard)
         val cardTitle : TextView = itemView.findViewById(R.id.titleofCard)
         val cardPrice : TextView = itemView.findViewById(R.id.priceOnCard)
-//        val cardLikes : TextView = itemView.findViewById(R.id.likesonCard)
+        val cardLikes : TextView = itemView.findViewById(R.id.ratings)
 //        val cardDislikes : TextView = itemView.findViewById(R.id.dislikesonCard)
     }
 }
