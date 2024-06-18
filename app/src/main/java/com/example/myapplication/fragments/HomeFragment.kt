@@ -1,43 +1,62 @@
 package com.example.myapplication.fragments
 
+import android.Manifest
 import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
-import android.provider.CalendarContract.Colors
+import android.os.Environment
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.myapplication.Login
 import com.example.myapplication.R
 import com.example.myapplication.UserProfile
 import com.example.myapplication.databinding.FragmentHomeBinding
-import com.example.myapplication.homeCards
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
-import homeAdapter
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.GeoPoint
+import com.google.firebase.storage.FirebaseStorage
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
-    private lateinit var backgroundId : Array<Int>
-    private lateinit var frontgroundId : Array<Int>
-    private lateinit var dishImage : Array<Int>
-    lateinit var title: Array<String>
-    lateinit var description: Array<String>
-    private lateinit var newRecyclerView: RecyclerView
-    private val binding get() = _binding!!
     private lateinit var auth: FirebaseAuth
+    private lateinit var firestore: FirebaseFirestore
+    private lateinit var storage: FirebaseStorage
+
+    private val binding get() = _binding!!
+
+    private val REQUEST_IMAGE_CAPTURE = 1
+    private val REQUEST_IMAGE_GALLERY = 2
+    private lateinit var imageUri: Uri
+    private var imageUrl: String = ""
+
+    private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
+    private lateinit var cropActivityResultLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,81 +64,58 @@ class HomeFragment : Fragment() {
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         auth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
+        storage = FirebaseStorage.getInstance()
         val currentUser = auth.currentUser
 
-        // Fetching only the first name from the user's display name
         val displayName = currentUser?.displayName ?: ""
         val firstName = displayName.split(" ").firstOrNull() ?: ""
 
-        // Setting the user name
         binding.userName.text = "Hi $firstName"
-        // Setting up the profile picture
+
         Glide.with(requireContext())
             .load(currentUser?.photoUrl)
             .circleCrop()
             .placeholder(R.drawable.circular_bg)
             .into(binding.profilePic)
 
-        // Click listener for profile picture
         binding.profilePic.setOnClickListener {
             val intent1 = Intent(requireContext(), UserProfile::class.java)
             val options = ActivityOptions.makeSceneTransitionAnimation(
                 requireActivity(),
                 binding.profilePic,
-                "photu"
+                "picture"
             )
             startActivity(intent1, options.toBundle())
         }
 
-
-
-        //Recycler view on home page....................................
-        backgroundId = arrayOf(
-            R.drawable.homechoice_bg,
-            R.drawable.homechoice_bg_blue,
-            R.drawable.homechoice_bg_yellow,
-            R.drawable.homechoice_bg
-        )
-        title = arrayOf(
-            "Noodles",
-            "RiceBowls",
-            "Sandwiches",
-            "Juices"
-        )
-        dishImage = arrayOf(
-            R.drawable.visphotu,
-            R.drawable.visphotu,
-            R.drawable.visphotu,
-            R.drawable.visphotu
-        )
-        description = arrayOf(
-            "Chinese Chataka",
-            "Fullfilling",
-            "Tangy & Tasty",
-            "Rehy-date"
-        )
-        frontgroundId = arrayOf(
-            R.drawable.untitled,
-            R.drawable.untitled,
-            R.drawable.untitled,
-            R.drawable.untitled
-        )
-        newRecyclerView = binding.recyclerHome
-        newRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL,false)
-
-//        newRecyclerView = view.findViewById(R.id.recyclerHome)
-//        newRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        val items = mutableListOf<homeCards>()
-        for (i in backgroundId.indices) {
-            items.add(homeCards(backgroundId[i], dishImage[i], frontgroundId[i], title[i], description[i]))
-        }
-        val adapter = homeAdapter(items)
-        newRecyclerView.adapter = adapter
-
-        //adding review functionaltiy
         val addReviewsImageView: ImageView = binding.root.findViewById(R.id.add_reviews)
         addReviewsImageView.setOnClickListener {
             showBottomSheet(requireContext())
+        }
+
+        requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+            if (isGranted) {
+                openCamera()
+            } else {
+                Toast.makeText(requireContext(), "Camera permission is required to take pictures", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        cropActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == AppCompatActivity.RESULT_OK) {
+                val resultUri = result.data?.let { CropImage.getActivityResult(it).uri }
+                resultUri?.let {
+                    uploadImageToFirebase(it)
+                }
+            } else if (result.resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                val error = result.data?.let { CropImage.getActivityResult(it).error }
+                Toast.makeText(
+                    requireContext(),
+                    "Crop failed: ${error?.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
 
         return binding.root
@@ -130,26 +126,18 @@ class HomeFragment : Fragment() {
         val bottomSheetDialog = BottomSheetDialog(context, R.style.BottomSheetDialogTheme)
         bottomSheetDialog.setContentView(bottomSheetView)
 
-        // Apply slide-in animation
         val slideIn = AnimationUtils.loadAnimation(context, R.anim.slide_in_bottom)
         bottomSheetView.startAnimation(slideIn)
 
-        // Get the BottomSheetBehavior
         val bottomSheet = bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
-        if (bottomSheet != null) {
-            bottomSheet.setBackgroundColor(Color.TRANSPARENT) // Make the bottom sheet background transparent
-        }
+        bottomSheet?.setBackgroundColor(Color.TRANSPARENT)
 
-        // Apply custom background with curved edges to the inflated view
         bottomSheetView.background = ContextCompat.getDrawable(context, R.drawable.dialog_home_bg_newitem)
 
         val behavior = BottomSheetBehavior.from(bottomSheet!!)
-
-        // Disable drag and set expanded state
         behavior.isDraggable = false
         behavior.state = BottomSheetBehavior.STATE_EXPANDED
 
-        // Handle dismiss with slide-out animation
         val slideOut = AnimationUtils.loadAnimation(context, R.anim.slide_out_bottom)
         slideOut.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(animation: Animation) {}
@@ -161,28 +149,176 @@ class HomeFragment : Fragment() {
             override fun onAnimationRepeat(animation: Animation) {}
         })
 
-        // Set BottomSheetCallback to handle state changes
-        behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-                if (newState == BottomSheetBehavior.STATE_HIDDEN) {
-                    bottomSheetView.startAnimation(slideOut)
+        val dishNameEditText = bottomSheetView.findViewById<EditText>(R.id.dishName)
+        val restaurantNameEditText = bottomSheetView.findViewById<EditText>(R.id.restaurantName)
+        val dishPriceEditText = bottomSheetView.findViewById<EditText>(R.id.dishPrice)
+        val dishReviewEditText = bottomSheetView.findViewById<EditText>(R.id.dishReview)
+
+        bottomSheetView.findViewById<View>(R.id.cancelBtn).setOnClickListener {
+            bottomSheetView.startAnimation(slideOut)
+        }
+
+        bottomSheetView.findViewById<View>(R.id.postBtn).setOnClickListener {
+            val dishName = dishNameEditText.text.toString().trim()
+            val restaurantName = restaurantNameEditText.text.toString().trim()
+            val dishPrice = dishPriceEditText.text.toString().toDoubleOrNull() ?: 0.0
+            val dishReview = dishReviewEditText.text.toString().trim()
+
+            if (validateInputs(dishName, restaurantName, dishPrice, dishReview)) {
+                if (imageUrl.isNotEmpty()) {
+                    postReview(dishName, restaurantName, dishPrice, dishReview, imageUrl)
+                    bottomSheetDialog.dismiss() // Dismiss the dialog after posting
+                } else {
+                    Toast.makeText(context, "Please upload an image", Toast.LENGTH_SHORT).show()
                 }
             }
+        }
 
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {}
-        })
+        bottomSheetView.findViewById<View>(R.id.uploadGallery).setOnClickListener {
+            openGallery()
+        }
+
+        bottomSheetView.findViewById<View>(R.id.uploadCamera).setOnClickListener {
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                openCamera()
+            } else {
+                requestPermissionLauncher.launch(Manifest.permission.CAMERA)
+            }
+        }
 
         bottomSheetDialog.show()
     }
 
-
-
-
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun validateInputs(
+        dishName: String,
+        restaurantName: String,
+        dishPrice: Double,
+        dishReview: String
+    ): Boolean {
+        if (dishName.isEmpty()) {
+            Toast.makeText(requireContext(), "Enter Dish Name", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        if (restaurantName.isEmpty()) {
+            Toast.makeText(requireContext(), "Enter Restaurant Name", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        if (dishPrice <= 0.0) {
+            Toast.makeText(requireContext(), "Enter Valid Price", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        if (dishReview.isEmpty() || dishReview.length !in 5..100) {
+            Toast.makeText(requireContext(), "Enter Review (5 to 100 characters)", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        return true
     }
-}
+
+    private fun openGallery() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(intent, REQUEST_IMAGE_GALLERY)
+    }
+
+    private fun openCamera() {
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        imageUri = FileProvider.getUriForFile(
+            requireContext(),
+            "${requireContext().packageName}.provider",
+            createImageFile()
+        )
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
+    }
+
+    @Throws(IOException::class)
+    private fun createImageFile(): File {
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
+        val storageDir = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile("JPEG_${timeStamp}_", ".jpg", storageDir).apply {
+            imageUrl = absolutePath
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == AppCompatActivity.RESULT_OK) {
+            when (requestCode) {
+                REQUEST_IMAGE_GALLERY -> {
+                    data?.data?.let { uri ->
+                        startCropActivity(uri)
+                    }
+                }
+                REQUEST_IMAGE_CAPTURE -> {
+                    startCropActivity(imageUri)
+                }
+                CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
+                    val result = CropImage.getActivityResult(data)
+                    if (result.isSuccessful) {
+                        val croppedImageUri = result.uri
+                        uploadImageToFirebase(croppedImageUri)
+                    } else {
+                        val error = result.error
+                        Toast.makeText(requireContext(), "Crop failed: ${error.message}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+    }
 
 
+    private fun startCropActivity(uri: Uri) {
+        CropImage.activity(uri)
+            .setGuidelines(CropImageView.Guidelines.ON)
+            .setAspectRatio(1, 1)
+            .setCropShape(CropImageView.CropShape.OVAL)
+            .start(requireContext(), this)
+    }
+
+                    private fun uploadImageToFirebase(uri: Uri) {
+                val storageRef = storage.reference.child("images/${UUID.randomUUID()}.jpg")
+                storageRef.putFile(uri)
+                    .addOnSuccessListener { taskSnapshot ->
+                        taskSnapshot.metadata?.reference?.downloadUrl?.addOnSuccessListener { downloadUri ->
+                            imageUrl = downloadUri.toString()
+//                            Toast.makeText(requireContext(), "Image uploaded successfully", Toast.LENGTH_SHORT).show()
+                        }?.addOnFailureListener { e ->
+                            Toast.makeText(requireContext(), "Failed to retrieve download URL: ${e.message}", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(requireContext(), "Image upload failed: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
+            }
+
+                    private fun postReview(
+                dishName: String,
+                restaurantName: String,
+                dishPrice: Double,
+                dishReview: String,
+                imageUrl: String
+            ) {
+                val review = hashMapOf(
+                    "dishName" to dishName,
+                    "restaurantName" to restaurantName,
+                    "price" to dishPrice,
+                    "reviewText" to dishReview,
+                    "rating" to 0,
+                    "imageUrl" to imageUrl,
+                    "location" to GeoPoint(0.0, 0.0)
+                )
+
+                firestore.collection("dishReview")
+                    .add(review)
+                    .addOnSuccessListener {
+                        Toast.makeText(requireContext(), "Review posted successfully", Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(requireContext(), "Failed to post review: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
+            }
+
+                    override fun onDestroyView() {
+                super.onDestroyView()
+                _binding = null
+            }
+    }

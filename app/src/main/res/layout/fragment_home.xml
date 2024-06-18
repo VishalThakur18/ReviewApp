@@ -145,66 +145,9 @@
                     </androidx.cardview.widget.CardView>
                 </ViewFlipper>
 
-                <!--                <androidx.viewpager2.widget.ViewPager2-->
-                <!--                    android:id="@+id/viewPagerHome"-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="180dp"-->
-                <!--                    app:layout_constraintBottom_toTopOf="@id/dots_indicator"-->
-                <!--                    app:layout_constraintEnd_toEndOf="parent"-->
-                <!--                    app:layout_constraintStart_toStartOf="parent"-->
-                <!--                    app:layout_constraintTop_toTopOf="parent" />-->
-
-                <!--                <com.tbuonomo.viewpagerdotsindicator.DotsIndicator-->
-                <!--                    android:id="@+id/dots_indicator"-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_margin="10dp"-->
-                <!--                    app:dotsColor="#BFBDBD"-->
-                <!--                    app:dotsCornerRadius="8dp"-->
-                <!--                    app:dotsSize="8dp"-->
-                <!--                    app:dotsSpacing="3dp"-->
-                <!--                    app:dotsWidthFactor="2.5"-->
-                <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-                <!--                    app:layout_constraintEnd_toEndOf="parent"-->
-                <!--                    app:layout_constraintHorizontal_bias="0.5"-->
-                <!--                    app:layout_constraintStart_toStartOf="parent"-->
-                <!--                    app:layout_constraintTop_toBottomOf="@id/viewPagerHome"-->
-                <!--                    app:progressMode="true"-->
-                <!--                    app:selectedDotColor="@color/black" />-->
-
-                <!--                <ProgressBar-->
-                <!--                    android:id="@+id/progressBar"-->
-                <!--                    style="?android:attr/progressBarStyle"-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:visibility="gone"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:progress="@integer/material_motion_duration_long_2"-->
-                <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-                <!--                    app:layout_constraintEnd_toEndOf="parent"-->
-                <!--                    app:layout_constraintStart_toStartOf="parent"-->
-                <!--                    app:layout_constraintTop_toTopOf="parent" />-->
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--            <TextView-->
-<!--                android:id="@+id/textView"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="20dp"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:fontFamily="@font/monserat2"-->
-<!--                android:text="Dishes"-->
-<!--                android:textColor="@color/black"-->
-<!--                android:textSize="32sp" />-->
 
-<!--            <TextView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="20dp"-->
-<!--                android:layout_marginBottom="10dp"-->
-<!--                android:fontFamily="@font/monserat2"-->
-<!--                android:text="Of the Day."-->
-<!--                android:textColor="#787878"-->
-<!--                android:textSize="18sp" />-->
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerHome"
@@ -224,21 +167,9 @@
                 android:clickable="true"
                 android:contentDescription="@string/app_name"
                 android:elevation="8dp"
-                android:src="@drawable/plus_sign" />
-<!--            <androidx.appcompat.widget.AppCompatButton-->
-<!--                android:id="@+id/main_button"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="50dp"-->
-<!--                android:textAllCaps="false"-->
-<!--                android:elevation="8dp"-->
-<!--                android:text="Login"-->
-<!--                android:textSize="17sp"-->
-<!--                android:textColor="@color/white"-->
-<!--                android:fontFamily="@font/realway_bold"-->
-<!--                android:background="@drawable/button_login_black"-->
-<!--                android:layout_marginStart="32dp"-->
-<!--                android:layout_marginEnd="32dp"-->
-<!--                android:layout_marginTop="20dp"/>-->
+                android:src="@drawable/plus_sign"
+                />
+
 
         </LinearLayout>
     </ScrollView>

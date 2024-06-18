@@ -1,6 +1,5 @@
 package com.example.myapplication
 
-import Model.UserModel
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -19,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import model.UserModel
 
 class SignUpPage : AppCompatActivity() {
 
@@ -147,7 +147,12 @@ class SignUpPage : AppCompatActivity() {
             userNumber = binding.userNumber.text.toString().trim()
             email = binding.userEmail.text.toString().trim()
             password = binding.userPassword.text.toString().trim()
-            val user = UserModel(userName, userNumber, email, password)
+            val user = UserModel(
+                name = userName,
+                phone = userNumber,
+                email = email,
+                password = password
+            )
             val userId = currentUser.uid
             // Save data in the Firebase
             database.child("users").child(userId).setValue(user)

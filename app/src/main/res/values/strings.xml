@@ -3,4 +3,9 @@
     <string name="web_client_id">1077045921872-uie0qp7iifr2c5pn005d5qd74frueotl.apps.googleusercontent.com</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <!-- Base application theme -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
 </resources>

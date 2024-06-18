@@ -1,4 +1,4 @@
-package Model
+package model
 data class UserModel(
     val name:String?=null,
     val phone:String?=null,

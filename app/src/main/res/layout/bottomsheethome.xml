@@ -99,9 +99,11 @@
                             android:src="@drawable/upload_image_icon" />
 
                         <TextView
+                            android:id="@+id/uploadGallery"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:clickable="true"
                             android:layout_weight="0.7"
                             android:fontFamily="@font/manropesemibold"
                             android:text="Upload"
@@ -118,10 +120,12 @@
                             android:src="@drawable/camera_icon_upload" />
 
                         <TextView
+                            android:id="@+id/uploadCamera"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginEnd="10dp"
+                            android:clickable="true"
                             android:layout_weight="0.7"
                             android:fontFamily="@font/manropesemibold"
                             android:text="Capture"
@@ -160,17 +164,18 @@
                         android:orientation="horizontal">
 
                         <EditText
+                            android:id="@+id/dishName"
                             android:layout_width="match_parent"
                             android:layout_height="35dp"
                             android:layout_gravity=""
-                            android:paddingStart="7dp"
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
                             android:background="@drawable/textfield_bg_home_plus"
                             android:fontFamily="@font/manropesemibold"
+                            android:paddingStart="7dp"
                             android:textColor="@color/black"
                             android:textSize="12sp"
-                            tools:ignore="SpeakableTextPresentCheck" />
+                            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -202,6 +207,7 @@
                         android:orientation="horizontal">
 
                         <EditText
+                            android:id="@+id/restaurantName"
                             android:layout_width="match_parent"
                             android:layout_height="35dp"
                             android:layout_gravity=""
@@ -212,7 +218,7 @@
                             android:fontFamily="@font/manropesemibold"
                             android:textColor="@color/black"
                             android:textSize="12sp"
-                            tools:ignore="SpeakableTextPresentCheck" />
+                            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -244,6 +250,7 @@
                         android:orientation="horizontal">
 
                         <EditText
+                            android:id="@+id/dishPrice"
                             android:layout_width="match_parent"
                             android:layout_height="35dp"
                             android:paddingStart="7dp"
@@ -253,7 +260,7 @@
                             android:fontFamily="@font/manropesemibold"
                             android:textColor="@color/black"
                             android:textSize="12sp"
-                            tools:ignore="SpeakableTextPresentCheck" />
+                            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -291,6 +298,7 @@
                             android:layout_height="match_parent"
                             android:src="@drawable/location_feedcard" />
                         <TextView
+                            android:id="@+id/shopLocation"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -332,6 +340,7 @@
                         android:orientation="horizontal">
 
                         <EditText
+                            android:id="@+id/dishReview"
                             android:layout_width="match_parent"
                             android:layout_height="100dp"
                             android:layout_marginStart="10dp"
@@ -351,11 +360,7 @@
                 </LinearLayout>
 
             </ScrollView>
-            <!--    <View-->
-            <!--        android:layout_width="match_parent"-->
-            <!--        android:layout_height="0.5dp"-->
-            <!--        android:background="#000000" />-->
-            <!--        EBEEF3-->
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -369,6 +374,7 @@
                     android:layout_marginBottom="20dp">
 
                     <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/cancelBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="88dp"
@@ -381,14 +387,15 @@
                         android:textColor="#7C7C7C"
                         android:textSize="15sp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/appCompatButton"
+                        app:layout_constraintEnd_toStartOf="@id/postBtn"
                         app:layout_constraintHorizontal_bias="0.838"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.0" />
 
                     <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/appCompatButton"
+
+                        android:id="@+id/postBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="20dp"

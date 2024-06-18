@@ -1,6 +1,5 @@
 package com.example.myapplication
 
-import Model.UserModel
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -22,6 +21,8 @@ import com.squareup.picasso.Picasso
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
+import model.UserModel
+
 
 class UserProfile : AppCompatActivity() {
 
