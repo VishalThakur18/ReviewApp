@@ -1,87 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="230dp"
-    android:layout_height="320dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:layout_margin="12dp"
-    android:elevation="8dp"
-    android:clipChildren="false">
+    android:clipChildren="false"
+    android:elevation="8dp">
 
-    <View
-        android:id="@+id/cardBack"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:elevation="8dp"
-        android:background="@drawable/homechoice_bg"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <TextView
-        android:elevation="8dp"
-        android:id="@+id/choiceName"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/topSideCard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Noodles"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"
-        android:textSize="28sp"
-        android:fontFamily="@font/monserat2"
-        android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:elevation="8dp"
-        android:id="@+id/choiceLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/monserat2"
-        android:text="Alpine Retreat"
-        android:textColor="@color/white"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="@+id/choiceName"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/choiceName"
-        app:layout_constraintTop_toBottomOf="@+id/choiceName" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:elevation="8dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@+id/cardBack"
+        app:cardCornerRadius="90dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/cardBack"
-        app:layout_constraintVertical_bias="0.616">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cardFront"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:background="@drawable/untitled"
-            android:elevation="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/dishImage"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:scaleType="centerCrop"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/visphotu" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </LinearLayout>
-
+        <ImageView
+            android:id="@+id/dishHomeImage"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_gravity="center"
+            android:src="@drawable/crop_chicken"/>
+    </androidx.cardview.widget.CardView>
+    <TextView
+        android:id="@+id/cardHomeTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/manropesemibold"
+        android:maxLines="2"
+        android:text="Name of item"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topSideCard"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

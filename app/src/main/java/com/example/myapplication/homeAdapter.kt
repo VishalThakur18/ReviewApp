@@ -9,29 +9,22 @@ import com.example.myapplication.homeCards
 
 class homeAdapter(private val cardList: MutableList<homeCards>) : RecyclerView.Adapter<homeAdapter.MyViewHolder>() {
 
-    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val backgroundId: View = itemView.findViewById(R.id.cardBack)
-        val cardTitle: TextView = itemView.findViewById(R.id.choiceName)
-        val cardDescription: TextView = itemView.findViewById(R.id.choiceLocation)
-        val frontgroundId: View = itemView.findViewById(R.id.cardFront)
-        val dishImage: ImageView = itemView.findViewById(R.id.dishImage)
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.card_home_choice, parent, false)
         return MyViewHolder(itemView)
     }
-
     override fun getItemCount(): Int {
         return cardList.size
     }
-
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val currentItem = cardList[position]
-        holder.backgroundId.setBackgroundResource(currentItem.backgroundId) // Use setBackgroundColor to set background color
-        holder.cardTitle.text = currentItem.cardTitle // Use title instead of cardTitle
-        holder.cardDescription.text = currentItem.cardDescription // Use description instead of cardDescription
+        val currentItem = cardList[position]// Use setBackgroundColor to set background color
+        holder.cardTitle.text = currentItem.cardTitle  // Use description instead of cardDescription
         holder.dishImage.setImageResource(currentItem.dishImage)
-        holder.frontgroundId.setBackgroundResource(currentItem.frontgroundId)
     }
+
+    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val cardTitle: TextView = itemView.findViewById(R.id.cardHomeTitle)
+        val dishImage: ImageView = itemView.findViewById(R.id.dishHomeImage)
+    }
+
 }

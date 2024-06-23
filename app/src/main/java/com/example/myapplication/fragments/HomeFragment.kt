@@ -24,10 +24,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myapplication.R
 import com.example.myapplication.UserProfile
 import com.example.myapplication.databinding.FragmentHomeBinding
+import com.example.myapplication.homeCards
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
@@ -36,6 +39,7 @@ import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.storage.FirebaseStorage
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
+import homeAdapter
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -47,6 +51,8 @@ class HomeFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
     private lateinit var storage: FirebaseStorage
+    private lateinit var homeAdapter: homeAdapter
+    private lateinit var newRecyclerView: RecyclerView
 
     private val binding get() = _binding!!
 
@@ -118,7 +124,38 @@ class HomeFragment : Fragment() {
             }
         }
 
+
+
+        // Initialize RecyclerView and Adapter
+        val cardList = createHomeCardList()  // Function to create list of HomeCard items
+        homeAdapter = homeAdapter(cardList)
+        newRecyclerView = _binding!!.recyclerHome  // Adjust this line according to your binding
+        newRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        newRecyclerView.adapter = homeAdapter
+
         return binding.root
+    }
+    private fun createHomeCardList(): MutableList<homeCards> {
+        val imageId = arrayOf(
+                R.drawable.crop_chicken,
+        R.drawable.crop_daal,
+        R.drawable.crop_dosa,
+        R.drawable.crop_noods,
+        R.drawable.crop_idli
+        )
+        val title = arrayOf(
+            "Non Veg",
+            "Pulses",
+            "Dosa",
+            "Noodles",
+            "South Indian"
+        )
+
+        val cardList = mutableListOf<homeCards>()
+        for (i in imageId.indices) {
+            cardList.add(homeCards(title[i], imageId[i]))
+        }
+        return cardList
     }
 
     private fun showBottomSheet(context: Context) {
@@ -188,6 +225,7 @@ class HomeFragment : Fragment() {
 
         bottomSheetDialog.show()
     }
+
 
     private fun validateInputs(
         dishName: String,

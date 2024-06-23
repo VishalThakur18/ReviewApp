@@ -19,8 +19,11 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="450dp"
-                android:layout_margin="20dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/cards_on_profile"
                 android:elevation="5dp">
 
@@ -62,152 +65,150 @@
                     android:id="@+id/userNameProfile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="30dp"
-                    android:fontFamily="@font/realway_bold"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="20dp"
+                    android:fontFamily="@font/manropesemibold"
                     android:text="User Name"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="32sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/profileOnUser" />
 
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:elevation="8dp"
+                android:background="@drawable/textfield_bg_home_plus"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/userNameProfile">
+
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/userNameProfile"
-                    app:layout_constraintVertical_bias="0.818">
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:elevation="8dp"
+                    android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="100dp"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginEnd="12dp"
-                        android:layout_marginBottom="12dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/cards_on_profile_2"
-                        android:elevation="8dp"
-                        android:orientation="vertical">
+                    <ImageView
+                        android:id="@+id/likes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:srcCompat="@drawable/like_svgrepo_com" />
 
-                        <ImageView
-                            android:id="@+id/likes"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            app:srcCompat="@drawable/like_svgrepo_com" />
+                    <TextView
+                        android:id="@+id/likeshc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/manropesemibold"
+                        android:text="Likes"
+                        android:textAlignment="center"
+                        android:textColor="#818181"
+                        android:textSize="12sp" />
 
-                        <TextView
-                            android:id="@+id/likeshc"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/realway_bold"
-                            android:text="Likes"
-                            android:textAlignment="center"
-                            android:textColor="#818181"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/likesfetched"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="@font/realway_bold"
-                            android:text="10.2K"
-                            android:textAlignment="center"
-                            android:textColor="@color/black"
-                            android:textSize="20sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="100dp"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginEnd="12dp"
-                        android:layout_marginBottom="12dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/cards_on_profile_2"
-                        android:elevation="8dp"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:id="@+id/offers"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            app:srcCompat="@drawable/fire_profile" />
-
-                        <TextView
-                            android:id="@+id/offershc"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/realway_bold"
-                            android:text="Offers"
-                            android:textAlignment="center"
-                            android:textColor="#818181"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/offersfetched"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="@font/realway_bold"
-                            android:text="2 P"
-                            android:textAlignment="center"
-                            android:textColor="@color/black"
-                            android:textSize="20sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="100dp"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginEnd="12dp"
-                        android:layout_marginBottom="12dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/cards_on_profile_2"
-                        android:elevation="8dp"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:id="@+id/posts"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            app:srcCompat="@drawable/paperclip_profile" />
-
-                        <TextView
-                            android:id="@+id/postshc"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/realway_bold"
-                            android:text="posts"
-                            android:textAlignment="center"
-                            android:textColor="#818181"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/postsfetched"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="@font/realway_bold"
-                            android:text="21"
-                            android:textAlignment="center"
-                            android:textColor="@color/black"
-                            android:textSize="20sp" />
-                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/likesfetched"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/manropesemibold"
+                        android:text="10.2K"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
                 </LinearLayout>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:elevation="8dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/offers"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:srcCompat="@drawable/fire_profile" />
+
+                    <TextView
+                        android:id="@+id/offershc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/manropesemibold"
+                        android:text="Offers"
+                        android:textAlignment="center"
+                        android:textColor="#818181"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/offersfetched"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/manropesemibold"
+                        android:text="2 P"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:elevation="8dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/posts"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:srcCompat="@drawable/paperclip_profile" />
+
+                    <TextView
+                        android:id="@+id/postshc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/manropesemibold"
+                        android:text="posts"
+                        android:textAlignment="center"
+                        android:textColor="#818181"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/postsfetched"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/manropesemibold"
+                        android:text="21"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+                </LinearLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -235,7 +236,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:fontFamily="@font/realway_bold"
+                    android:fontFamily="@font/manropesemibold"
                     android:textSize="15sp"
                     android:textColor="@color/black"
                     android:text="Phone Number" />
@@ -265,7 +266,7 @@
                     android:id="@+id/userEmailProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/realway_bold"
+                    android:fontFamily="@font/manropesemibold"
                     android:layout_marginStart="10dp"
                     android:layout_gravity="center"
                     android:layout_weight="1"
@@ -285,7 +286,7 @@
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/button_login_black"
                 android:textColor="@color/white"
-                android:fontFamily="@font/realway_bold"
+                android:fontFamily="@font/manropesemibold"
                 android:textSize="25sp"
                 android:textAllCaps="false"
                 android:text="Log Out" />

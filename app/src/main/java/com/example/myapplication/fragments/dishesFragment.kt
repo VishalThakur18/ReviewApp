@@ -20,10 +20,11 @@ class dishesFragment : Fragment() {
     private lateinit var newRecyclerView: RecyclerView
     private lateinit var newArrayList: ArrayList<feedCards>
     private lateinit var imageId : Array<Int>
+    private lateinit var profilePic : Array<Int>
     lateinit var title: Array<String>
     lateinit var price: Array<String>
     lateinit var likes: Array<String>
-    lateinit var dislikes: Array<String>
+    lateinit var ratings: Array<String>
 
 
     override fun onCreateView(
@@ -74,15 +75,25 @@ class dishesFragment : Fragment() {
             "5",
             "4.1"
         )
-        dislikes = arrayOf(
-            "0 k",
+        ratings = arrayOf(
+            "4",
             "3",
             "2",
             "1",
-            "0 k",
+            "0",
             "3",
             "2",
             "1"
+        )
+        profilePic = arrayOf(
+            R.drawable.person1,
+            R.drawable.person2,
+            R.drawable.person4,
+            R.drawable.person3,
+            R.drawable.person4,
+            R.drawable.person3,
+            R.drawable.person1,
+            R.drawable.person2
         )
         newRecyclerView = view.findViewById(R.id.dishesrecyclerView)
         newRecyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -97,7 +108,7 @@ class dishesFragment : Fragment() {
 
     private fun getUserdata() {
         for(i in imageId.indices) {
-            val cards = feedCards(imageId[i],title[i],price[i],likes[i],dislikes[i])
+            val cards = feedCards(imageId[i],title[i],price[i],likes[i],ratings[i],profilePic[i])
             newArrayList.add(cards)
         }
         newRecyclerView.adapter = feedAdapter(newArrayList)
