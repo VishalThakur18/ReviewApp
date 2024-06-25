@@ -1,16 +1,15 @@
 package com.example.myapplication.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
+import com.example.myapplication.FeedFragmentAdapter
 import com.example.myapplication.R
-import com.example.myapplication.feedFragmentAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-
 
 class FeedFragment : Fragment() {
     private lateinit var tabLayout: TabLayout
@@ -26,7 +25,7 @@ class FeedFragment : Fragment() {
         val tabLayout:TabLayout = view.findViewById(R.id.tablout)
         val viewPager2:ViewPager2 = view.findViewById(R.id.pager_feed)
 
-        viewPager2.adapter = feedFragmentAdapter(this)
+        viewPager2.adapter = FeedFragmentAdapter(this)
         TabLayoutMediator(tabLayout, viewPager2) { tab, position ->
             when(position) {
                 0 -> tab.text = "Dishes"

@@ -36,7 +36,7 @@
                 android:clipChildren="false"
                 app:cardCornerRadius="90dp">
                 <ImageView
-                    android:id="@+id/profileOnCard"
+                    android:id="@+id/User_profile_pic"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:src="@drawable/person1"
@@ -54,15 +54,16 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/titleofCard"
+                android:id="@+id/Dish_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="DishName here"
+                android:text="Dish Name"
                 android:textSize="17sp"
                 android:textColor="@color/black"
                 android:fontFamily="@font/manropesemibold"/>
 
             <TextView
+                android:id="@+id/User_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="by personName(@rooster etc.)"
@@ -72,7 +73,7 @@
                 android:layout_gravity="top"/>
 
             <TextView
-                android:id="@+id/reviewOnCard"
+                android:id="@+id/Review_text"
                 android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -103,7 +104,7 @@
                         app:cardCornerRadius="12dp">
 
                         <ImageView
-                            android:id="@+id/imageOnCard"
+                            android:id="@+id/Food_image"
                             android:layout_width="match_parent"
                             android:layout_height="100dp"
                             android:scaleType="centerCrop"
@@ -128,12 +129,15 @@
                             android:rating="4"
                             android:stepSize="1"/>
                         <ImageView
+                            android:id="@+id/like_btn"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:src="@drawable/heart_oncard"
+                            android:clickable="true"
                             android:layout_marginStart="30dp"
                             />
                         <TextView
+                            android:id="@+id/like_count"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="12K"

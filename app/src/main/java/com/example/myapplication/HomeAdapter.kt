@@ -1,13 +1,14 @@
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.HomeCards
 import com.example.myapplication.R
-import com.example.myapplication.homeCards
 
-class homeAdapter(private val cardList: MutableList<homeCards>) : RecyclerView.Adapter<homeAdapter.MyViewHolder>() {
+class HomeAdapter(private val cardList: MutableList<HomeCards>) : RecyclerView.Adapter<HomeAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.card_home_choice, parent, false)

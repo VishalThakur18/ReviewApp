@@ -1,13 +1,11 @@
 package com.example.myapplication
 
-import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.airbnb.lottie.LottieAnimationView
 
 class OnboardingItemsAdapter(private val onboardingItem: List<OnboardingItem>) :
 RecyclerView.Adapter<OnboardingItemsAdapter.OnboardingItemViewHolder>() {

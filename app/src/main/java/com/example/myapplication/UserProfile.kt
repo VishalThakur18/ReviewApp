@@ -1,5 +1,4 @@
 package com.example.myapplication
-
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -179,7 +178,7 @@ class UserProfile : AppCompatActivity() {
                         }
                     }
             }
-        }.addOnFailureListener { exception ->
+        }.addOnFailureListener {
             // Handle unsuccessful uploads
             Toast.makeText(this, "Failed to upload image", Toast.LENGTH_SHORT).show()
         }

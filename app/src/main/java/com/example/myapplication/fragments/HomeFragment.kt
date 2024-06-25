@@ -1,5 +1,6 @@
 package com.example.myapplication.fragments
 
+import HomeAdapter
 import android.Manifest
 import android.app.ActivityOptions
 import android.content.Context
@@ -27,10 +28,10 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.myapplication.HomeCards
 import com.example.myapplication.R
 import com.example.myapplication.UserProfile
 import com.example.myapplication.databinding.FragmentHomeBinding
-import com.example.myapplication.homeCards
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
@@ -39,7 +40,6 @@ import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.storage.FirebaseStorage
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
-import homeAdapter
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -51,7 +51,7 @@ class HomeFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
     private lateinit var storage: FirebaseStorage
-    private lateinit var homeAdapter: homeAdapter
+    private lateinit var homeAdapter: HomeAdapter
     private lateinit var newRecyclerView: RecyclerView
 
     private val binding get() = _binding!!
@@ -128,14 +128,14 @@ class HomeFragment : Fragment() {
 
         // Initialize RecyclerView and Adapter
         val cardList = createHomeCardList()  // Function to create list of HomeCard items
-        homeAdapter = homeAdapter(cardList)
+        homeAdapter = HomeAdapter(cardList)
         newRecyclerView = _binding!!.recyclerHome  // Adjust this line according to your binding
         newRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         newRecyclerView.adapter = homeAdapter
 
         return binding.root
     }
-    private fun createHomeCardList(): MutableList<homeCards> {
+    private fun createHomeCardList(): MutableList<HomeCards> {
         val imageId = arrayOf(
                 R.drawable.crop_chicken,
         R.drawable.crop_daal,
@@ -151,9 +151,9 @@ class HomeFragment : Fragment() {
             "South Indian"
         )
 
-        val cardList = mutableListOf<homeCards>()
+        val cardList = mutableListOf<HomeCards>()
         for (i in imageId.indices) {
-            cardList.add(homeCards(title[i], imageId[i]))
+            cardList.add(HomeCards(title[i], imageId[i]))
         }
         return cardList
     }
@@ -312,7 +312,7 @@ class HomeFragment : Fragment() {
             .start(requireContext(), this)
     }
 
-                    private fun uploadImageToFirebase(uri: Uri) {
+          private fun uploadImageToFirebase(uri: Uri) {
                 val storageRef = storage.reference.child("images/${UUID.randomUUID()}.jpg")
                 storageRef.putFile(uri)
                     .addOnSuccessListener { taskSnapshot ->
@@ -328,21 +328,30 @@ class HomeFragment : Fragment() {
                     }
             }
 
-                    private fun postReview(
+            private fun postReview(
                 dishName: String,
                 restaurantName: String,
                 dishPrice: Double,
                 dishReview: String,
                 imageUrl: String
             ) {
+                val currentUser = auth.currentUser
+                val userProfilePic = currentUser?.photoUrl.toString()
+                val userName = currentUser?.displayName ?: "Anonymous"
+                val reviewRef = firestore.collection("dishReview").document()
+
                 val review = hashMapOf(
+                    "id" to reviewRef.id,
                     "dishName" to dishName,
                     "restaurantName" to restaurantName,
                     "price" to dishPrice,
                     "reviewText" to dishReview,
                     "rating" to 0,
                     "imageUrl" to imageUrl,
-                    "location" to GeoPoint(0.0, 0.0)
+                    "location" to GeoPoint(0.0, 0.0),
+                    "userProfilePic" to userProfilePic, 
+                    "userName" to userName,
+                    "timestamp" to com.google.firebase.firestore.FieldValue.serverTimestamp()
                 )
 
                 firestore.collection("dishReview")

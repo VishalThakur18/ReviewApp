@@ -1,22 +1,19 @@
 package com.example.myapplication
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.view.animation.Animation
-import android.view.animation.Animation.AnimationListener
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.myapplication.databinding.ActivityGetStartedBinding
-import com.google.firebase.database.core.Context
-import java.text.FieldPosition
 
 class GetStarted : AppCompatActivity() {
 
@@ -49,13 +46,6 @@ class GetStarted : AppCompatActivity() {
                 override fun onAnimationRepeat(animation: Animation?) {}
             })
             binding.buttongs.startAnimation(scaleAnimation)
-//            previous one used for intent travel
-//            binding.buttongs.setOnClickListener{
-//                val scaleAnimation: Animation = AnimationUtils.loadAnimation(this,R.anim.bounce)
-//                binding.buttongs.startAnimation(scaleAnimation)
-//                val intent= Intent(this,Login::class.java)
-//                startActivity(intent)
-//            }
         }
 
     }

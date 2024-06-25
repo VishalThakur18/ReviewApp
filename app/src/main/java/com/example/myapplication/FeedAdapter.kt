@@ -8,7 +8,7 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class feedAdapter (private val cardList: ArrayList<feedCards>) : RecyclerView.Adapter<feedAdapter.MyViewHolder>(){
+class FeedAdapter (private val cardList: ArrayList<FeedCards>) : RecyclerView.Adapter<FeedAdapter.MyViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.card_feed,
             parent,false)
@@ -31,11 +31,11 @@ class feedAdapter (private val cardList: ArrayList<feedCards>) : RecyclerView.Ad
         holder.cardRating.rating = currentItem.cardRating.toFloat()
     }
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val cardProfile : ImageView = itemView.findViewById(R.id.profileOnCard)
-        val cardImage : ImageView = itemView.findViewById(R.id.imageOnCard)
-        val cardTitle : TextView = itemView.findViewById(R.id.titleofCard)
+        val cardProfile : ImageView = itemView.findViewById(R.id.User_profile_pic)
+        val cardImage : ImageView = itemView.findViewById(R.id.Food_image)
+        val cardTitle : TextView = itemView.findViewById(R.id.Dish_name)
         val cardPrice : TextView = itemView.findViewById(R.id.priceOnCard)
         val cardRating : RatingBar = itemView.findViewById(R.id.rating)
-//        val cardDislikes : TextView = itemView.findViewById(R.id.dislikesonCard)
+
     }
 }

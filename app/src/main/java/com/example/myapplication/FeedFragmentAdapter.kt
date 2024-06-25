@@ -2,20 +2,20 @@ package com.example.myapplication
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.example.myapplication.fragments.DishesFragment
 import com.example.myapplication.fragments.FeedFragment
-import com.example.myapplication.fragments.dishesFragment
-import com.example.myapplication.fragments.restrauntsFragment
+import com.example.myapplication.fragments.RestrauntsFragment
 
-class feedFragmentAdapter(fa: FeedFragment):FragmentStateAdapter(fa) {
+class FeedFragmentAdapter(fa: FeedFragment):FragmentStateAdapter(fa) {
     override fun getItemCount(): Int {
         return 2
     }
 
     override fun createFragment(position: Int): Fragment {
         return when(position) {
-            0 -> dishesFragment()
-            1 -> restrauntsFragment()
-            else -> dishesFragment()
+            0 -> DishesFragment()
+            1 -> RestrauntsFragment()
+            else -> DishesFragment()
         }
     }
 

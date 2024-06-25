@@ -1,5 +1,4 @@
 package com.example.myapplication
-
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -19,8 +18,7 @@ import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import model.UserModel
-
-class SignUpPage : AppCompatActivity() {
+class  SignUpPage : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var database: DatabaseReference
@@ -138,7 +136,6 @@ class SignUpPage : AppCompatActivity() {
                 }
             }
     }
-
     // To Save the User's registration Data
     private fun saveUserData() {
         val currentUser = FirebaseAuth.getInstance().currentUser

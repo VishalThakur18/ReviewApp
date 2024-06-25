@@ -1,6 +1,6 @@
 package com.example.myapplication
 
-data class feedCards(
+data class FeedCards(
     val cardImage: Int,
     val cardTitle: String,
     val cardPrice: String,
