@@ -7,8 +7,8 @@ import java.util.Date
 data class DishReview(
     var id: String = "",
     var dishName: String = "",
-    var dishPrice: Double = 0.0,
-    var dishRating: Double = 0.0,
+    var price: Int = 0,
+    var rating: Double = 0.0,
     var likedBy: List<String> = emptyList(),
     var likes: Int = 0,
     val imageUrl: String = "",

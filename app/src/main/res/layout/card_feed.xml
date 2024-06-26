@@ -128,14 +128,15 @@
                             android:progressTint="#FFC107"
                             android:rating="4"
                             android:stepSize="1"/>
+
                         <ImageView
                             android:id="@+id/like_btn"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:src="@drawable/heart_oncard"
-                            android:clickable="true"
                             android:layout_marginStart="30dp"
-                            />
+                            android:clickable="true"
+                            android:src="@drawable/heart_oncard"
+                            tools:ignore="TouchTargetSizeCheck" />
                         <TextView
                             android:id="@+id/like_count"
                             android:layout_width="wrap_content"

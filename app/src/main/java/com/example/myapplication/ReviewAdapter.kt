@@ -19,6 +19,9 @@ class ReviewAdapter(private var reviewList: List<DishReview>, private val contex
     RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder>() {
 
     private val firestore = FirebaseFirestore.getInstance()
+    private val userId: String? = FirebaseAuth.getInstance().currentUser?.uid
+
+
 
     class ReviewViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val dishName: TextView = itemView.findViewById(R.id.Dish_name)
@@ -39,12 +42,13 @@ class ReviewAdapter(private var reviewList: List<DishReview>, private val contex
 
     override fun onBindViewHolder(holder: ReviewViewHolder, position: Int) {
         val review = reviewList[position]
+
         holder.dishName.text = review.dishName
         holder.userName.text = review.userName
         holder.reviewText.text = review.reviewText
-        holder.priceOnCard.text = "Rs.${review.dishPrice}"
-        holder.rating.rating = review.dishRating.toFloat()
-        holder.likeCount.text = review.likedBy.size.toString()
+        holder.priceOnCard.text = "Rs.${review.price}"
+        holder.rating.rating = review.rating.toFloat()
+        holder.likeCount.text = review.likes.toString()
 
         Glide.with(holder.itemView.context)
             .load(review.imageUrl)
@@ -54,35 +58,53 @@ class ReviewAdapter(private var reviewList: List<DishReview>, private val contex
             .load(review.userProfilePic)
             .into(holder.userProfilePic)
 
-        holder.likeBtn.setOnClickListener {
-            val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return@setOnClickListener
-            val mutableLikedBy = review.likedBy.toMutableList() // Convert to mutable list
+        // Determine if the current user has already liked this review
+        var isLiked = userId != null && review.likedBy.contains(userId)
 
-            if (mutableLikedBy.contains(userId)) {
+        // Set initial like button state
+        if (isLiked) {
+            holder.likeBtn.setImageResource(R.drawable.liked_ic)
+        } else {
+            holder.likeBtn.setImageResource(R.drawable.like_ic)
+        }
+
+        holder.likeBtn.setOnClickListener {
+            userId ?: return@setOnClickListener // If userId is null, return early
+
+            val mutableLikedBy = review.likedBy.toMutableList()
+
+            if (isLiked) {
                 // User has already liked the review, so unlike it
                 mutableLikedBy.remove(userId)
+                review.likes -= 1
+                holder.likeBtn.setImageResource(R.drawable.like_ic) // Change button state
             } else {
                 // User has not liked the review, so like it
                 mutableLikedBy.add(userId)
+                review.likes += 1
+                holder.likeBtn.setImageResource(R.drawable.liked_ic) // Change button state
             }
 
-            handleLikeClick(review.id, mutableLikedBy)
+            // Update Firestore document with new likedBy list and likes count
+            handleLikeClick(review.id, mutableLikedBy, review.likes)
+
+            // Update UI
+            holder.likeCount.text = review.likes.toString()
+            isLiked = !isLiked // Toggle like status
         }
     }
 
     override fun getItemCount() = reviewList.size
+
 
     fun updateReviews(newReviews: List<DishReview>) {
         reviewList = newReviews
         notifyDataSetChanged()
     }
 
-    private fun handleLikeClick(reviewId: String, likedBy: List<String>) {
+    private fun handleLikeClick(reviewId: String, likedBy: List<String>, likes: Int) {
         val reviewRef = firestore.collection("dishReview").document(reviewId)
-        reviewRef.update("likedBy", likedBy)
-            .addOnSuccessListener {
-                notifyDataSetChanged() // Update the UI
-            }
+        reviewRef.update("likedBy", likedBy, "likes", likes)
             .addOnFailureListener { e ->
                 Toast.makeText(context, "Failed to update like count: ${e.message}", Toast.LENGTH_SHORT).show()
             }

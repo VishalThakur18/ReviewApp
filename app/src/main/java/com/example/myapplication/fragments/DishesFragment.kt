@@ -32,7 +32,7 @@ class DishesFragment : Fragment() {
 
         reviewsRecyclerView = binding.dishesrecyclerView
         reviewsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        reviewAdapter = ReviewAdapter(reviewList, requireContext()) // Pass the context here
+        reviewAdapter = ReviewAdapter(reviewList, requireContext())
         reviewsRecyclerView.adapter = reviewAdapter
 
         fetchReviews()
