@@ -308,7 +308,7 @@ class HomeFragment : Fragment() {
         CropImage.activity(uri)
             .setGuidelines(CropImageView.Guidelines.ON)
             .setAspectRatio(1, 1)
-            .setCropShape(CropImageView.CropShape.OVAL)
+            .setCropShape(CropImageView.CropShape.RECTANGLE)
             .start(requireContext(), this)
     }
 
