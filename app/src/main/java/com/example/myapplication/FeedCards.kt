@@ -6,5 +6,6 @@ data class FeedCards(
     val cardPrice: String,
     val cardRating: String,
     val cardLikes: String,
-    val cardProfile: Int
+    val cardProfile: Int,
+    val cardRest: String
 )

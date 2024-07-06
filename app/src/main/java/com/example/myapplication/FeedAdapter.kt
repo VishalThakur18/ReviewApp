@@ -25,6 +25,7 @@ class FeedAdapter (private val cardList: ArrayList<FeedCards>) : RecyclerView.Ad
         holder.cardProfile.setImageResource(currentItem.cardProfile)
         holder.cardImage.setImageResource(currentItem.cardImage)
         holder.cardTitle.text = currentItem.cardTitle
+        holder.cardRest.text = currentItem.cardRest
 //        holder.cardDislikes.text = currentItem.cardDislikes
 
         holder.cardPrice.text = currentItem.cardPrice
@@ -36,6 +37,6 @@ class FeedAdapter (private val cardList: ArrayList<FeedCards>) : RecyclerView.Ad
         val cardTitle : TextView = itemView.findViewById(R.id.Dish_name)
         val cardPrice : TextView = itemView.findViewById(R.id.priceOnCard)
         val cardRating : RatingBar = itemView.findViewById(R.id.rating)
-
+        val cardRest: TextView = itemView.findViewById(R.id.Restraunt_Name)
     }
 }

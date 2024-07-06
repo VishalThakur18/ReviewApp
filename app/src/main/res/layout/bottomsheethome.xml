@@ -56,13 +56,11 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
+                android:layout_height="1dp"
                 android:layout_marginTop="30dp"
                 android:background="#7C7C7C" />
 
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="300dp">
+
 
                 <LinearLayout
                     android:id="@+id/layoutEdit"
@@ -405,7 +403,7 @@
 
                 </LinearLayout>
 
-            </ScrollView>
+
 
 
             <LinearLayout

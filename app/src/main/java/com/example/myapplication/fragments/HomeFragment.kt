@@ -18,6 +18,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -95,8 +96,8 @@ class HomeFragment : Fragment() {
             startActivity(intent1, options.toBundle())
         }
 
-        val addReviewsImageView: ImageView = binding.root.findViewById(R.id.add_reviews)
-        addReviewsImageView.setOnClickListener {
+        //val addReviewsImageView: ImageView = binding.root.findViewById(R.id.add_reviews)
+        binding.addReviews.setOnClickListener {
             showBottomSheet(requireContext())
         }
 

@@ -63,6 +63,16 @@
                 android:fontFamily="@font/manropesemibold"/>
 
             <TextView
+                android:id="@+id/Restraunt_Name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:fontFamily="@font/manropesemibold"
+                android:text="Restaurants Name"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <TextView
                 android:id="@+id/User_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -74,7 +84,7 @@
 
             <TextView
                 android:id="@+id/Review_text"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
@@ -87,7 +97,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
                 <!-- First LinearLayout with CardView -->
@@ -106,7 +116,7 @@
                         <ImageView
                             android:id="@+id/Food_image"
                             android:layout_width="match_parent"
-                            android:layout_height="100dp"
+                            android:layout_height="180dp"
                             android:scaleType="centerCrop"
                             android:src="@drawable/biryani_plahol" />
                     </androidx.cardview.widget.CardView>
@@ -114,7 +124,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="5dp"
                         android:orientation="horizontal">
 
                         <RatingBar
@@ -136,7 +146,7 @@
                             android:layout_marginStart="30dp"
                             android:clickable="true"
                             android:src="@drawable/heart_oncard"
-                            tools:ignore="TouchTargetSizeCheck" />
+                            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
                         <TextView
                             android:id="@+id/like_count"
                             android:layout_width="wrap_content"
