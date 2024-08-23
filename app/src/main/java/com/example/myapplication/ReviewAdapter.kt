@@ -1,4 +1,4 @@
-package com.example.myapplication.adapters
+package com.example.myapplication
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -10,7 +10,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.myapplication.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import model.DishReview
@@ -25,6 +24,7 @@ class ReviewAdapter(private var reviewList: List<DishReview>, private val contex
 
     class ReviewViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val dishName: TextView = itemView.findViewById(R.id.Dish_name)
+        val restaurantName:TextView=itemView.findViewById(R.id.Restraunt_Name)
         val userName: TextView = itemView.findViewById(R.id.User_name)
         val reviewText: TextView = itemView.findViewById(R.id.Review_text)
         val foodImage: ImageView = itemView.findViewById(R.id.Food_image)
@@ -44,6 +44,7 @@ class ReviewAdapter(private var reviewList: List<DishReview>, private val contex
         val review = reviewList[position]
 
         holder.dishName.text = review.dishName
+        holder.restaurantName.text=review.restaurantName
         holder.userName.text = review.userName
         holder.reviewText.text = review.reviewText
         holder.priceOnCard.text = "Rs.${review.price}"

@@ -22,7 +22,6 @@ import com.theartofdev.edmodo.cropper.CropImageView
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import model.UserModel
 
-
 class UserProfile : AppCompatActivity() {
 
     companion object {
@@ -111,6 +110,7 @@ class UserProfile : AppCompatActivity() {
         startActivityForResult(intent, REQUEST_IMAGE_GALLERY)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
@@ -154,7 +154,7 @@ class UserProfile : AppCompatActivity() {
         val imagesRef = storageRef.child("profile_pictures/${FirebaseAuth.getInstance().currentUser?.uid}.jpg")
 
         val uploadTask = imagesRef.putFile(uri)
-        uploadTask.addOnSuccessListener { taskSnapshot ->
+        uploadTask.addOnSuccessListener {
             imagesRef.downloadUrl.addOnSuccessListener { downloadUri ->
                 // Update the profile picture in Firebase Authentication
                 val currentUser = FirebaseAuth.getInstance().currentUser

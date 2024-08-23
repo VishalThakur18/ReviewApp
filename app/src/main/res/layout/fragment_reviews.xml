@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#3939F6"
+    android:background="#F9EDDF"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.ReviewsFragment">
 
@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:text="reviews???"
         android:layout_margin="24dp"
-        android:textColor="@color/white"
+        android:textColor="@color/quantum_grey"
         android:textAlignment="center"
         android:textSize="25sp"
         android:textStyle="bold"
