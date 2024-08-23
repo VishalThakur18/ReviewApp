@@ -73,7 +73,7 @@ dependencies {
     implementation ("com.etebarian:meow-bottom-navigation:1.2.0")
     implementation ("jp.wasabeef:picasso-transformations:2.2.1")
     //library to crop the image during uploading
-    implementation ("com.theartofdev.edmodo:android-image-cropper:2.8.+")
+    implementation ("com.theartofdev.edmodo:android-image-cropper:2.8.0")
     implementation ("com.github.yalantis:ucrop:2.2.8")
 
 

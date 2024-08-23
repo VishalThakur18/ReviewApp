@@ -9,7 +9,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#F9EDDF"
+        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -20,151 +20,154 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             android:clipChildren="false"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="20dp"
-                android:clipChildren="false"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/profilePic"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:background="@drawable/circular_bg"
-                    android:transitionName="photu"
-                    tools:src="@drawable/profile" />
-
-                <TextView
-                    android:id="@+id/userName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="16dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/manropesemibold"
-                    android:textAlignment="center"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    tools:text="User Name" />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/circular_bg"
-                    android:clipChildren="false"
-                    android:elevation="8dp"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:outlineSpotShadowColor="@color/black"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp">
-
-                    <ImageView
-                        android:id="@+id/imageView2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/notification_bing" />
-
-                    <ImageView
-                        android:id="@+id/redNotif"
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        app:layout_constraintBottom_toBottomOf="@id/imageView2"
-                        app:layout_constraintEnd_toEndOf="@id/imageView2"
-                        app:layout_constraintHorizontal_bias="1.0"
-                        app:layout_constraintStart_toStartOf="@id/imageView2"
-                        app:layout_constraintTop_toTopOf="@id/imageView2"
-                        app:layout_constraintVertical_bias="0.0"
-                        app:srcCompat="@drawable/red_notification_dot" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="2"
-                        android:textColor="@color/white"
-                        android:textSize="10sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@id/redNotif"
-                        app:layout_constraintEnd_toEndOf="@id/redNotif"
-                        app:layout_constraintStart_toStartOf="@id/redNotif"
-                        app:layout_constraintTop_toTopOf="@id/redNotif" />
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </LinearLayout>
-<!--            <ImageView-->
-<!--                android:id="@+id/add_reviews"-->
-<!--                android:layout_width="70dp"-->
-<!--                android:layout_height="70dp"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:clickable="true"-->
-<!--                android:contentDescription="@string/app_name"-->
-<!--                android:elevation="8dp"-->
-<!--                android:src="@drawable/plus_sign"-->
-<!--                />-->
-            <LinearLayout
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                >
+                android:orientation="vertical"
+                android:clipChildren="false"
+                android:elevation="8dp"
+                android:background="@drawable/home_bg_banner">
+
+
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="45dp"
-                    android:layout_weight="1"
-                    android:elevation="8dp"
-                    android:background="@drawable/textfield_bg_home_plus"
-                    android:layout_marginEnd="10dp"
-                    android:gravity="center"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="17sp"
-                        android:text="extra"
-                        android:fontFamily="@font/manropesemibold"
-                        android:textColor="@color/black"
-                        android:gravity="center_horizontal"
-                        android:textAlignment="center"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/add_reviews"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:elevation="8dp"
-                    android:background="@drawable/background_cards_glass"
-                    android:gravity="center"
-                    android:layout_marginStart="10dp"
-                    android:orientation="vertical">
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="20dp"
+                    android:clipChildren="false"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/profilePic"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:background="@drawable/circular_bg"
+                        android:transitionName="photu"
+                        tools:src="@drawable/profile" />
+
                     <TextView
-                        android:layout_width="match_parent"
+                        android:id="@+id/userName"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="17sp"
-                        android:text="Post Review"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="16dp"
+                        android:layout_weight="1"
                         android:fontFamily="@font/manropesemibold"
-                        android:textColor="@color/white"
-                        android:gravity="center_horizontal"
-                        android:textAlignment="center"/>
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        tools:text="User Name" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/circular_bg"
+                        android:clipChildren="false"
+                        android:elevation="8dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:outlineSpotShadowColor="@color/black"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp">
+
+                        <ImageView
+                            android:id="@+id/imageView2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/notification_bing" />
+
+                        <ImageView
+                            android:id="@+id/redNotif"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            app:layout_constraintBottom_toBottomOf="@id/imageView2"
+                            app:layout_constraintEnd_toEndOf="@id/imageView2"
+                            app:layout_constraintHorizontal_bias="1.0"
+                            app:layout_constraintStart_toStartOf="@id/imageView2"
+                            app:layout_constraintTop_toTopOf="@id/imageView2"
+                            app:layout_constraintVertical_bias="0.0"
+                            app:srcCompat="@drawable/red_notification_dot" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="2"
+                            android:textColor="@color/white"
+                            android:textSize="10sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@id/redNotif"
+                            app:layout_constraintEnd_toEndOf="@id/redNotif"
+                            app:layout_constraintStart_toStartOf="@id/redNotif"
+                            app:layout_constraintTop_toTopOf="@id/redNotif" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
                 </LinearLayout>
 
-            </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:clipChildren="false"
+                    >
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_weight="1"
+                        android:elevation="8dp"
+                        android:background="@drawable/textfield_bg_home_plus"
+                        android:layout_marginEnd="10dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="17sp"
+                            android:text="View Reviews"
+                            android:fontFamily="@font/manropesemibold"
+                            android:textColor="@color/black"
+                            android:gravity="center_horizontal"
+                            android:textAlignment="center"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/add_reviews"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:elevation="8dp"
+                        android:background="@drawable/background_cards_glass"
+                        android:gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="17sp"
+                            android:text="Post Review"
+                            android:fontFamily="@font/manropesemibold"
+                            android:textColor="@color/white"
+                            android:gravity="center_horizontal"
+                            android:textAlignment="center"/>
+                    </LinearLayout>
 
+                </LinearLayout>
+            </LinearLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -172,7 +175,7 @@
 
                 <ViewFlipper
                     android:layout_width="match_parent"
-                    android:layout_height="180dp"
+                    android:layout_height="150dp"
                     android:layout_margin="20dp"
                     android:autoStart="true"
                     android:flipInterval="4000"
@@ -203,13 +206,86 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipChildren="false">
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="160dp"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="20dp"
+                    android:background="@drawable/textfield_bg_home_plus"
+                    android:elevation="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.5">
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:elevation="1dp"
+                        android:fontFamily="@font/manropesemibold"
+                        android:maxLines="2"
+                        android:text="Offer Mania"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.5" />
+
+
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout"
+                    android:layout_width="160dp"
+                    android:layout_height="60dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/textfield_bg_home_plus"
+                    android:elevation="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.5">
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/manropesemibold"
+                        android:text="Restraunts"
+                        android:textColor="@color/black"
+                        android:textSize="17sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.5" />
+
+<!--                    <ImageView-->
+<!--                        android:layout_width="10dp"-->
+<!--                        android:layout_height="10dp"-->
+<!--                        android:src="@drawable/red_notification_dot"-->
+<!--                        app:layout_constraintTop_toTopOf="@+id/textView"-->
+<!--                        app:layout_constraintEnd_toEndOf="@+id/textView" />-->
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Trending Foods"
                 android:textColor="@color/black"
                 android:textSize="22sp"
+                android:layout_marginTop="15dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="20dp"
