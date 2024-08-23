@@ -131,19 +131,56 @@
                         android:layout_height="45dp"
                         android:layout_weight="1"
                         android:elevation="8dp"
-                        android:background="@drawable/textfield_bg_home_plus"
+                        android:background="@drawable/background_cards_glass"
                         android:layout_marginEnd="10dp"
                         android:gravity="center"
                         android:orientation="vertical">
-                        <TextView
+
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="17sp"
-                            android:text="View Reviews"
-                            android:fontFamily="@font/manropesemibold"
-                            android:textColor="@color/black"
-                            android:gravity="center_horizontal"
-                            android:textAlignment="center"/>
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center_vertical"
+                                android:background="@drawable/rectangular_white_bg"
+                                android:clipChildren="false"
+                                android:elevation="8dp"
+                                android:gravity="center"
+                                android:layout_weight="2.5"
+                                android:layout_margin="5dp"
+                                android:orientation="horizontal"
+                                android:outlineSpotShadowColor="@color/black"
+                                android:paddingStart="8dp"
+                                android:paddingEnd="8dp">
+
+                                <ImageView
+                                    android:id="@+id/imageView22"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:srcCompat="@drawable/post_review_svg" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="17sp"
+                                android:layout_weight="1"
+                                android:text="Post Review"
+                                android:fontFamily="@font/manropesemibold"
+                                android:textColor="@color/white"
+                                android:gravity="center_horizontal"
+                                android:textAlignment="center"/>
+                        </LinearLayout>
                     </LinearLayout>
                     <LinearLayout
                         android:id="@+id/add_reviews"
@@ -151,19 +188,54 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:elevation="8dp"
-                        android:background="@drawable/background_cards_glass"
+                        android:background="@drawable/textfield_bg_home_plus"
                         android:gravity="center"
                         android:layout_marginStart="10dp"
                         android:orientation="vertical">
-                        <TextView
+
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="17sp"
-                            android:text="Post Review"
-                            android:fontFamily="@font/manropesemibold"
-                            android:textColor="@color/white"
-                            android:gravity="center_horizontal"
-                            android:textAlignment="center"/>
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center_vertical"
+                                android:background="@drawable/rectangular_black_bg"
+                                android:clipChildren="false"
+                                android:elevation="8dp"
+                                android:gravity="center"
+                                android:layout_weight="2.5"
+                                android:layout_margin="5dp"
+                                android:orientation="horizontal"
+                                android:outlineSpotShadowColor="@color/black"
+                                android:paddingStart="8dp"
+                                android:paddingEnd="8dp">
+
+                                <ImageView
+                                    android:id="@+id/imageView23"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:srcCompat="@drawable/view_reviews_svg" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="17sp"
+                                android:layout_weight="1"
+                                android:text="View Reviews"
+                                android:fontFamily="@font/manropesemibold"
+                                android:textColor="@color/black"
+                                android:gravity="center_horizontal"
+                                android:textAlignment="center"/>
+                        </LinearLayout>
                     </LinearLayout>
 
                 </LinearLayout>
