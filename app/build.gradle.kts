@@ -76,8 +76,7 @@ dependencies {
     implementation ("com.theartofdev.edmodo:android-image-cropper:2.8.0")
     implementation ("com.github.yalantis:ucrop:2.2.8")
 
+    implementation ("com.github.AnupKumarPanwar:ScratchView:1.2")
 
-
-
-
+    implementation("com.github.cooltechworks:ScratchView:v1.1")
 }

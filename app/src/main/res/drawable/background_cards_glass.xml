@@ -5,7 +5,7 @@
     <item>
         <shape android:shape="rectangle">
             <!-- Background Color -->
-            <solid android:color="#000000"/> <!-- Change the color as per your preference -->
+            <solid android:color="#E4E3E3"/> <!-- Change the color as per your preference -->
 
             <!-- Rounded Corners -->
             <corners android:radius="10dp"/> <!-- Adjust the radius as per your preference -->
@@ -13,7 +13,7 @@
     </item>
 
     <!-- Border Line -->
-    <item android:right="3dp" android:left="3dp" android:top="3dp" android:bottom="3dp">
+    <item android:right="1dp" android:left="1dp" android:top="1dp" android:bottom="1dp">
         <shape android:shape="rectangle">
             <!-- Border Color -->
             <solid android:color="#000000"/> <!-- Change the color as per your preference -->
