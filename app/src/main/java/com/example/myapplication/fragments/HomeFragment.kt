@@ -17,8 +17,6 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -26,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -99,6 +98,15 @@ class HomeFragment : Fragment() {
         //val addReviewsImageView: ImageView = binding.root.findViewById(R.id.add_reviews)
         binding.addReviews.setOnClickListener {
             showBottomSheet(requireContext())
+        }
+        binding.viewReview.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_feedFragment)
+        }
+        binding.restaurantBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_restrauntsFragment)
+        }
+        binding.offerZoneBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_reviewsFragment)
         }
 
         requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
@@ -226,8 +234,6 @@ class HomeFragment : Fragment() {
 
         bottomSheetDialog.show()
     }
-
-
     private fun validateInputs(
         dishName: String,
         restaurantName: String,
@@ -340,6 +346,7 @@ class HomeFragment : Fragment() {
                 val userProfilePic = currentUser?.photoUrl.toString()
                 val userName = currentUser?.displayName ?: "Anonymous"
                 val reviewRef = firestore.collection("dishReview").document()
+                val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
 
                 val review = hashMapOf(
                     "id" to reviewRef.id,
@@ -352,7 +359,8 @@ class HomeFragment : Fragment() {
                     "location" to GeoPoint(0.0, 0.0),
                     "userProfilePic" to userProfilePic, 
                     "userName" to userName,
-                    "timestamp" to com.google.firebase.firestore.FieldValue.serverTimestamp()
+                    "timestamp" to com.google.firebase.firestore.FieldValue.serverTimestamp(),
+                    "userId" to userId
                 )
 
                 firestore.collection("dishReview")

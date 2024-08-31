@@ -4,54 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="#F9EDDF"
     tools:context=".GetStarted">
-
-
-<!--    <com.airbnb.lottie.LottieAnimationView-->
-<!--        android:layout_width="320dp"-->
-<!--        android:layout_height="320dp"-->
-<!--        android:layout_marginTop="48dp"-->
-<!--        app:lottie_autoPlay="true"-->
-<!--        app:lottie_repeatCount="20"-->
-<!--        app:lottie_speed="1"-->
-<!--        app:lottie_fileName="Animationvis.json"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--    <TextView-->
-<!--        android:id="@+id/textView6"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="32dp"-->
-<!--        android:layout_marginEnd="32dp"-->
-<!--        android:fontFamily="@font/realway_bold"-->
-<!--        android:text="WELCOME"-->
-<!--        android:textAlignment="center"-->
-<!--        android:textColor="@color/white"-->
-<!--        android:textSize="36sp"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/textView7"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.497"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintVertical_bias="0.925" />-->
-
-<!--    <TextView-->
-<!--        android:id="@+id/textView7"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="32dp"-->
-<!--        android:layout_marginEnd="32dp"-->
-<!--        android:layout_marginBottom="116dp"-->
-<!--        android:fontFamily="@font/realway_bold"-->
-<!--        android:text="This is where the description will go change"-->
-<!--        android:textColor="@color/white"-->
-<!--        android:textSize="15sp"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/button"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent" />-->
 
     <androidx.viewpager2.widget.ViewPager2
         android:layout_width="match_parent"
@@ -102,7 +56,7 @@
         android:layout_marginBottom="32dp"
         android:background="@drawable/getstarted_button"
         android:fontFamily="@font/realway_bold"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:text="GET STARTED"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"

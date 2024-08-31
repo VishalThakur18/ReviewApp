@@ -41,7 +41,6 @@ class Login : AppCompatActivity() {
     private val binding:ActivityLoginBinding by lazy {
         ActivityLoginBinding.inflate(layoutInflater)
     }
-
     //Google Sign Up
     private lateinit var googleSignIn: GoogleSignInClient
 
@@ -73,9 +72,6 @@ class Login : AppCompatActivity() {
 
             }
         }
-
-
-
         //Forget Password
         val reset:TextView=findViewById<TextView>(R.id.passwordResetButton)
         reset.setOnClickListener{
@@ -156,8 +152,6 @@ class Login : AppCompatActivity() {
             }
         }
     }
-
-
     private fun createUSerAccount(email: String, password: String) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
@@ -211,7 +205,6 @@ class Login : AppCompatActivity() {
         }
 
     }
-
     private fun handleResult(task: Task<GoogleSignInAccount>) {
         if(task.isSuccessful){
             val account:GoogleSignInAccount?=task.result
@@ -224,7 +217,6 @@ class Login : AppCompatActivity() {
         }
 
     }
-
     private fun updateUIGoogle(account: GoogleSignInAccount) {
         val credential = GoogleAuthProvider.getCredential(account.idToken, null)
         auth.signInWithCredential(credential).addOnCompleteListener {

@@ -194,6 +194,7 @@
                         android:orientation="vertical">
 
                         <LinearLayout
+                            android:id="@+id/viewReview"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center"
@@ -302,6 +303,7 @@
                 android:clipChildren="false">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/offerZoneBtn"
                     android:layout_width="160dp"
                     android:layout_height="60dp"
                     android:layout_marginStart="20dp"
@@ -346,7 +348,8 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout"
+
+                    android:id="@+id/restaurantBtn"
                     android:layout_width="160dp"
                     android:layout_height="60dp"
                     android:layout_marginEnd="20dp"
@@ -462,12 +465,12 @@
                     android:background="#A0A0A0"/>
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_margin="20dp"
-                android:scaleType="fitXY"
-                app:srcCompat="@drawable/graffiti_bg_offers" />
+<!--            <ImageView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="100dp"-->
+<!--                android:layout_margin="20dp"-->
+<!--                android:scaleType="fitXY"-->
+<!--                app:srcCompat="@drawable/graffiti_bg_offers" />-->
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
