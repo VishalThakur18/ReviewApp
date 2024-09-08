@@ -1,5 +1,4 @@
 package com.example.myapplication.fragments
-
 import HomeAdapter
 import android.Manifest
 import android.app.ActivityOptions
@@ -11,6 +10,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,6 +37,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
+import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
@@ -53,12 +54,13 @@ class HomeFragment : Fragment() {
     private lateinit var storage: FirebaseStorage
     private lateinit var homeAdapter: HomeAdapter
     private lateinit var newRecyclerView: RecyclerView
+    private var foodItem= mutableListOf<HomeCards>()
 
     private val binding get() = _binding!!
 
     private val REQUEST_IMAGE_CAPTURE = 1
     private val REQUEST_IMAGE_GALLERY = 2
-    private lateinit var imageUri: Uri
+    private var imageUri: Uri? = null
     private var imageUrl: String = ""
 
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
@@ -106,8 +108,9 @@ class HomeFragment : Fragment() {
             findNavController().navigate(R.id.action_homeFragment_to_restrauntsFragment)
         }
         binding.offerZoneBtn.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_reviewsFragment)
+            findNavController().navigate(R.id.action_homeFragment_to_offersFragment)
         }
+
 
         requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
             if (isGranted) {
@@ -136,36 +139,35 @@ class HomeFragment : Fragment() {
 
 
         // Initialize RecyclerView and Adapter
-        val cardList = createHomeCardList()  // Function to create list of HomeCard items
-        homeAdapter = HomeAdapter(cardList)
         newRecyclerView = _binding!!.recyclerHome  // Adjust this line according to your binding
         newRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        homeAdapter=HomeAdapter(foodItem,requireContext())
         newRecyclerView.adapter = homeAdapter
+
+        fetchFoodItems()
 
         return binding.root
     }
-    private fun createHomeCardList(): MutableList<HomeCards> {
-        val imageId = arrayOf(
-                R.drawable.crop_chicken,
-        R.drawable.crop_daal,
-        R.drawable.crop_dosa,
-        R.drawable.crop_noods,
-        R.drawable.crop_idli
-        )
-        val title = arrayOf(
-            "Non Veg",
-            "Pulses",
-            "Dosa",
-            "Noodles",
-            "South Indian"
-        )
-
-        val cardList = mutableListOf<HomeCards>()
-        for (i in imageId.indices) {
-            cardList.add(HomeCards(title[i], imageId[i]))
-        }
-        return cardList
+    private fun fetchFoodItems() {
+        firestore.collection("dishReview")
+            .orderBy("likes", Query.Direction.DESCENDING)
+            .get()
+            .addOnSuccessListener { documents ->
+                foodItem.clear() // Clear the list before adding new data
+                for (document in documents) {
+                    val review = document.toObject(HomeCards::class.java)
+                    // Check if the imageUrl field is not null or empty
+                    if (review.imageUrl.isNotEmpty()) {
+                        foodItem.add(review)
+                    }
+                }
+                homeAdapter.updateReviews(foodItem)
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(requireContext(), "Error fetching reviews: ${exception.message}", Toast.LENGTH_SHORT).show()
+            }
     }
+
 
     private fun showBottomSheet(context: Context) {
         val bottomSheetView = layoutInflater.inflate(R.layout.bottomsheethome, null)
@@ -211,12 +213,10 @@ class HomeFragment : Fragment() {
             val dishReview = dishReviewEditText.text.toString().trim()
 
             if (validateInputs(dishName, restaurantName, dishPrice, dishReview)) {
-                if (imageUrl.isNotEmpty()) {
+
                     postReview(dishName, restaurantName, dishPrice, dishReview, imageUrl)
                     bottomSheetDialog.dismiss() // Dismiss the dialog after posting
-                } else {
-                    Toast.makeText(context, "Please upload an image", Toast.LENGTH_SHORT).show()
-                }
+
             }
         }
 
@@ -252,7 +252,7 @@ class HomeFragment : Fragment() {
             Toast.makeText(requireContext(), "Enter Valid Price", Toast.LENGTH_SHORT).show()
             return false
         }
-        if (dishReview.isEmpty() || dishReview.length !in 5..100) {
+        if (dishReview.isEmpty() || dishReview.length !in 1..100) {
             Toast.makeText(requireContext(), "Enter Review (5 to 100 characters)", Toast.LENGTH_SHORT).show()
             return false
         }
@@ -266,23 +266,47 @@ class HomeFragment : Fragment() {
 
     private fun openCamera() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        imageUri = FileProvider.getUriForFile(
-            requireContext(),
-            "${requireContext().packageName}.provider",
-            createImageFile()
-        )
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
-        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
-    }
+        val photoFile = createImageFile()
+        if (photoFile != null) {
+            imageUri = FileProvider.getUriForFile(
+                requireContext(),
+                "${requireContext().packageName}.provider",
+                photoFile
+            )
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
 
-    @Throws(IOException::class)
-    private fun createImageFile(): File {
-        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
-        val storageDir = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File.createTempFile("JPEG_${timeStamp}_", ".jpg", storageDir).apply {
-            imageUrl = absolutePath
+            // Double-check if imageUri is properly initialized
+            if (imageUri != null) {
+                Log.d("CameraIntent", "Image URI set: $imageUri")
+                startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
+            } else {
+                Log.e("CameraIntent", "Error: imageUri is null")
+                Toast.makeText(requireContext(), "Error initializing image capture", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Log.e("CameraIntent", "Error creating image file")
+            Toast.makeText(requireContext(), "Error creating image file", Toast.LENGTH_SHORT).show()
         }
     }
+
+
+    @Throws(IOException::class)
+    private fun createImageFile(): File? {
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val storageDir: File? = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+
+        return try {
+            File.createTempFile(
+                "JPEG_${timeStamp}_", /* prefix */
+                ".jpg", /* suffix */
+                storageDir /* directory */
+            )
+        } catch (ex: IOException) {
+            Log.e("CreateFileError", "Error creating file: ${ex.message}")
+            null
+        }
+    }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -294,21 +318,32 @@ class HomeFragment : Fragment() {
                     }
                 }
                 REQUEST_IMAGE_CAPTURE -> {
-                    startCropActivity(imageUri)
+                    imageUri?.let {
+                        Log.d("ActivityResult", "Starting crop activity with URI: $imageUri")
+                        startCropActivity(it)
+                    } ?: run {
+                        Log.e("ActivityResult", "Error: Image URI is not initialized")
+                        Toast.makeText(requireContext(), "Error: Image URI is not initialized", Toast.LENGTH_SHORT).show()
+                    }
                 }
                 CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
                     val result = CropImage.getActivityResult(data)
                     if (result.isSuccessful) {
                         val croppedImageUri = result.uri
+                        Log.d("ActivityResult", "Image cropped successfully: $croppedImageUri")
                         uploadImageToFirebase(croppedImageUri)
                     } else {
                         val error = result.error
+                        Log.e("ActivityResult", "Crop failed: ${error.message}")
                         Toast.makeText(requireContext(), "Crop failed: ${error.message}", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
+        } else {
+            Log.d("ActivityResult", "Result not OK, resultCode: $resultCode")
         }
     }
+
 
 
     private fun startCropActivity(uri: Uri) {
@@ -319,62 +354,63 @@ class HomeFragment : Fragment() {
             .start(requireContext(), this)
     }
 
-          private fun uploadImageToFirebase(uri: Uri) {
-                val storageRef = storage.reference.child("images/${UUID.randomUUID()}.jpg")
-                storageRef.putFile(uri)
-                    .addOnSuccessListener { taskSnapshot ->
-                        taskSnapshot.metadata?.reference?.downloadUrl?.addOnSuccessListener { downloadUri ->
-                            imageUrl = downloadUri.toString()
-//                            Toast.makeText(requireContext(), "Image uploaded successfully", Toast.LENGTH_SHORT).show()
-                        }?.addOnFailureListener { e ->
-                            Toast.makeText(requireContext(), "Failed to retrieve download URL: ${e.message}", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                    .addOnFailureListener { e ->
-                        Toast.makeText(requireContext(), "Image upload failed: ${e.message}", Toast.LENGTH_SHORT).show()
-                    }
+    private fun uploadImageToFirebase(uri: Uri) {
+        val storageRef = storage.reference.child("images/${UUID.randomUUID()}.jpg")
+        storageRef.putFile(uri)
+            .addOnSuccessListener { taskSnapshot ->
+                taskSnapshot.metadata?.reference?.downloadUrl?.addOnSuccessListener { downloadUri ->
+                    imageUrl = downloadUri.toString()
+                    imageUri = null // Reset imageUri after successful upload
+                }?.addOnFailureListener { e ->
+                    Toast.makeText(requireContext(), "Failed to retrieve download URL: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
             }
-
-            private fun postReview(
-                dishName: String,
-                restaurantName: String,
-                dishPrice: Double,
-                dishReview: String,
-                imageUrl: String
-            ) {
-                val currentUser = auth.currentUser
-                val userProfilePic = currentUser?.photoUrl.toString()
-                val userName = currentUser?.displayName ?: "Anonymous"
-                val reviewRef = firestore.collection("dishReview").document()
-                val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
-
-                val review = hashMapOf(
-                    "id" to reviewRef.id,
-                    "dishName" to dishName,
-                    "restaurantName" to restaurantName,
-                    "price" to dishPrice,
-                    "reviewText" to dishReview,
-                    "rating" to 0,
-                    "imageUrl" to imageUrl,
-                    "location" to GeoPoint(0.0, 0.0),
-                    "userProfilePic" to userProfilePic, 
-                    "userName" to userName,
-                    "timestamp" to com.google.firebase.firestore.FieldValue.serverTimestamp(),
-                    "userId" to userId
-                )
-
-                firestore.collection("dishReview")
-                    .add(review)
-                    .addOnSuccessListener {
-                        Toast.makeText(requireContext(), "Review posted successfully", Toast.LENGTH_SHORT).show()
-                    }
-                    .addOnFailureListener { e ->
-                        Toast.makeText(requireContext(), "Failed to post review: ${e.message}", Toast.LENGTH_SHORT).show()
-                    }
-            }
-
-                    override fun onDestroyView() {
-                super.onDestroyView()
-                _binding = null
+            .addOnFailureListener { e ->
+                Toast.makeText(requireContext(), "Image upload failed: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
+
+
+    private fun postReview(
+        dishName: String,
+        restaurantName: String,
+        dishPrice: Double,
+        dishReview: String,
+        imageUrl: String
+    ) {
+        val currentUser = auth.currentUser
+        val userProfilePic = currentUser?.photoUrl.toString()
+        val userName = currentUser?.displayName ?: "Anonymous"
+        val reviewRef = firestore.collection("dishReview").document()
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
+
+        val review = hashMapOf(
+            "id" to reviewRef.id,
+            "dishName" to dishName,
+            "restaurantName" to restaurantName,
+            "price" to dishPrice,
+            "reviewText" to dishReview,
+            "rating" to 0,
+            "imageUrl" to imageUrl,
+            "location" to GeoPoint(0.0, 0.0),
+            "userProfilePic" to userProfilePic,
+            "userName" to userName,
+            "timestamp" to com.google.firebase.firestore.FieldValue.serverTimestamp(),
+            "userId" to userId
+        )
+
+        firestore.collection("dishReview")
+            .add(review)
+            .addOnSuccessListener {
+                Toast.makeText(requireContext(), "Review posted successfully", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(requireContext(), "Failed to post review: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+}

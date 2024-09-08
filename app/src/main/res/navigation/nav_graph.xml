@@ -14,11 +14,11 @@
             android:id="@+id/action_homeFragment_to_feedFragment"
             app:destination="@id/feedFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_reviewsFragment"
-            app:destination="@id/reviewsFragment" />
-        <action
             android:id="@+id/action_homeFragment_to_restrauntsFragment"
             app:destination="@id/restrauntsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_offersFragment"
+            app:destination="@id/offersFragment" />
     </fragment>
     <fragment
         android:id="@+id/feedFragment"
@@ -30,21 +30,21 @@
             app:destination="@id/homeFragment" />
     </fragment>
     <fragment
-        android:id="@+id/reviewsFragment"
-        android:name="com.example.myapplication.fragments.ReviewsFragment"
-        android:label="fragment_reviews"
-        tools:layout="@layout/offers_reviews" >
-        <action
-            android:id="@+id/action_reviewsFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/restrauntsFragment"
         android:name="com.example.myapplication.fragments.RestrauntsFragment"
         android:label="fragment_restraunts"
         tools:layout="@layout/fragment_restraunts" >
         <action
             android:id="@+id/action_restrauntsFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/offersFragment"
+        android:name="com.example.myapplication.fragments.OffersFragment"
+        android:label="offers_fragment"
+        tools:layout="@layout/offers_fragment" >
+        <action
+            android:id="@+id/action_offersFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
 </navigation>

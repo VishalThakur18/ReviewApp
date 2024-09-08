@@ -1,3 +1,3 @@
 package com.example.myapplication
 
-data class HomeCards(val cardTitle: String, val dishImage: Int)
+data class HomeCards( var dishName: String = "", val imageUrl: String = "")

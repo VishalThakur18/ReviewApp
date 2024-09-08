@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
             when (it.id) {
                 1 -> navController.navigate(R.id.homeFragment)
                 2 -> navController.navigate(R.id.feedFragment)
-                3 -> navController.navigate(R.id.reviewsFragment)
+                3 -> navController.navigate(R.id.offersFragment)
             }
         }
 
@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
             when (destination.id) {
                 R.id.homeFragment -> bottomNavigation.show(1, true)
                 R.id.feedFragment -> bottomNavigation.show(2, true)
-                R.id.reviewsFragment -> bottomNavigation.show(3, true)
+                R.id.offersFragment -> bottomNavigation.show(3, true)
                 else -> bottomNavigation.show(1, true)
             }
         }

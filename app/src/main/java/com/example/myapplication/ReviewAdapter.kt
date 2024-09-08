@@ -55,9 +55,14 @@ class ReviewAdapter(
 //        holder.rating.rating = review.rating.toFloat()
         holder.likeCount.text = review.likes.toString()
 
-        Glide.with(holder.itemView.context)
-            .load(review.imageUrl)
-            .into(holder.foodImage)
+        if (review.imageUrl.isNotEmpty()) {
+            holder.foodImage.visibility = View.VISIBLE // Show ImageView if image exists
+            Glide.with(holder.itemView.context)
+                .load(review.imageUrl)
+                .into(holder.foodImage)
+        } else {
+            holder.foodImage.visibility = View.GONE // Hide ImageView if no image
+        }
 
         Glide.with(holder.itemView.context)
             .load(review.userProfilePic)
@@ -75,13 +80,19 @@ class ReviewAdapter(
         })
         // Attach double-tap gesture listener to the entire card (i.e., itemView)
         holder.itemView.setOnTouchListener { v, event ->
-            // Let gestureDetector handle touch events
+            // Handle gesture detection
             gestureDetector.onTouchEvent(event)
+
+            // Check if the action is a click (ACTION_UP)
+            if (event.action == MotionEvent.ACTION_UP) {
+                // Call performClick for accessibility
+                v.performClick()
+            }
+
+            // Return true to indicate the touch event has been handled
             true
-
-
-
         }
+
         // Single click on like button
         holder.likeBtn.setOnClickListener {
             toggleLike(holder, review)

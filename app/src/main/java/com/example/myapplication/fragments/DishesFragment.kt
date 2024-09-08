@@ -1,5 +1,4 @@
 package com.example.myapplication.fragments
-
 import ReviewAdapter
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -3,32 +3,47 @@ package com.example.myapplication.fragments
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.anupkumarpanwar.scratchview.ScratchView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.myapplication.R
 import com.example.myapplication.ReviewCards
 import com.example.myapplication.ReviewPageAdapter
+import com.example.myapplication.databinding.OffersFragmentBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.storage.FirebaseStorage
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-class ReviewsFragment : Fragment() {
-
+class OffersFragment : Fragment() {
+    private var _binding: OffersFragmentBinding? = null
+    private val binding get() = _binding!!
     private lateinit var newRecyclerView: RecyclerView
     private lateinit var cardList: ArrayList<ReviewCards>
     private val scratchPrefKey = "SCRATCH_PREF_KEY"
+    private val storageReference = FirebaseStorage.getInstance().reference
+    private val auth = FirebaseAuth.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.offers_reviews, container, false)
+        _binding = OffersFragmentBinding.inflate(inflater, container, false)
+        val view = binding.root
+
+        binding.backBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_offersFragment_to_homeFragment)
+        }
 
         newRecyclerView = view.findViewById(R.id.recyclerReview)
         newRecyclerView.layoutManager = LinearLayoutManager(context)
@@ -71,6 +86,27 @@ class ReviewsFragment : Fragment() {
                     }
                 }
             })
+        }
+
+        // Check if the user is authenticated
+        if (auth.currentUser != null) {
+            // Load banner image from Firebase Storage
+            val bannerImageView: ImageView = view.findViewById(R.id.imageView5)
+            val bannerImageRef = storageReference.child("deal_of_the_day/deal.jpg") // Update path accordingly
+            val startTime = System.currentTimeMillis()
+
+            bannerImageRef.downloadUrl.addOnSuccessListener { uri ->
+                Log.d("Firebase", "Image URL fetched in ${System.currentTimeMillis() - startTime} ms")
+                Glide.with(this)
+                    .load(uri)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(bannerImageView)
+            }.addOnFailureListener { exception ->
+                Log.e("Firebase", "Failed to get image URL: ${exception.message}")
+                Toast.makeText(requireContext(), "Failed to load banner image: ${exception.message}", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Toast.makeText(requireContext(), "User is not authenticated. Please log in.", Toast.LENGTH_SHORT).show()
         }
 
         return view
