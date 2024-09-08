@@ -1,7 +1,9 @@
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.view.GestureDetector
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -30,7 +32,7 @@ class ReviewAdapter(
         val reviewText: TextView = itemView.findViewById(R.id.Review_text)
         val foodImage: ImageView = itemView.findViewById(R.id.Food_image)
         val priceOnCard: TextView = itemView.findViewById(R.id.priceOnCard)
-        val rating: RatingBar = itemView.findViewById(R.id.rating)
+//        val rating: RatingBar = itemView.findViewById(R.id.rating)
         val userProfilePic: ImageView = itemView.findViewById(R.id.User_profile_pic)
         val likeBtn: ImageView = itemView.findViewById(R.id.like_btn)
         val likeCount: TextView = itemView.findViewById(R.id.like_count)
@@ -50,7 +52,7 @@ class ReviewAdapter(
         holder.userName.text = review.userName
         holder.reviewText.text = review.reviewText
         holder.priceOnCard.text = "Rs.${review.price}"
-        holder.rating.rating = review.rating.toFloat()
+//        holder.rating.rating = review.rating.toFloat()
         holder.likeCount.text = review.likes.toString()
 
         Glide.with(holder.itemView.context)
@@ -64,29 +66,25 @@ class ReviewAdapter(
         // Set initial like button state based on isLikedByUser
         holder.likeBtn.setImageResource(if (review.isLikedByUser) R.drawable.liked_ic else R.drawable.like_ic)
 
-        holder.likeBtn.setOnClickListener {
-            userId ?: return@setOnClickListener // If userId is null, return early
-
-            val mutableLikedBy = review.likedBy.toMutableList()
-
-            if (review.isLikedByUser) {
-                // User has already liked the review, so unlike it
-                mutableLikedBy.remove(userId)
-                review.likes -= 1
-                holder.likeBtn.setImageResource(R.drawable.like_ic) // Change button state
-            } else {
-                // User has not liked the review, so like it
-                mutableLikedBy.add(userId)
-                review.likes += 1
-                holder.likeBtn.setImageResource(R.drawable.liked_ic) // Change button state
+        // GestureDetector to detect double tap
+        val gestureDetector = GestureDetector(holder.itemView.context, object : GestureDetector.SimpleOnGestureListener() {
+            override fun onDoubleTap(e: MotionEvent): Boolean {
+                toggleLike(holder, review)  // Perform the like toggle when double-tap detected
+                return true
             }
+        })
+        // Attach double-tap gesture listener to the entire card (i.e., itemView)
+        holder.itemView.setOnTouchListener { v, event ->
+            // Let gestureDetector handle touch events
+            gestureDetector.onTouchEvent(event)
+            true
 
-            // Update Firestore document with new likedBy list and likes count
-            handleLikeClick(review.id, mutableLikedBy, review.likes)
 
-            // Update UI
-            holder.likeCount.text = review.likes.toString()
-            review.isLikedByUser = !review.isLikedByUser // Toggle like status
+
+        }
+        // Single click on like button
+        holder.likeBtn.setOnClickListener {
+            toggleLike(holder, review)
         }
 
         // Handle delete button functionality
@@ -99,6 +97,47 @@ class ReviewAdapter(
                 Toast.makeText(context, "You can only delete your own reviews.", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    // Method to toggle like state and update Firestore
+    private fun toggleLike(holder: ReviewViewHolder, review: DishReview) {
+        userId ?: return // If userId is null, return early
+
+        val mutableLikedBy = review.likedBy.toMutableList()
+
+        if (review.isLikedByUser) {
+            // User has already liked the review, so unlike it
+            mutableLikedBy.remove(userId)
+            review.likes -= 1
+            holder.likeBtn.setImageResource(R.drawable.like_ic) // Change button state
+        } else {
+            // User has not liked the review, so like it
+            mutableLikedBy.add(userId)
+            review.likes += 1
+            holder.likeBtn.setImageResource(R.drawable.liked_ic) // Change button state
+        }
+
+        // Update Firestore document with new likedBy list and likes count
+        handleLikeClick(review.id, mutableLikedBy, review.likes)
+
+        // Show the updated like count temporarily
+        showLikeCountTemporarily(holder, review.likes)
+
+        // Update UI in real-time
+        holder.likeCount.text = review.likes.toString()
+        review.isLikedByUser = !review.isLikedByUser // Toggle like status
+    }
+
+
+    // Method to show like count temporarily for 4 seconds
+    private fun showLikeCountTemporarily(holder: ReviewViewHolder, likeCount: Int) {
+        holder.likeCount.visibility = View.VISIBLE
+        holder.likeCount.text = likeCount.toString()
+
+        // Hide the like count after 4 seconds
+        holder.itemView.postDelayed({
+            holder.likeCount.visibility = View.GONE
+        }, 2200) // 1000 milliseconds = 1 seconds
     }
 
     override fun getItemCount() = reviewList.size

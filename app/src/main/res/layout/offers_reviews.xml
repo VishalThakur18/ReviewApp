@@ -18,10 +18,29 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="start"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/circular_bg"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:id="@+id/imageView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="0dp"
+                    android:src="@drawable/back_rounded_arrow"/>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
                 android:gravity="center"
                 android:orientation="horizontal">
@@ -32,7 +51,7 @@
                     android:fontFamily="@font/realway_bold"
                     android:text="Deal Of The Day"
                     android:textColor="#282828"
-                    android:textSize="20sp" />
+                    android:textSize="25sp" />
 
                 <View
                     android:id="@+id/line_2"
@@ -45,9 +64,9 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
                 android:background="@drawable/cards_on_profile_2">
 
                 <androidx.cardview.widget.CardView
@@ -100,9 +119,9 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="425dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
                 android:background="@drawable/cards_on_profile_2">
 
                 <androidx.recyclerview.widget.RecyclerView

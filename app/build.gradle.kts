@@ -78,8 +78,8 @@ dependencies {
     implementation ("com.github.yalantis:ucrop:2.2.8")
 
     // To navigate between the fragments
-    implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
-    implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.8.0")
+    implementation("androidx.navigation:navigation-ui-ktx:2.8.0")
     // Scratch card
     implementation ("com.github.AnupKumarPanwar:ScratchView:1.2")
     implementation("com.github.cooltechworks:ScratchView:v1.1")
