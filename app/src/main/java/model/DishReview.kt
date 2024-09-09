@@ -1,5 +1,6 @@
 package model
 
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.firestore.ServerTimestamp
 import java.util.Date
@@ -11,7 +12,6 @@ data class DishReview(
     var rating: Double = 0.0,
     var likedBy: List<String> = emptyList(),
     var likes: Int = 0,
-    var isLikedByUser: Boolean = false, // Added field to store like state
     val imageUrl: String = "",
     var restaurantName: String = "",
     var reviewText: String = "",
@@ -19,5 +19,9 @@ data class DishReview(
     @ServerTimestamp var timestamp: Date? = null,
     var userName: String = "",
     var userProfilePic: String = "",
-    var userId: String = "" // Add userId field to store the ID of the user who created the review
-)
+    var userId: String = ""
+) {
+    fun isLikedByUser(currentUserId: String?): Boolean {
+        return currentUserId != null && currentUserId in likedBy
+    }
+}

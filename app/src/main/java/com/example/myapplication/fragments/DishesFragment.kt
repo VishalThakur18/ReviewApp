@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.databinding.FragmentDishesBinding
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import model.DishReview
@@ -40,18 +41,23 @@ class DishesFragment : Fragment() {
     }
 
     private fun fetchReviews() {
+        val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
+
         firestore.collection("dishReview")
             .orderBy("timestamp", Query.Direction.DESCENDING)
             .get()
             .addOnSuccessListener { documents ->
-                reviewList.clear() // Clear the list before adding new data
-                for (document in documents) {
-                    val review = document.toObject(DishReview::class.java).apply {
+                val newReviewList = documents.mapNotNull { document ->
+                    document.toObject(DishReview::class.java).apply {
                         id = document.id // Ensure the ID is set from Firestore
+                        // Explicitly set likedBy from the document data
+                        likedBy = (document.get("likedBy") as? List<String>) ?: emptyList()
                     }
-                    reviewList.add(review)
                 }
+                reviewList.clear()
+                reviewList.addAll(newReviewList)
                 reviewAdapter.updateReviews(reviewList)
+                reviewAdapter.setCurrentUserId(currentUserId)
             }
             .addOnFailureListener { exception ->
                 Toast.makeText(requireContext(), "Error fetching reviews: ${exception.message}", Toast.LENGTH_SHORT).show()

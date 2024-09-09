@@ -3,7 +3,9 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.widget.MediaController
 import android.widget.Toast
+import android.widget.VideoView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.databinding.ActivityUserProfileBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -36,6 +38,21 @@ class UserProfile : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityUserProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
+
+//        // Load the video from the raw folder
+//        val videoView: VideoView = findViewById(R.id.videoViewFeature)
+//        val videoUri = Uri.parse("android.resource://" + packageName + "/" + R.raw.feature_promo)
+//        videoView.setVideoURI(videoUri)
+//
+//        // Set MediaController for video controls (play, pause, etc.)
+//        val mediaController = MediaController(this)
+//        mediaController.setAnchorView(videoView)
+//        videoView.setMediaController(mediaController)
+//
+//        // Start playing the video
+//        videoView.start()
 
         // Fetch and display user's profile picture and name
         val currentUser = mAuth.currentUser
