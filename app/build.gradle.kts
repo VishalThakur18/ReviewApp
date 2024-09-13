@@ -84,4 +84,7 @@ dependencies {
     implementation ("com.github.AnupKumarPanwar:ScratchView:1.2")
     implementation("com.github.cooltechworks:ScratchView:v1.1")
 
+    //gif
+    implementation ("pl.droidsonroids.gif:android-gif-drawable:1.2.25")
+
 }

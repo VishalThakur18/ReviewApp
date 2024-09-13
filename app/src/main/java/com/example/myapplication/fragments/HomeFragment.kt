@@ -41,6 +41,10 @@ import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -74,6 +78,8 @@ class HomeFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
         storage = FirebaseStorage.getInstance()
+        val binding=_binding?:return null
+        val root=binding.root
         val currentUser = auth.currentUser
 
         val displayName = currentUser?.displayName ?: ""
@@ -144,9 +150,20 @@ class HomeFragment : Fragment() {
         homeAdapter=HomeAdapter(foodItem,requireContext())
         newRecyclerView.adapter = homeAdapter
 
+        // Show ProgressBar and hide RecyclerView initially
+        binding.progressBarHome.visibility = View.VISIBLE
+        newRecyclerView.visibility = View.GONE
+
         fetchFoodItems()
 
-        return binding.root
+        // Delay for 3-5 seconds if loading takes time
+        GlobalScope.launch(Dispatchers.Main) {
+            delay(3000)  // 3 seconds delay
+            binding.progressBarHome.visibility = View.GONE  // Hide the ProgressBar
+            newRecyclerView.visibility = View.VISIBLE  // Show the RecyclerView
+        }
+
+        return root
     }
     private fun fetchFoodItems() {
         firestore.collection("dishReview")

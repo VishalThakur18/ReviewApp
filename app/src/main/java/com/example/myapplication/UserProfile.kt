@@ -41,19 +41,6 @@ class UserProfile : AppCompatActivity() {
 
 
 
-//        // Load the video from the raw folder
-//        val videoView: VideoView = findViewById(R.id.videoViewFeature)
-//        val videoUri = Uri.parse("android.resource://" + packageName + "/" + R.raw.feature_promo)
-//        videoView.setVideoURI(videoUri)
-//
-//        // Set MediaController for video controls (play, pause, etc.)
-//        val mediaController = MediaController(this)
-//        mediaController.setAnchorView(videoView)
-//        videoView.setMediaController(mediaController)
-//
-//        // Start playing the video
-//        videoView.start()
-
         // Fetch and display user's profile picture and name
         val currentUser = mAuth.currentUser
         currentUser?.let { user ->

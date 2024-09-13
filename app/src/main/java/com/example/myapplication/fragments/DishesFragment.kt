@@ -1,17 +1,22 @@
 package com.example.myapplication.fragments
-import ReviewAdapter
+import com.example.myapplication.ReviewAdapter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.databinding.FragmentDishesBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import model.DishReview
 
 class DishesFragment : Fragment() {
@@ -28,6 +33,7 @@ class DishesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentDishesBinding.inflate(inflater, container, false)
+        val root =binding.root
         firestore = FirebaseFirestore.getInstance()
 
         reviewsRecyclerView = binding.dishesrecyclerView
@@ -35,9 +41,22 @@ class DishesFragment : Fragment() {
         reviewAdapter = ReviewAdapter(reviewList, requireContext())
         reviewsRecyclerView.adapter = reviewAdapter
 
+        // Show ProgressBar and hide RecyclerView initially
+        binding.progressBarDishes.visibility = View.VISIBLE
+        reviewsRecyclerView.visibility = View.GONE
+
         fetchReviews()
 
-        return binding.root
+        // Delay for 3-5 seconds if loading takes time
+        viewLifecycleOwner.lifecycleScope.launch {
+            delay(2000)  // 2 seconds delay
+            binding?.let {  // Ensure binding is not null
+                it.progressBarDishes.visibility = View.GONE  // Hide the ProgressBar
+                it.dishesrecyclerView.visibility = View.VISIBLE  // Show the RecyclerView
+            }
+        }
+
+        return root
     }
 
     private fun fetchReviews() {
