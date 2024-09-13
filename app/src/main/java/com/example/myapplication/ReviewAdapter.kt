@@ -131,9 +131,9 @@ class ReviewAdapter(
         holder.likeCount.visibility = View.VISIBLE
         holder.likeCount.text = likeCount.toString()
 
-        holder.itemView.postDelayed({
-            holder.likeCount.visibility = View.GONE
-        }, 2200)
+//        holder.itemView.postDelayed({
+//            holder.likeCount.visibility = View.GONE
+//        }, 2200)
     }
 
     override fun getItemCount() = reviewList.size
