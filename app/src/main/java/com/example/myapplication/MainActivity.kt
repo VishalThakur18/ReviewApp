@@ -4,11 +4,11 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import com.etebarian.meowbottomnavigation.MeowBottomNavigation
+import com.nafis.bottomnavigation.NafisBottomNavigation
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var bottomNavigation: MeowBottomNavigation
+    private lateinit var bottomNavigation: NafisBottomNavigation
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,9 +21,9 @@ class MainActivity : AppCompatActivity() {
 
         // Set up the MeowBottomNavigation
         bottomNavigation = findViewById(R.id.bottomNavigation)
-        bottomNavigation.add(MeowBottomNavigation.Model(1, R.drawable.home))
-        bottomNavigation.add(MeowBottomNavigation.Model(2, R.drawable.fav_icon))
-        bottomNavigation.add(MeowBottomNavigation.Model(3, R.drawable.setting))
+        bottomNavigation.add(NafisBottomNavigation.Model(1, R.drawable.home))
+        bottomNavigation.add(NafisBottomNavigation.Model(2, R.drawable.fav_icon))
+        bottomNavigation.add(NafisBottomNavigation.Model(3, R.drawable.setting))
 
         // Link the MeowBottomNavigation with the NavController
         bottomNavigation.setOnClickMenuListener {

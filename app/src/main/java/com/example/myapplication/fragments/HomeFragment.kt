@@ -32,6 +32,8 @@ import com.example.myapplication.HomeCards
 import com.example.myapplication.R
 import com.example.myapplication.UserProfile
 import com.example.myapplication.databinding.FragmentHomeBinding
+import com.foysaldev.cropper.CropImage
+import com.foysaldev.cropper.CropImageView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
@@ -39,8 +41,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
-import com.theartofdev.edmodo.cropper.CropImage
-import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay

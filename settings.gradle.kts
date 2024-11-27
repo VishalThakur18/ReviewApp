@@ -7,7 +7,7 @@ pluginManagement {
             url =uri("https://jcenter.bintray.com")
             maven { url = uri("https://www.jitpack.io" ) }
         }
-        jcenter()
+
     }
 }
 dependencyResolutionManagement {
@@ -15,11 +15,11 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        gradlePluginPortal()
         maven {
             url =uri("https://jcenter.bintray.com")
             maven { url = uri("https://www.jitpack.io" ) }
         }
-        jcenter()
     }
 }
 

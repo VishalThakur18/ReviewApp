@@ -22,7 +22,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- MeowBottomNavigation to show on every fragment -->
-    <com.etebarian.meowbottomnavigation.MeowBottomNavigation
+    <com.nafis.bottomnavigation.NafisBottomNavigation
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -285,7 +285,7 @@
                         android:layout_height="match_parent"
                         app:cardCornerRadius="30dp">
                         <ImageView
-                            android:layout_width="366dp"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="fitXY"
                             android:src="@drawable/imgoff2" />
@@ -489,29 +489,8 @@
                 android:layout_marginEnd="20dp"
                 android:gravity="center"
                 android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/realway_bold"
-                    android:text="Deal Of The Day"
-                    android:textColor="#282828"
-                    android:textSize="20sp" />
-
-                <View
-                    android:id="@+id/line_2"
-                    android:layout_width="match_parent"
-                    android:layout_height="1.5dp"
-                    android:layout_marginStart="5dp"
-                    android:background="#A0A0A0"/>
             </LinearLayout>
 
-<!--            <ImageView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="100dp"-->
-<!--                android:layout_margin="20dp"-->
-<!--                android:scaleType="fitXY"-->
-<!--                app:srcCompat="@drawable/graffiti_bg_offers" />-->
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
