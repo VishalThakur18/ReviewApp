@@ -10,7 +10,6 @@ class FeedFragmentAdapter(fa: FeedFragment):FragmentStateAdapter(fa) {
     override fun getItemCount(): Int {
         return 2
     }
-
     override fun createFragment(position: Int): Fragment {
         return when(position) {
             0 -> DishesFragment()
@@ -18,5 +17,4 @@ class FeedFragmentAdapter(fa: FeedFragment):FragmentStateAdapter(fa) {
             else -> DishesFragment()
         }
     }
-
 }

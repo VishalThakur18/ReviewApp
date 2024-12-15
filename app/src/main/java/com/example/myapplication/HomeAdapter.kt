@@ -6,10 +6,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.myapplication.HomeCards
+import model.HomeCards
 import com.example.myapplication.R
 import com.google.firebase.firestore.FirebaseFirestore
-import model.DishReview
 
 class HomeAdapter(
     private var cardList: List<HomeCards>,
@@ -22,6 +21,7 @@ class HomeAdapter(
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val cardTitle: TextView = itemView.findViewById(R.id.cardHomeTitle)
         val dishImage: ImageView = itemView.findViewById(R.id.dishHomeImage)
+        val restaurantName: TextView = itemView.findViewById(R.id.cardHomeRest)
     }
 
 
@@ -32,6 +32,7 @@ class HomeAdapter(
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = cardList[position]// Use setBackgroundColor to set background color
         holder.cardTitle.text = currentItem.dishName  // Use description instead of cardDescription
+        holder.restaurantName.text = currentItem.restaurantName
         Glide.with(holder.itemView.context)
             .load(currentItem.imageUrl)
             .into(holder.dishImage)

@@ -28,7 +28,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.myapplication.HomeCards
+import model.HomeCards
 import com.example.myapplication.R
 import com.example.myapplication.UserProfile
 import com.example.myapplication.databinding.FragmentHomeBinding
@@ -173,9 +173,14 @@ class HomeFragment : Fragment() {
                 foodItem.clear() // Clear the list before adding new data
                 for (document in documents) {
                     val review = document.toObject(HomeCards::class.java)
-                    // Check if the imageUrl field is not null or empty
-                    if (review.imageUrl.isNotEmpty()) {
-                        foodItem.add(review)
+                    if (review.imageUrl.isNotEmpty()) { // Check for non-empty image URL
+                        foodItem.add(
+                            HomeCards(
+                                dishName = review.dishName,
+                                imageUrl = review.imageUrl,
+                                restaurantName = review.restaurantName // Fetch restaurant name
+                            )
+                        )
                     }
                 }
                 homeAdapter.updateReviews(foodItem)
@@ -184,6 +189,7 @@ class HomeFragment : Fragment() {
                 Toast.makeText(requireContext(), "Error fetching reviews: ${exception.message}", Toast.LENGTH_SHORT).show()
             }
     }
+
 
 
     private fun showBottomSheet(context: Context) {
