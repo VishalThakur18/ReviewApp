@@ -50,6 +50,13 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.tasks.Task
+import android.location.Location
+import android.location.Geocoder
+import java.util.Locale
+
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
@@ -59,8 +66,10 @@ class HomeFragment : Fragment() {
     private lateinit var homeAdapter: HomeAdapter
     private lateinit var newRecyclerView: RecyclerView
     private var foodItem= mutableListOf<HomeCards>()
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private var userLocation: GeoPoint? = null
 
-    private val binding get() = _binding!!
+//    private val binding get() = _binding!!
 
     private val REQUEST_IMAGE_CAPTURE = 1
     private val REQUEST_IMAGE_GALLERY = 2
@@ -78,6 +87,8 @@ class HomeFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
         storage = FirebaseStorage.getInstance()
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+
         val binding=_binding?:return null
         val root=binding.root
         val currentUser = auth.currentUser
@@ -116,6 +127,12 @@ class HomeFragment : Fragment() {
         binding.offerZoneBtn.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_offersFragment)
         }
+
+        // Request location permissions
+        requestLocationPermissions()
+
+        // Fetch user's location
+        fetchUserLocation()
 
 
         requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
@@ -165,6 +182,57 @@ class HomeFragment : Fragment() {
 
         return root
     }
+
+    private fun requestLocationPermissions() {
+        val permissionFineLocation = Manifest.permission.ACCESS_FINE_LOCATION
+        val permissionCoarseLocation = Manifest.permission.ACCESS_COARSE_LOCATION
+
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                permissionFineLocation
+            ) != PackageManager.PERMISSION_GRANTED ||
+            ContextCompat.checkSelfPermission(
+                requireContext(),
+                permissionCoarseLocation
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestPermissions(
+                arrayOf(permissionFineLocation, permissionCoarseLocation),
+                LOCATION_PERMISSION_REQUEST_CODE
+            )
+        }
+    }
+    private fun fetchUserLocation() {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            fusedLocationClient.lastLocation.addOnCompleteListener { task: Task<Location> ->
+                if (task.isSuccessful && task.result != null) {
+                    val location = task.result
+                    userLocation = GeoPoint(location.latitude, location.longitude)
+
+                    // Convert coordinates to a human-readable address
+                    val geocoder = Geocoder(requireContext(), Locale.getDefault())
+                    val addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+                    if (!addresses.isNullOrEmpty()) {
+                        val address = addresses[0].getAddressLine(0)
+                        // Display the address in the TextView
+                        _binding?.currentLocation?.text = address
+                    } else {
+                        _binding?.currentLocation?.text = "Unable to fetch location"
+                    }
+                } else {
+                    _binding?.currentLocation?.text = "Location not available"
+                }
+            }
+        }
+    }
+
+
+
+
     private fun fetchFoodItems() {
         firestore.collection("dishReview")
             .orderBy("likes", Query.Direction.DESCENDING)
@@ -431,6 +499,26 @@ class HomeFragment : Fragment() {
                 Toast.makeText(requireContext(), "Failed to post review: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
+    companion object {
+        private const val LOCATION_PERMISSION_REQUEST_CODE = 1001
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE &&
+            grantResults.isNotEmpty() &&
+            grantResults[0] == PackageManager.PERMISSION_GRANTED
+        ) {
+            fetchUserLocation()
+        } else {
+            _binding?.currentLocation?.text = "Outer Space, Maybe?"
+        }
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

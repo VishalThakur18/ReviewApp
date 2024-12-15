@@ -119,6 +119,60 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:elevation="-2dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="10dp"
+                    android:orientation="vertical"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Current Posting Location:"
+                        android:textColor="@color/black"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/manropesemibold"
+                        />
+                    <TextView
+                        android:id="@+id/currentLocation"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/textfield_bg_home_plus"
+                        android:text="Room No - 807, Zakir A, Chandigarh University, Chandigarh"
+                        android:maxLines="1"
+                        android:textColor="#787676"
+                        android:layout_marginBottom="1dp"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/manropesemibold"
+                        android:paddingStart="10dp"
+                        android:gravity="center_vertical"
+                        android:textSize="12sp"
+                        android:paddingEnd="10dp"
+                        />
+
+                </LinearLayout>
+<!--                <ImageView-->
+<!--                    android:layout_gravity="bottom"-->
+<!--                    android:layout_width="25dp"-->
+<!--                    android:layout_marginEnd="10dp"-->
+<!--                    android:layout_height="25dp"/>-->
+                <ImageView
+                    android:layout_gravity="bottom"
+                    android:layout_width="25dp"
+                    android:padding="2dp"
+                    android:src="@drawable/info_circle"
+                    android:layout_height="25dp"/>
+            </LinearLayout>
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:background="@drawable/cards_on_profile"
                 android:layout_marginStart="20dp"
