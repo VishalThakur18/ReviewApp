@@ -31,8 +31,11 @@ class HomeAdapter(
     }
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = cardList[position]// Use setBackgroundColor to set background color
+
         holder.cardTitle.text = currentItem.dishName  // Use description instead of cardDescription
-        holder.restaurantName.text = currentItem.restaurantName
+
+        holder.restaurantName.text = "@${currentItem.restaurantName}"
+        holder.restaurantName.setTextColor(holder.itemView.context.getColor(R.color.link))
         Glide.with(holder.itemView.context)
             .load(currentItem.imageUrl)
             .into(holder.dishImage)

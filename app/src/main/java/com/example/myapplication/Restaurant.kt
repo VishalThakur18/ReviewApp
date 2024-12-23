@@ -1,5 +1,5 @@
 data class Restaurant(
     val name: String,
-    val votes: String,
+    var votes: Int,
     val imageResId: Int // Drawable resource ID for the image
 )

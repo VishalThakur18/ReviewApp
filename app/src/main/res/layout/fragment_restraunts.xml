@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:clipChildren="false"
@@ -174,6 +174,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/daysTextView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="02"
@@ -214,6 +215,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/hoursTextView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="11"
@@ -252,6 +254,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/minutesTextView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="43"
@@ -289,6 +292,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/secondsTextView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="22"
@@ -314,6 +318,7 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/restrauntRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="20dp" />

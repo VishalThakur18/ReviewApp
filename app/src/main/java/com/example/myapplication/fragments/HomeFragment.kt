@@ -55,6 +55,9 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.Task
 import android.location.Location
 import android.location.Geocoder
+import android.text.Editable
+import android.widget.SeekBar
+import com.google.android.material.textview.MaterialTextView
 import java.util.Locale
 
 class HomeFragment : Fragment() {
@@ -292,6 +295,25 @@ class HomeFragment : Fragment() {
         val restaurantNameEditText = bottomSheetView.findViewById<EditText>(R.id.restaurantName)
         val dishPriceEditText = bottomSheetView.findViewById<EditText>(R.id.dishPrice)
         val dishReviewEditText = bottomSheetView.findViewById<EditText>(R.id.dishReview)
+        //Ayush Extra
+        val dishRatingsText = bottomSheetView.findViewById<MaterialTextView>(R.id.ratings)
+        val toggleValue = bottomSheetView.findViewById<SeekBar>(R.id.ratingBar)
+
+        dishRatingsText.text = Editable.Factory.getInstance().newEditable(toggleValue.progress.toString())
+
+        toggleValue.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                dishRatingsText.text = Editable.Factory.getInstance().newEditable(toggleValue.progress.toString())
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+
+            }
+        })
 
         bottomSheetView.findViewById<View>(R.id.cancelBtn).setOnClickListener {
             bottomSheetView.startAnimation(slideOut)
