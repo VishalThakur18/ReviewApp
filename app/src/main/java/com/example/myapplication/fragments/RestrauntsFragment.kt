@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.RestaurantAdapter
+import java.util.Calendar
 import java.util.concurrent.TimeUnit
 
 class RestrauntsFragment : Fragment() {
@@ -25,7 +26,7 @@ class RestrauntsFragment : Fragment() {
     private lateinit var adapter: RestaurantAdapter
     private val restaurantList = mutableListOf<Restaurant>()
 
-    private val countdownTimeInMillis = 7 * 24 * 60 * 60 * 1000L // x days * counter
+    //private val countdownTimeInMillis = 7 * 24 * 60 * 60 * 1000L // x days * counter
 
 
     override fun onCreateView(
@@ -42,7 +43,8 @@ class RestrauntsFragment : Fragment() {
         secondsTextView = view.findViewById(R.id.secondsTextView)
 
         // Start the countdown timer
-        startCountdownTimer(countdownTimeInMillis)
+        val timeUntilNextSunday = calculateTimeUntilNextSundayMidnight()
+        startCountdownTimer(timeUntilNextSunday)
 
 
         // Initialize RecyclerView
@@ -57,6 +59,24 @@ class RestrauntsFragment : Fragment() {
         recyclerView.adapter = adapter
 
         return view
+    }
+
+    private fun calculateTimeUntilNextSundayMidnight(): Long {
+        val calendar = Calendar.getInstance()
+        val currentDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
+
+        // Calculate days until next Sunday
+        val daysUntilSunday = if (currentDayOfWeek == Calendar.SUNDAY) 0 else 8 - currentDayOfWeek
+
+        // Set calendar to next Sunday midnight
+        calendar.add(Calendar.DAY_OF_YEAR, daysUntilSunday)
+        calendar.set(Calendar.HOUR_OF_DAY, 23)
+        calendar.set(Calendar.MINUTE, 59)
+        calendar.set(Calendar.SECOND, 59)
+        calendar.set(Calendar.MILLISECOND, 999)
+
+        // Return the time difference in milliseconds
+        return calendar.timeInMillis - System.currentTimeMillis()
     }
 
     private fun loadRestaurants() {
@@ -84,10 +104,9 @@ class RestrauntsFragment : Fragment() {
             }
 
             override fun onFinish() {
-                daysTextView.text = "00"
-                hoursTextView.text = "00"
-                minutesTextView.text = "00"
-                secondsTextView.text = "00"
+                // Reset countdown to next Sunday midnight
+                val timeUntilNextSunday = calculateTimeUntilNextSundayMidnight()
+                startCountdownTimer(timeUntilNextSunday)
             }
         }.start()
     }
