@@ -21,7 +21,6 @@ class RestrauntsFragment : Fragment() {
     private lateinit var hoursTextView: TextView
     private lateinit var minutesTextView: TextView
     private lateinit var secondsTextView: TextView
-
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: RestaurantAdapter
     private val restaurantList = mutableListOf<Restaurant>()

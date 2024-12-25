@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
@@ -36,6 +37,7 @@ class ReviewAdapter(
         val likeBtn: ImageView = itemView.findViewById(R.id.like_btn)
         val likeCount: TextView = itemView.findViewById(R.id.like_count)
         val deleteBtn: ImageView = itemView.findViewById(R.id.deleteBtn)
+        val ratingTextView: TextView = itemView.findViewById(R.id.ratingTextView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewViewHolder {
@@ -52,7 +54,15 @@ class ReviewAdapter(
         holder.reviewText.text = review.reviewText
         holder.priceOnCard.text = "Rs.${review.price}"
         holder.likeCount.text = review.likes.toString()
+        holder.ratingTextView.text=review.rating.toString()
 
+        val backgroundColor = when (review.rating) {
+            1 -> R.drawable.redrectangle
+            2 -> R.drawable.orangerectangle
+            3 -> R.drawable.yellowrectangle
+            else -> R.drawable.greenrectangle
+        }
+        holder.itemView.findViewById<ConstraintLayout>(R.id.background_color).setBackgroundResource(backgroundColor)
         if (review.imageUrl.isNotEmpty()) {
             holder.foodImage.visibility = View.VISIBLE
             Glide.with(holder.itemView.context)
@@ -131,9 +141,6 @@ class ReviewAdapter(
         holder.likeCount.visibility = View.VISIBLE
         holder.likeCount.text = likeCount.toString()
 
-//        holder.itemView.postDelayed({
-//            holder.likeCount.visibility = View.GONE
-//        }, 2200)
     }
 
     override fun getItemCount() = reviewList.size

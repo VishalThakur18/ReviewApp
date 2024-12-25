@@ -4,4 +4,7 @@
     <color name="link">#1261FF</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#FF0000</color>
+    <color name="orange">#FFA500</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="green">#008000</color>
 </resources>

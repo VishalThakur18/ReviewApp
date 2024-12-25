@@ -506,8 +506,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:background="#7C7C7C">
+                android:paddingBottom="10dp">
 
                 <ProgressBar
                     android:id="@+id/progressBarHome"

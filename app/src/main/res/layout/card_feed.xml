@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_marginStart="10dp"
     android:layout_marginEnd="10dp"
@@ -205,7 +204,7 @@
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:background="@drawable/greenrectangle"
+                    android:id="@+id/background_color"
                     android:elevation="8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -213,7 +212,7 @@
                     android:layout_weight="1">
 
                     <ImageView
-                        android:id="@+id/ratng"
+                        android:id="@+id/rating"
                         android:layout_width="35dp"
                         android:layout_height="match_parent"
                         android:padding="10dp"
@@ -225,6 +224,7 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.0" />
                     <TextView
+                        android:id="@+id/ratingTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="4.5"
@@ -235,7 +235,7 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/ratng"
+                        app:layout_constraintStart_toEndOf="@id/rating"
                         android:gravity="center"
                         android:paddingEnd="10dp"/>
 
@@ -306,135 +306,6 @@
             </LinearLayout>
 
         </LinearLayout>
-
     </LinearLayout>
-
-<!--    <View-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="0.5dp"-->
-<!--        android:background="#A9A0A0"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent" />-->
-
 </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
-    <!--    <LinearLayout-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        android:orientation="vertical">-->
-
-    <!--        <androidx.cardview.widget.CardView-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:elevation="8dp"-->
-    <!--            app:cardCornerRadius="12dp"-->
-    <!--            android:layout_height="235dp">-->
-
-    <!--            <androidx.constraintlayout.widget.ConstraintLayout-->
-    <!--                android:layout_width="match_parent"-->
-    <!--                android:layout_height="match_parent">-->
-
-    <!--                <ImageView-->
-    <!--                    android:id="@+id/imageOnCard"-->
-    <!--                    android:layout_width="match_parent"-->
-    <!--                    android:layout_height="match_parent"-->
-    <!--                    app:srcCompat="@drawable/place_holder"-->
-    <!--                    tools:layout_editor_absoluteX="0dp"-->
-    <!--                    tools:layout_editor_absoluteY="0dp" />-->
-
-    <!--                <ImageButton-->
-    <!--                    android:id="@+id/location_img"-->
-    <!--                    android:layout_width="50dp"-->
-    <!--                    android:layout_height="50dp"-->
-    <!--                    android:layout_margin="22dp"-->
-    <!--                    android:background="@drawable/cards_on_profile"-->
-    <!--                    android:contentDescription="@string/app_name"-->
-    <!--                    android:elevation="8dp"-->
-    <!--                    android:src="@drawable/location_feedcard"-->
-    <!--                    app:layout_constraintEnd_toEndOf="parent"-->
-    <!--                    app:layout_constraintTop_toTopOf="parent" />-->
-
-    <!--                <TextView-->
-    <!--                    android:id="@+id/priceOnCard"-->
-    <!--                    android:layout_width="wrap_content"-->
-    <!--                    android:layout_height="wrap_content"-->
-    <!--                    android:textSize="25sp"-->
-    <!--                    android:fontFamily="@font/realway_bold"-->
-    <!--                    android:textColor="#FFC107"-->
-    <!--                    android:padding="5dp"-->
-    <!--                    android:background="@drawable/cards_on_profile"-->
-    <!--                    app:layout_constraintTop_toTopOf="parent"-->
-    <!--                    app:layout_constraintStart_toStartOf="parent"-->
-    <!--                    android:layout_margin="22dp"-->
-    <!--                    android:text="$ Price"-->
-    <!--                    android:gravity="center"/>-->
-    <!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
-    <!--        </androidx.cardview.widget.CardView>-->
-
-
-
-    <!--            <TextView-->
-    <!--                android:id="@+id/titleofCard"-->
-    <!--                android:layout_width="wrap_content"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:layout_marginStart="10dp"-->
-    <!--                android:layout_marginTop="10dp"-->
-    <!--                android:layout_marginBottom="10dp"-->
-    <!--                android:fontFamily="@font/realway_bold"-->
-    <!--                android:text="Title . . . . . . . "-->
-    <!--                android:textColor="@color/black"-->
-    <!--                android:textSize="32sp" />-->
-
-
-    <!--    </LinearLayout>-->
-
-
-<!--<LinearLayout-->
-<!--android:layout_width="match_parent"-->
-<!--android:layout_height="match_parent"-->
-<!--android:layout_marginTop="5dp"-->
-<!--android:orientation="horizontal">-->
-
-<!--<RatingBar-->
-<!--    android:layout_width="wrap_content"-->
-<!--    android:layout_height="wrap_content"-->
-<!--    android:id="@+id/rating"-->
-<!--    style="?android:attr/ratingBarStyleSmall"-->
-<!--    android:layout_gravity="center_vertical"-->
-<!--    android:isIndicator="true"-->
-<!--    android:numStars="5"-->
-<!--    android:progressTint="#FFC107"-->
-<!--    android:rating="4"-->
-<!--    android:stepSize="1"/>-->
-
-<!--<ImageView-->
-<!--    android:id="@+id/like_btn"-->
-<!--    android:layout_width="wrap_content"-->
-<!--    android:layout_height="match_parent"-->
-<!--    android:layout_marginStart="30dp"-->
-<!--    android:clickable="true"-->
-<!--    android:src="@drawable/heart_oncard"-->
-<!--    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />-->
-<!--<TextView-->
-<!--    android:id="@+id/like_count"-->
-<!--    android:layout_width="wrap_content"-->
-<!--    android:layout_height="match_parent"-->
-<!--    android:text="12K"-->
-<!--    android:textColor="@color/black"-->
-<!--    android:fontFamily="@font/manropesemibold"-->
-<!--    android:layout_gravity="center"-->
-<!--    android:textSize="12sp"/>-->
-
-<!--<TextView-->
-<!--    android:id="@+id/priceOnCard"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent"-->
-<!--    android:text="Rs.125"-->
-<!--    android:fontFamily="@font/manropesemibold"-->
-<!--    android:textColor="@color/black"-->
-<!--    android:textSize="12sp"-->
-<!--    android:textAlignment="viewEnd"/>-->
-
-<!--</LinearLayout>-->

@@ -295,7 +295,6 @@ class HomeFragment : Fragment() {
         val restaurantNameEditText = bottomSheetView.findViewById<EditText>(R.id.restaurantName)
         val dishPriceEditText = bottomSheetView.findViewById<EditText>(R.id.dishPrice)
         val dishReviewEditText = bottomSheetView.findViewById<EditText>(R.id.dishReview)
-        //Ayush Extra
         val dishRatingsText = bottomSheetView.findViewById<MaterialTextView>(R.id.ratings)
         val toggleValue = bottomSheetView.findViewById<SeekBar>(R.id.ratingBar)
 
@@ -324,10 +323,11 @@ class HomeFragment : Fragment() {
             val restaurantName = restaurantNameEditText.text.toString().trim()
             val dishPrice = dishPriceEditText.text.toString().toDoubleOrNull() ?: 0.0
             val dishReview = dishReviewEditText.text.toString().trim()
+            val dishRating = toggleValue.progress
 
             if (validateInputs(dishName, restaurantName, dishPrice, dishReview)) {
 
-                    postReview(dishName, restaurantName, dishPrice, dishReview, imageUrl)
+                    postReview(dishName, restaurantName, dishPrice, dishReview,dishRating, imageUrl)
                     bottomSheetDialog.dismiss() // Dismiss the dialog after posting
 
             }
@@ -489,6 +489,7 @@ class HomeFragment : Fragment() {
         restaurantName: String,
         dishPrice: Double,
         dishReview: String,
+        dishRating: Int,
         imageUrl: String
     ) {
         val currentUser = auth.currentUser
@@ -503,7 +504,7 @@ class HomeFragment : Fragment() {
             "restaurantName" to restaurantName,
             "price" to dishPrice,
             "reviewText" to dishReview,
-            "rating" to 0,
+            "rating" to dishRating,
             "imageUrl" to imageUrl,
             "location" to GeoPoint(0.0, 0.0),
             "userProfilePic" to userProfilePic,
