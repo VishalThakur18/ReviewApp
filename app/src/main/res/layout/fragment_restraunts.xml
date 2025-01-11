@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.RestrauntsFragment">
+    tools:context=".fragments.RestaurantsFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -49,10 +49,21 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/japanese_restraunt">
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/restaurantOfTheWeekImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/japanese_restraunt"/>
 
                         <androidx.cardview.widget.CardView
+                            android:id="@+id/cardView2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="20dp"
@@ -67,6 +78,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:orientation="horizontal">
+
                                 <ImageView
                                     android:id="@+id/profilePic"
                                     android:layout_width="40dp"
@@ -80,60 +92,63 @@
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="1"
                                     android:layout_margin="12dp"
+                                    android:layout_weight="1"
                                     android:orientation="vertical">
 
                                     <TextView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="Ramen@"
-                                        android:textSize="12sp"
-                                        android:maxLines="1"
-                                        android:textColor="@color/black"
                                         android:fontFamily="@font/manropesemibold"
-                                        />
+                                        android:maxLines="1"
+                                        android:text="Ramen@"
+                                        android:textColor="@color/black"
+                                        android:textSize="12sp" />
+
                                     <TextView
+                                        android:id="@+id/restaurantOfTheWeekName"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:textColor="@color/black"
-                                        android:text="Albinos Kitchen"
-                                        android:maxLines="1"
                                         android:fontFamily="@font/manropesemibold"
-                                        android:textSize="14sp"/>
+                                        android:maxLines="1"
+                                        android:text="Albinos Kitchen"
+                                        android:textColor="@color/black"
+                                        android:textSize="14sp" />
                                 </LinearLayout>
+
                                 <View
                                     android:layout_width="0.8dp"
                                     android:layout_height="match_parent"
-                                    android:background="#ACACAC"
-                                    android:layout_marginTop="8dp"
                                     android:layout_marginStart="2dp"
+                                    android:layout_marginTop="8dp"
                                     android:layout_marginEnd="10dp"
-                                    android:layout_marginBottom="8dp"/>
+                                    android:layout_marginBottom="8dp"
+                                    android:background="#ACACAC" />
+
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="2"
                                     android:layout_marginTop="12dp"
                                     android:layout_marginEnd="12dp"
                                     android:layout_marginBottom="12dp"
+                                    android:layout_weight="2"
                                     android:orientation="vertical">
 
                                     <TextView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="431 Votes"
-                                        android:maxLines="1"
-                                        android:textColor="@color/black"
                                         android:fontFamily="@font/manropesemibold"
-                                        android:textSize="10sp"
-                                        />
+                                        android:maxLines="1"
+                                        android:text="431 Votes"
+                                        android:textColor="@color/black"
+                                        android:textSize="10sp" />
+
                                     <ImageView
                                         android:layout_width="15dp"
                                         android:layout_height="15dp"
                                         android:layout_marginTop="5dp"
                                         android:padding="2dp"
-                                        android:src="@drawable/location_feedcard"/>
+                                        android:src="@drawable/location_feedcard" />
 
 
                                 </LinearLayout>
@@ -336,6 +351,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
+        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />

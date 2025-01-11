@@ -79,31 +79,6 @@
                     android:padding="10dp"/>
 
             </androidx.cardview.widget.CardView>
-
         </LinearLayout>
-
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_weight="1"-->
-<!--            android:gravity="center"-->
-<!--            android:orientation="vertical">-->
-
-<!--            <androidx.cardview.widget.CardView-->
-<!--                android:layout_width="50dp"-->
-<!--                android:layout_height="50dp"-->
-<!--                android:elevation="8dp"-->
-<!--                app:cardCornerRadius="90dp">-->
-
-<!--                <ImageView-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="match_parent"-->
-<!--                    android:background="@drawable/red_background_rounded"-->
-<!--                    android:src="@drawable/downvote_svgrepo_com"-->
-<!--                    android:padding="14dp"/>-->
-
-<!--            </androidx.cardview.widget.CardView>-->
-
-<!--        </LinearLayout>-->
     </LinearLayout>
 </LinearLayout>

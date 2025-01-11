@@ -91,7 +91,6 @@ class HomeFragment : Fragment() {
         firestore = FirebaseFirestore.getInstance()
         storage = FirebaseStorage.getInstance()
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
-
         val binding=_binding?:return null
         val root=binding.root
         val currentUser = auth.currentUser
@@ -182,6 +181,8 @@ class HomeFragment : Fragment() {
             binding.progressBarHome.visibility = View.GONE  // Hide the ProgressBar
             newRecyclerView.visibility = View.VISIBLE  // Show the RecyclerView
         }
+
+
 
         return root
     }

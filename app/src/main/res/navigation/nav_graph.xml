@@ -31,7 +31,7 @@
     </fragment>
     <fragment
         android:id="@+id/restrauntsFragment"
-        android:name="com.example.myapplication.fragments.RestrauntsFragment"
+        android:name="com.example.myapplication.fragments.RestaurantsFragment"
         android:label="fragment_restraunts"
         tools:layout="@layout/fragment_restraunts" >
         <action

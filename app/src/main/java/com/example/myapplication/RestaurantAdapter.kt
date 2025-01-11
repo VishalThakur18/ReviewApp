@@ -1,6 +1,5 @@
 package com.example.myapplication
 
-import Restaurant
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,14 +7,16 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import model.Restaurant
 
 class RestaurantAdapter(
-    private val restaurants: List<Restaurant>
+    private val restaurants: List<Restaurant>,
+    private val onVoteClick: (Restaurant) -> Unit // Callback passes the entire Restaurant object
 ) : RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.card_restaurant_voting, parent, false)
-
         return RestaurantViewHolder(view)
     }
 
@@ -25,12 +26,16 @@ class RestaurantAdapter(
         // Bind data to views
         holder.restaurantName.text = restaurant.name
         holder.voteCount.text = "${restaurant.votes} Votes"
-        holder.restaurantImage.setImageResource(restaurant.imageResId)
+
+
+        // Load the restaurant image using Glide
+        Glide.with(holder.itemView.context)
+            .load(restaurant.imageUrl)
+            .into(holder.restaurantImage)
 
         // Handle vote-up button click
         holder.voteUpButton.setOnClickListener {
-            restaurant.votes++
-            holder.voteCount.text = "${restaurant.votes} Votes" // Update UI
+            onVoteClick(restaurant) // Pass the entire Restaurant object
         }
     }
 
@@ -44,3 +49,4 @@ class RestaurantAdapter(
         val voteUpButton: CardView = itemView.findViewById(R.id.voteUpButton)
     }
 }
+

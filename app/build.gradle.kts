@@ -57,7 +57,7 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
     //Signup with google
-    implementation("com.google.android.gms:play-services-auth:21.2.0")
+    implementation("com.google.android.gms:play-services-auth:21.3.0")
 
     //lottie animation
     implementation ("com.airbnb.android:lottie:6.3.0")

@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.myapplication.fragments.DishesFragment
 import com.example.myapplication.fragments.FeedFragment
-import com.example.myapplication.fragments.RestrauntsFragment
+import com.example.myapplication.fragments.RestaurantsFragment
 
 class FeedFragmentAdapter(fa: FeedFragment):FragmentStateAdapter(fa) {
     override fun getItemCount(): Int {
@@ -13,7 +13,7 @@ class FeedFragmentAdapter(fa: FeedFragment):FragmentStateAdapter(fa) {
     override fun createFragment(position: Int): Fragment {
         return when(position) {
             0 -> DishesFragment()
-            1 -> RestrauntsFragment()
+            1 -> RestaurantsFragment()
             else -> DishesFragment()
         }
     }
