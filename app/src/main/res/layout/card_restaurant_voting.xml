@@ -4,9 +4,9 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
-    android:background="@drawable/cards_on_profile_3"
+    android:background="@drawable/restaurant_list_bg"
     android:layout_margin="10dp"
-    android:elevation="5dp"
+    android:elevation="3dp"
     android:padding="12dp">
     <androidx.cardview.widget.CardView
         android:layout_width="60dp"

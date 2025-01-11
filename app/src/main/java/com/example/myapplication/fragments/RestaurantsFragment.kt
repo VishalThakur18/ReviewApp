@@ -199,23 +199,54 @@ class RestaurantsFragment : Fragment() {
         return calendar.timeInMillis
     }
 
-    private fun startCountdownTimer(timeInMillis: Long) {
-        object : CountDownTimer(timeInMillis, 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-                val days = TimeUnit.MILLISECONDS.toDays(millisUntilFinished)
-                val hours = TimeUnit.MILLISECONDS.toHours(millisUntilFinished) % 24
-                val minutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) % 60
-                val seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) % 60
-                daysTextView.text = String.format("%02d", days)
-                hoursTextView.text = String.format("%02d", hours)
-                minutesTextView.text = String.format("%02d", minutes)
-                secondsTextView.text = String.format("%02d", seconds)
-            }
+private fun startCountdownTimer(timeInMillis: Long) {
+    object : CountDownTimer(timeInMillis, 1000) {
+        override fun onTick(millisUntilFinished: Long) {
+            val days = TimeUnit.MILLISECONDS.toDays(millisUntilFinished)
+            val hours = TimeUnit.MILLISECONDS.toHours(millisUntilFinished) % 24
+            val minutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) % 60
+            val seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) % 60
+            daysTextView.text = String.format("%02d", days)
+            hoursTextView.text = String.format("%02d", hours)
+            minutesTextView.text = String.format("%02d", minutes)
+            secondsTextView.text = String.format("%02d", seconds)
+        }
 
-            override fun onFinish() {
-                val timeUntilNextSunday = calculateTimeUntilNextSundayMidnight()
-                startCountdownTimer(timeUntilNextSunday)
+        override fun onFinish() {
+            // Reset all restaurant votes to 0
+            resetRestaurantVotes()
+
+            // Restart the countdown timer for the next week
+            val timeUntilNextSunday = calculateTimeUntilNextSundayMidnight()
+            startCountdownTimer(timeUntilNextSunday)
+        }
+    }.start()
+}
+
+    private fun resetRestaurantVotes() {
+        val batch = db.batch()
+
+        // Fetch all restaurants and update their vote counts
+        db.collection("restaurants")
+            .get()
+            .addOnSuccessListener { snapshot ->
+                for (document in snapshot.documents) {
+                    val restaurantRef = db.collection("restaurants").document(document.id)
+                    batch.update(restaurantRef, "votes", 0) // Reset the votes to 0
+                }
+
+                // Commit the batch operation to reset votes
+                batch.commit()
+                    .addOnSuccessListener {
+                        Log.d("RestaurantsFragment", "Votes have been reset successfully.")
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e("RestaurantsFragment", "Error resetting votes: $e")
+                    }
             }
-        }.start()
+            .addOnFailureListener { e ->
+                Log.e("RestaurantsFragment", "Error fetching restaurants: $e")
+            }
     }
+
 }
