@@ -94,23 +94,45 @@ class RestaurantsFragment : Fragment() {
         return calendar.timeInMillis - System.currentTimeMillis()
     }
 
+//    private fun loadRestaurants() {
+//        db.collection("restaurants")
+//            .orderBy("votes", Query.Direction.DESCENDING) // Order by votes in descending order
+//            .get()
+//            .addOnSuccessListener { snapshot ->
+//                restaurantList.clear() // Clear the existing list
+//                for (document in snapshot.documents) {
+//                    val restaurant = document.toObject(Restaurant::class.java)?.apply {
+//                        id = document.id // Set the auto-generated document ID
+//                    }
+//                    restaurant?.let { restaurantList.add(it) }
+//                }
+//                adapter.notifyDataSetChanged()
+//            }
+//            .addOnFailureListener {
+//                Toast.makeText(context, "Failed to load restaurants.", Toast.LENGTH_SHORT).show()
+//            }
+//    }
     private fun loadRestaurants() {
         db.collection("restaurants")
-            .get()
-            .addOnSuccessListener { snapshot ->
-                restaurantList.clear()
-                for (document in snapshot.documents) {
-                    val restaurant = document.toObject(Restaurant::class.java)?.apply {
-                        id = document.id // Set the auto-generated document ID
-                    }
-                    restaurant?.let { restaurantList.add(it) }
+            .orderBy("votes", Query.Direction.DESCENDING)
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    Toast.makeText(context, "Failed to load restaurants.", Toast.LENGTH_SHORT).show()
+                    return@addSnapshotListener
                 }
-                adapter.notifyDataSetChanged()
-            }
-            .addOnFailureListener {
-                Toast.makeText(context, "Failed to load restaurants.", Toast.LENGTH_SHORT).show()
+                if (snapshot != null && !snapshot.isEmpty) {
+                    restaurantList.clear()
+                    for (document in snapshot.documents) {
+                        val restaurant = document.toObject(Restaurant::class.java)?.apply {
+                            id = document.id
+                        }
+                        restaurant?.let { restaurantList.add(it) }
+                    }
+                    adapter.notifyDataSetChanged()
+                }
             }
     }
+
 
     private fun fetchRestaurantOfTheWeek() {
         db.collection("restaurants")
@@ -124,19 +146,49 @@ class RestaurantsFragment : Fragment() {
                     Glide.with(this)
                         .load(restaurant?.imageUrl)
                         .into(restaurantOfTheWeekImage)
+
+                    // Fetch and display the number of votes
+                    val votesCount = restaurant?.votes ?: 0
+                    val votesOnRestOfWeek = view?.findViewById<TextView>(R.id.votesOnRestOfWeek)
+                    votesOnRestOfWeek?.text = "$votesCount Votes"
                 }
+            }
+            .addOnFailureListener { e->
+                Log.e("FetchRestaurantOfTheWeek", "Error fetching restaurant of the week: $e")
             }
     }
 
     private fun showVoteConfirmationDialog(restaurant: Restaurant) {
-        AlertDialog.Builder(context)
-            .setTitle("Confirm Vote")
-            .setMessage("Vote for ${restaurant.name}?")
-            .setPositiveButton("Confirm") { _, _ ->
-                handleVote(restaurant)
-            }
-            .setNegativeButton("Cancel", null)
-            .show()
+        val dialogView = LayoutInflater.from(context).inflate(R.layout.restraunt_voting_dialog,null)
+        val dialogBuilder = AlertDialog.Builder(context)
+            .setView(dialogView)
+            .setCancelable(false)
+        // Get references to the views in the dialog layout
+        val restaurantNameTextView = dialogView.findViewById<TextView>(R.id.nameRest)
+        val restaurantImageView = dialogView.findViewById<ImageView>(R.id.restaurantImage)
+        val confirmButton = dialogView.findViewById<TextView>(R.id.confirmBtn)
+        val cancelButton = dialogView.findViewById<TextView>(R.id.cancelBtn)
+
+        // Set the restaurant details dynamically
+        restaurantNameTextView.text = "Vote for \"${restaurant.name}\", You Sure?"
+        Glide.with(this)
+            .load(restaurant.imageUrl) // Use Glide to load the image
+            .into(restaurantImageView)
+
+        // Create and show the dialog
+        val dialog = dialogBuilder.create()
+
+        // Handle button clicks
+        confirmButton.setOnClickListener {
+            handleVote(restaurant) // Submit the vote
+            dialog.dismiss() // Close the dialog
+        }
+
+        cancelButton.setOnClickListener {
+            dialog.dismiss() // Close the dialog without action
+        }
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.show()
     }
 
     private fun handleVote(restaurant: Restaurant) {
@@ -165,10 +217,26 @@ class RestaurantsFragment : Fragment() {
 
                     db.collection("votes").add(voteData)
                         .addOnSuccessListener {
+                            // Update the vote count for the restaurant
                             db.collection("restaurants").document(restaurant.id)
                                 .update("votes", FieldValue.increment(1))
                                 .addOnSuccessListener {
                                     Toast.makeText(context, "Vote submitted successfully!", Toast.LENGTH_SHORT).show()
+
+                                    // Add a listener to track the vote count in real-time
+                                    db.collection("restaurants").document(restaurant.id)
+                                        .addSnapshotListener { snapshot, error ->
+                                            if (error != null) {
+                                                Log.e("HandleVote", "Error fetching vote count: $error")
+                                                return@addSnapshotListener
+                                            }
+                                            snapshot?.let {
+                                                val updatedVotes = it.getLong("votes")?.toInt() ?: 0
+                                                updateVoteCountUI(restaurant, updatedVotes) // Update the UI for this restaurant
+                                            }
+                                        }
+
+                                    // Fetch the updated Restaurant of the Week
                                     fetchRestaurantOfTheWeek()
                                 }
                                 .addOnFailureListener { e ->
@@ -187,6 +255,17 @@ class RestaurantsFragment : Fragment() {
                 Log.e("HandleVote", "Error fetching votes: $e")
             }
     }
+
+
+    private fun updateVoteCountUI(restaurant: Restaurant, newVoteCount: Int) {
+        // Find the index of the restaurant in the list
+        val index = restaurantList.indexOfFirst { it.id == restaurant.id }
+        if (index != -1) {
+            // Update the vote count in the adapter
+            adapter.updateVoteCount(index, newVoteCount)
+        }
+    }
+
 
 
     private fun getStartOfCurrentWeekTimestamp(): Long {

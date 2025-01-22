@@ -60,6 +60,14 @@ import android.widget.SeekBar
 import com.google.android.material.textview.MaterialTextView
 import java.util.Locale
 
+import android.os.Handler
+import android.os.Looper
+import android.widget.Button
+
+import android.animation.Animator
+import android.animation.ObjectAnimator
+
+
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
@@ -71,6 +79,10 @@ class HomeFragment : Fragment() {
     private var foodItem= mutableListOf<HomeCards>()
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var userLocation: GeoPoint? = null
+
+    private lateinit var refreshButton: Button
+    private val handler = Handler(Looper.getMainLooper())
+    private val refreshInterval: Long = 5 * 60 * 1000 // 5 minutes in milliseconds
 
 //    private val binding get() = _binding!!
 
@@ -94,6 +106,36 @@ class HomeFragment : Fragment() {
         val binding=_binding?:return null
         val root=binding.root
         val currentUser = auth.currentUser
+
+        // Start periodic location updates
+        startLocationRefresh()
+
+        val refreshLocation = binding.refreshLocation
+        refreshLocation.setOnClickListener {
+            fetchCurrentLocation()
+            val rotateAnimation = ObjectAnimator.ofFloat(refreshLocation, "rotation", 0f,180f)
+            rotateAnimation.duration = 1000 // Duration of speeding
+
+            rotateAnimation.addListener(object  : Animator.AnimatorListener {
+                override fun onAnimationStart(animation: Animator) {
+                    binding.currentLocation.visibility = View.GONE
+                }
+
+                override fun onAnimationEnd(animation: Animator) {
+                    binding.currentLocation.visibility = View.VISIBLE
+                    fetchCurrentLocation()
+                }
+
+                override fun onAnimationCancel(animation: Animator) {
+
+                }
+
+                override fun onAnimationRepeat(animation: Animator) {
+
+                }
+            })
+            rotateAnimation.start()
+        }
 
         val displayName = currentUser?.displayName ?: ""
         val firstName = displayName.split(" ").firstOrNull() ?: ""
@@ -131,10 +173,10 @@ class HomeFragment : Fragment() {
         }
 
         // Request location permissions
-        requestLocationPermissions()
+        //requestLocationPermissions()
 
         // Fetch user's location
-        fetchUserLocation()
+        //fetchUserLocation()
 
 
         requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
@@ -185,6 +227,20 @@ class HomeFragment : Fragment() {
 
 
         return root
+    }
+
+    private fun fetchCurrentLocation() {
+        requestLocationPermissions()
+        fetchUserLocation()
+    }
+
+    private fun startLocationRefresh() {
+        handler.post(object : Runnable {
+            override fun run() {
+                fetchCurrentLocation()
+                handler.postDelayed(this, refreshInterval)
+            }
+        })
     }
 
     private fun requestLocationPermissions() {
@@ -546,6 +602,7 @@ class HomeFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        handler.removeCallbacksAndMessages(null)
         _binding = null
     }
 }

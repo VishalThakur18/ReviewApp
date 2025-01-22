@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
@@ -11,7 +12,7 @@ import com.bumptech.glide.Glide
 import model.Restaurant
 
 class RestaurantAdapter(
-    private val restaurants: List<Restaurant>,
+    private val restaurants: List<Restaurant>,// MutableList to allow changes
     private val onVoteClick: (Restaurant) -> Unit // Callback passes the entire Restaurant object
 ) : RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder>() {
 
@@ -33,6 +34,14 @@ class RestaurantAdapter(
             .load(restaurant.imageUrl)
             .into(holder.restaurantImage)
 
+        // Set background color based on ranking (top 3)
+        when (position) {
+            0 -> holder.cardView.setBackgroundResource(R.drawable.gold_encircle_bg) // Gold outline for first place
+            1 -> holder.cardView.setBackgroundResource(R.drawable.silver_encircle_bg) // Silver outline for second place
+            //2 -> holder.cardView.setBackgroundResource(R.drawable.bronze_outline) // Bronze outline for third place
+            //else -> holder.cardView.setBackgroundResource(android.R.color/white) // Default background for others
+        }
+
         // Handle vote-up button click
         holder.voteUpButton.setOnClickListener {
             onVoteClick(restaurant) // Pass the entire Restaurant object
@@ -40,6 +49,11 @@ class RestaurantAdapter(
     }
 
     override fun getItemCount(): Int = restaurants.size
+    // Function to update the vote count for a specific restaurant
+    fun updateVoteCount(position: Int, newVoteCount: Int) {
+        restaurants[position].votes = newVoteCount // Update the vote count
+        notifyItemChanged(position) // Notify the adapter to refresh the specific item
+    }
 
     // ViewHolder for Restaurant item
     class RestaurantViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -47,6 +61,7 @@ class RestaurantAdapter(
         val voteCount: TextView = itemView.findViewById(R.id.voteCount)
         val restaurantImage: ImageView = itemView.findViewById(R.id.restaurantImage)
         val voteUpButton: CardView = itemView.findViewById(R.id.voteUpButton)
+        val cardView: LinearLayout = itemView.findViewById(R.id.cardView) // The main container for the restaurant item
     }
 }
 

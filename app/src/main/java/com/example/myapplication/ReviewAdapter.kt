@@ -57,6 +57,7 @@ class ReviewAdapter(
         holder.ratingTextView.text=review.rating.toString()
 
         val backgroundColor = when (review.rating) {
+            0 -> R.drawable.redrectangle
             1 -> R.drawable.redrectangle
             2 -> R.drawable.orangerectangle
             3 -> R.drawable.yellowrectangle
@@ -176,17 +177,33 @@ class ReviewAdapter(
     }
 
     private fun showDeleteConfirmationDialog(reviewId: String, position: Int) {
-        AlertDialog.Builder(context)
-            .setTitle("Delete Review")
-            .setMessage("Do you really want to delete this review?")
-            .setPositiveButton("Delete") { dialog, _ ->
-                handleDeleteReview(reviewId)
-                dialog.dismiss()
-            }
-            .setNegativeButton("Cancel") { dialog, _ ->
-                dialog.dismiss()
-            }
+        // Inflate the custom dialog layout
+        val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_delete_review, null)
+
+        // Create and configure the AlertDialog
+        val alertDialog = AlertDialog.Builder(context)
+            .setView(dialogView)
+            .setCancelable(false)
             .create()
-            .show()
+
+        // Find the dialog components
+        val deleteButton = dialogView.findViewById<androidx.appcompat.widget.AppCompatButton>(R.id.confirmDeleteButton)
+        val cancelButton = dialogView.findViewById<androidx.appcompat.widget.AppCompatButton>(R.id.cancelDeleteButton)
+
+        // Set the Delete button click listener
+        deleteButton.setOnClickListener {
+            handleDeleteReview(reviewId)
+            alertDialog.dismiss()
+        }
+        alertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        // Set the Cancel button click listener
+        cancelButton.setOnClickListener {
+            alertDialog.dismiss()
+        }
+
+        // Show the dialog
+        alertDialog.show()
     }
+
 }

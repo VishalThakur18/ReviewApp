@@ -121,21 +121,119 @@
             android:layout_marginTop="15dp"
             android:fontFamily="@font/realway_bold"
             android:text="Hot Offers"
+
             android:textColor="@color/black"
             android:textSize="25sp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="425dp"
+
+            android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
             android:background="@drawable/cards_on_profile_2">
 
+            <LinearLayout
+                android:id="@+id/offerBackend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:background="@drawable/cards_on_profile"
+                android:padding="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Image:-"
+                        android:textSize="12sp"
+                        android:layout_weight="1"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/manropesemibold"/>
+
+                    <TextView
+                        android:id="@+id/imageHere"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Click here"
+                        android:textSize="12sp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/manropesemibold"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Text:-"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/manropesemibold"/>
+                    <EditText
+                        android:id="@+id/textHere"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:background="@drawable/textfield_bg_home_plus"
+                        android:fontFamily="@font/manropesemibold"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                         />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Title:-"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/manropesemibold"/>
+                    <EditText
+                        android:id="@+id/titleHere"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:background="@drawable/textfield_bg_home_plus"
+                        android:fontFamily="@font/manropesemibold"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        />
+
+                </LinearLayout>
+            </LinearLayout>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerReview"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"

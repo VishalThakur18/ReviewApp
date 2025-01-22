@@ -11,20 +11,20 @@
         android:strokeLineJoin="round"
         android:strokeWidth="2.5"
         android:fillColor="#00000000"
-        android:strokeColor="#000000"
+        android:strokeColor="#757575"
         android:strokeLineCap="round"/>
     <path
         android:pathData="M12,8h0.01v0.01h-0.01z"
         android:strokeLineJoin="round"
         android:strokeWidth="3.75"
         android:fillColor="#00000000"
-        android:strokeColor="#000000"/>
+        android:strokeColor="#757575"/>
     <path
         android:pathData="M12,12V16"
         android:strokeLineJoin="round"
         android:strokeWidth="2.5"
         android:fillColor="#00000000"
-        android:strokeColor="#000000"
+        android:strokeColor="#757575"
         android:strokeLineCap="round"/>
   </group>
 </vector>

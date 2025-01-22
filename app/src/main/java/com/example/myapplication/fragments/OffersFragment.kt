@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -20,6 +21,10 @@ import com.example.myapplication.ReviewCards
 import com.example.myapplication.ReviewPageAdapter
 import com.example.myapplication.databinding.OffersFragmentBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -30,9 +35,12 @@ class OffersFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var newRecyclerView: RecyclerView
     private lateinit var cardList: ArrayList<ReviewCards>
+    private lateinit var offerBackend: LinearLayout
     private val scratchPrefKey = "SCRATCH_PREF_KEY"
     private val storageReference = FirebaseStorage.getInstance().reference
     private val auth = FirebaseAuth.getInstance()
+    private val databaseRef = FirebaseDatabase.getInstance().getReference("offers")
+    private val allowedEmail = "pramod.k.201555@gmail.com"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,12 +53,24 @@ class OffersFragment : Fragment() {
             findNavController().navigate(R.id.action_offersFragment_to_homeFragment)
         }
 
+        offerBackend = view.findViewById(R.id.offerBackend)
         newRecyclerView = view.findViewById(R.id.recyclerReview)
         newRecyclerView.layoutManager = LinearLayoutManager(context)
         newRecyclerView.setHasFixedSize(true)
 
         cardList = arrayListOf()
-        populateCardList()
+//        populateCardList()
+        // Adjust visibility based on the logged-in user's email
+        val currentUser = auth.currentUser
+        if (currentUser?.email == allowedEmail) {
+            offerBackend.visibility = View.VISIBLE
+            newRecyclerView.visibility = View.GONE
+        } else {
+            offerBackend.visibility = View.GONE
+            newRecyclerView.visibility = View.VISIBLE
+        }
+        // Fetch offers from Firebase
+        fetchOffers()
 
         newRecyclerView.adapter = ReviewPageAdapter(cardList)
 
@@ -110,6 +130,23 @@ class OffersFragment : Fragment() {
         }
 
         return view
+    }
+
+    private fun fetchOffers() {
+        databaseRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                cardList.clear()
+                for (offerSnapshot in snapshot.children) {
+                    val offer = offerSnapshot.getValue(ReviewCards::class.java)
+                    offer?.let { cardList.add(it) }
+                }
+                newRecyclerView.adapter = ReviewPageAdapter(cardList)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(requireContext(), "Failed to fetch offers: ${error.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     private fun populateCardList() {

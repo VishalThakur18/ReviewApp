@@ -13,35 +13,27 @@
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_marginTop="20dp"
             android:fontFamily="@font/manropesemibold"
             android:text="Feed"
             android:textColor="@color/black"
-            android:textSize="30sp"
+            android:textSize="26sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <View
-            android:id="@+id/line_1"
-            android:layout_width="match_parent"
-            android:layout_height="1.5dp"
-            android:layout_margin="25dp"
-            android:background="#AAA1A1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintTop_toBottomOf="@id/textView6"
-            app:layout_constraintStart_toStartOf="parent" />
+
 
     <com.google.android.material.tabs.TabLayout
-
         android:id="@+id/tablout"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_margin="22dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/line_1"
+        app:layout_constraintTop_toBottomOf="@id/textView6"
         app:tabIndicator="@drawable/selected_tabs_feed"
         app:tabIndicatorAnimationMode="elastic"
         app:tabIndicatorColor="@null"
@@ -59,7 +51,7 @@
         android:id="@+id/pager_feed"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -68,3 +60,15 @@
         app:layout_constraintVertical_bias="1.0" />
     <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <!--        <View-->
+    <!--            android:id="@+id/line_1"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="1.5dp"-->
+    <!--            android:layout_margin="25dp"-->
+    <!--            android:background="#AAA1A1"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintHorizontal_bias="0.5"-->
+    <!--            app:layout_constraintTop_toBottomOf="@id/textView6"-->
+    <!--            app:layout_constraintStart_toStartOf="parent" />-->

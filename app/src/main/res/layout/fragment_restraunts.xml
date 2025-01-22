@@ -67,7 +67,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="20dp"
-                            app:cardCornerRadius="12dp"
+                            app:cardCornerRadius="36dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.5"
@@ -76,7 +76,7 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@color/primary"
+                                android:background="@color/white"
                                 android:layout_gravity="center"
                                 android:orientation="horizontal">
 
@@ -136,6 +136,7 @@
                                     android:orientation="vertical">
 
                                     <TextView
+                                        android:id="@+id/votesOnRestOfWeek"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:fontFamily="@font/manropesemibold"
@@ -172,6 +173,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textColor="@color/black"
                         android:fontFamily="@font/manropesemibold"
                         android:text="Next Iteration in - "
                         android:textSize="12sp" />
@@ -183,6 +185,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:orientation="horizontal">
 
 
@@ -191,7 +194,7 @@
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_marginEnd="10dp"
-                        android:backgroundTint="#F9EDDF"
+                        android:backgroundTint="#B0AEF1"
                         android:layout_height="wrap_content">
 
                         <LinearLayout
@@ -207,8 +210,7 @@
                                 android:text="02"
                                 android:textAlignment="center"
                                 android:textSize="18sp"
-
-                                android:textColor="@color/black"
+                                android:textColor="@color/white"
                                 android:fontFamily="@font/manropebold"
                                 />
                             <TextView
@@ -218,7 +220,7 @@
                                 android:textAlignment="center"
                                 android:layout_marginBottom="5dp"
                                 android:textSize="12sp"
-                                android:textColor="#5C5C5C"
+                                android:textColor="@color/white"
                                 android:fontFamily="@font/manropebold"
                                 />
 
@@ -349,9 +351,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/restrauntRecyclerView"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginTop="10dp"
         android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

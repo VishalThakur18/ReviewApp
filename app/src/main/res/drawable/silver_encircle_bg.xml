@@ -1,0 +1,6 @@
+<!-- res/drawable/silver_outline.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <stroke android:color="#C0C0C0" android:width="2dp"/>
+    <corners android:radius="12dp"/>
+    <solid android:color="@color/white"/>
+</shape>
