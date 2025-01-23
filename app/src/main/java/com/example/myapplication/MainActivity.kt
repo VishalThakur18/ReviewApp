@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         bottomNavigation = findViewById(R.id.bottomNavigation)
         bottomNavigation.add(NafisBottomNavigation.Model(1, R.drawable.home))
         bottomNavigation.add(NafisBottomNavigation.Model(2, R.drawable.fav_icon))
-        bottomNavigation.add(NafisBottomNavigation.Model(3, R.drawable.setting))
+        bottomNavigation.add(NafisBottomNavigation.Model(3, R.drawable.fire_profile))
 
         // Link the MeowBottomNavigation with the NavController
         bottomNavigation.setOnClickMenuListener {

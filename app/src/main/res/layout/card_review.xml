@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,6 +19,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.5">
 
+        <ImageView
+            android:id="@+id/imageOnCard"
+            android:layout_width="220dp"
+            android:padding="10dp"
+            android:layout_height="120dp"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/tokens_1" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -26,37 +35,62 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/nameOfPlace"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:text="Kharar-Theka"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/manropesemibold"
+                android:textColor="#FDB35D"/>
+
+            <TextView
                 android:id="@+id/OfferTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="10dp"
                 android:fontFamily="@font/monserat"
-                android:text="SAVE &amp; SLAY"
-                android:textSize="20sp"
+                android:text="3 Beers @just 150"
+                android:textSize="15sp"
                 android:textColor="@color/black" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:padding="4dp"
+                    android:src="@drawable/location_feedcard"/>
+                <TextView
+                    android:id="@+id/distanceOnCard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textColor="#17671A"
+                    android:text="300m"
+                    android:fontFamily="@font/manropesemibold"
+                    android:textSize="11sp"/>
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/offersDesc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:textSize="12sp"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginEnd="20dp"
                 android:textColor="#7C7A7A"
                 android:fontFamily="@font/manropesemibold"
-                android:text="Enjoy ur Coupon For saving 100rs. @ ShamaRestraunt only for today."
-                android:maxLines="2"/>
+                android:text="Coupon expires on 01-12-2025"
+                android:maxLines="2"
+                android:layout_marginBottom="10dp"/>
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/ImageOnCard"
-            android:layout_width="250dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:scaleType="fitXY"
-            android:src="@drawable/tokens_1"/>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
