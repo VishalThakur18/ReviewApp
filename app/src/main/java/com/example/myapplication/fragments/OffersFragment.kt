@@ -71,6 +71,28 @@ class OffersFragment : Fragment() {
                         offerList.add(offer)
                     }
                 }
+
+                // Sort the offers based on expireDate
+                offerList.sortWith { offer1, offer2 ->
+                    val dateFormat = SimpleDateFormat("dd/MM/yy", Locale.getDefault()) // Update the format
+
+                    try {
+                        val date1 = dateFormat.parse(offer1.expireDate)
+                        val date2 = dateFormat.parse(offer2.expireDate)
+                        when {
+                            date1 == null && date2 == null -> 0
+                            date1 == null -> 1
+                            date2 == null -> -1
+                            else -> date1.compareTo(date2)
+                        }
+                    } catch (e: Exception) {
+                        // Handle any parsing errors (invalid date format, etc.)
+                        Log.e("Date Parsing", "Error parsing date: ${e.message}")
+                        0
+                    }
+                }
+
+                // Notify adapter of data change
                 adapter.notifyDataSetChanged() // Update RecyclerView
             }
             .addOnFailureListener { exception ->
@@ -78,6 +100,8 @@ class OffersFragment : Fragment() {
                 Toast.makeText(requireContext(), "Failed to load offers.", Toast.LENGTH_SHORT).show()
             }
     }
+
+
 
     private fun setupScratchCard(view: View) {
         val scratchView: ScratchView = view.findViewById(R.id.scratchView)

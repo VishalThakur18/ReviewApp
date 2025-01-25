@@ -22,16 +22,14 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
-            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/manropesemibold"
-                android:text="Deal Of The Week"
-                android:textColor="#282828"
+                android:text="Deal Of The Day"
+                android:textColor="@color/black"
                 android:textSize="20sp" />
 
         </LinearLayout>
