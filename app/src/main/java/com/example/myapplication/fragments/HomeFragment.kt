@@ -173,7 +173,7 @@ class HomeFragment : Fragment() {
         }
 
         // Request location permissions
-        //requestLocationPermissions()
+        requestLocationPermissions()
 
         // Fetch user's location
         //fetchUserLocation()

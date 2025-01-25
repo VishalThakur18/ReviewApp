@@ -38,8 +38,7 @@ class RestaurantAdapter(
         when (position) {
             0 -> holder.cardView.setBackgroundResource(R.drawable.gold_encircle_bg) // Gold outline for first place
             1 -> holder.cardView.setBackgroundResource(R.drawable.silver_encircle_bg) // Silver outline for second place
-            //2 -> holder.cardView.setBackgroundResource(R.drawable.bronze_outline) // Bronze outline for third place
-            //else -> holder.cardView.setBackgroundResource(android.R.color/white) // Default background for others
+
         }
 
         // Handle vote-up button click
@@ -49,11 +48,6 @@ class RestaurantAdapter(
     }
 
     override fun getItemCount(): Int = restaurants.size
-    // Function to update the vote count for a specific restaurant
-    fun updateVoteCount(position: Int, newVoteCount: Int) {
-        restaurants[position].votes = newVoteCount // Update the vote count
-        notifyItemChanged(position) // Notify the adapter to refresh the specific item
-    }
 
     // ViewHolder for Restaurant item
     class RestaurantViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

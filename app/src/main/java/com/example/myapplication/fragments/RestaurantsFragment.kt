@@ -57,13 +57,12 @@ class RestaurantsFragment : Fragment() {
         currentUserId = auth.currentUser?.uid
 
         if (currentUserId == null) {
-            Toast.makeText(context, "Please log in to vote!", Toast.LENGTH_SHORT).show()
+            showToast("Please log in to vote!")
             return view
         }
 
         // Countdown Timer
-        val timeUntilNextSunday = calculateTimeUntilNextSundayMidnight()
-        startCountdownTimer(timeUntilNextSunday)
+        startCountdownTimer(calculateTimeUntilNextSundayMidnight())
 
         // Initialize RecyclerView
         recyclerView = view.findViewById(R.id.restrauntRecyclerView)
@@ -73,10 +72,8 @@ class RestaurantsFragment : Fragment() {
         }
         recyclerView.adapter = adapter
 
-        // Load restaurants
+        // Load restaurants and fetch Restaurant of the Week
         loadRestaurants()
-
-        // Fetch restaurant of the week
         fetchRestaurantOfTheWeek()
 
         return view
@@ -94,30 +91,13 @@ class RestaurantsFragment : Fragment() {
         return calendar.timeInMillis - System.currentTimeMillis()
     }
 
-//    private fun loadRestaurants() {
-//        db.collection("restaurants")
-//            .orderBy("votes", Query.Direction.DESCENDING) // Order by votes in descending order
-//            .get()
-//            .addOnSuccessListener { snapshot ->
-//                restaurantList.clear() // Clear the existing list
-//                for (document in snapshot.documents) {
-//                    val restaurant = document.toObject(Restaurant::class.java)?.apply {
-//                        id = document.id // Set the auto-generated document ID
-//                    }
-//                    restaurant?.let { restaurantList.add(it) }
-//                }
-//                adapter.notifyDataSetChanged()
-//            }
-//            .addOnFailureListener {
-//                Toast.makeText(context, "Failed to load restaurants.", Toast.LENGTH_SHORT).show()
-//            }
-//    }
     private fun loadRestaurants() {
         db.collection("restaurants")
             .orderBy("votes", Query.Direction.DESCENDING)
             .addSnapshotListener { snapshot, error ->
                 if (error != null) {
-                    Toast.makeText(context, "Failed to load restaurants.", Toast.LENGTH_SHORT).show()
+                    Log.e("LoadRestaurants", "Failed to load restaurants: $error")
+                    showToast("Failed to load restaurants.")
                     return@addSnapshotListener
                 }
                 if (snapshot != null && !snapshot.isEmpty) {
@@ -133,7 +113,6 @@ class RestaurantsFragment : Fragment() {
             }
     }
 
-
     private fun fetchRestaurantOfTheWeek() {
         db.collection("restaurants")
             .orderBy("votes", Query.Direction.DESCENDING)
@@ -147,68 +126,60 @@ class RestaurantsFragment : Fragment() {
                         .load(restaurant?.imageUrl)
                         .into(restaurantOfTheWeekImage)
 
-                    // Fetch and display the number of votes
+                    // Display the number of votes
                     val votesCount = restaurant?.votes ?: 0
-                    val votesOnRestOfWeek = view?.findViewById<TextView>(R.id.votesOnRestOfWeek)
-                    votesOnRestOfWeek?.text = "$votesCount Votes"
+                    view?.findViewById<TextView>(R.id.votesOnRestOfWeek)?.text = "$votesCount Votes"
                 }
             }
-            .addOnFailureListener { e->
-                Log.e("FetchRestaurantOfTheWeek", "Error fetching restaurant of the week: $e")
+            .addOnFailureListener { e ->
+                Log.e("FetchRestaurantOfTheWeek", "Error: $e")
             }
     }
 
     private fun showVoteConfirmationDialog(restaurant: Restaurant) {
-        val dialogView = LayoutInflater.from(context).inflate(R.layout.restraunt_voting_dialog,null)
-        val dialogBuilder = AlertDialog.Builder(context)
+        val dialogView = LayoutInflater.from(context).inflate(R.layout.restraunt_voting_dialog, null)
+        val dialogBuilder = AlertDialog.Builder(requireContext())
             .setView(dialogView)
             .setCancelable(false)
-        // Get references to the views in the dialog layout
+
         val restaurantNameTextView = dialogView.findViewById<TextView>(R.id.nameRest)
         val restaurantImageView = dialogView.findViewById<ImageView>(R.id.restaurantImage)
         val confirmButton = dialogView.findViewById<TextView>(R.id.confirmBtn)
         val cancelButton = dialogView.findViewById<TextView>(R.id.cancelBtn)
 
-        // Set the restaurant details dynamically
         restaurantNameTextView.text = "Vote for \"${restaurant.name}\", You Sure?"
         Glide.with(this)
-            .load(restaurant.imageUrl) // Use Glide to load the image
+            .load(restaurant.imageUrl)
             .into(restaurantImageView)
 
-        // Create and show the dialog
         val dialog = dialogBuilder.create()
 
-        // Handle button clicks
         confirmButton.setOnClickListener {
-            handleVote(restaurant) // Submit the vote
-            dialog.dismiss() // Close the dialog
+            handleVote(restaurant)
+            dialog.dismiss()
         }
 
-        cancelButton.setOnClickListener {
-            dialog.dismiss() // Close the dialog without action
-        }
+        cancelButton.setOnClickListener { dialog.dismiss() }
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.show()
     }
 
     private fun handleVote(restaurant: Restaurant) {
         if (restaurant.id.isEmpty() || currentUserId.isNullOrEmpty()) {
-            Toast.makeText(context, "Invalid restaurant ID or user session.", Toast.LENGTH_SHORT).show()
+            showToast("Invalid restaurant ID or user session.")
             return
         }
 
-        val currentWeekStart = getStartOfCurrentWeekTimestamp()
+        val currentWeekStart = calculateTimeUntilNextSundayMidnight()
 
-        // Check if the user has voted for ANY restaurant this week
         db.collection("votes")
             .whereEqualTo("userId", currentUserId)
-            .whereGreaterThanOrEqualTo("timestamp", currentWeekStart) // Check votes in the current week
+            .whereGreaterThanOrEqualTo("timestamp", currentWeekStart)
             .get()
             .addOnSuccessListener { snapshot ->
                 if (!snapshot.isEmpty) {
-                    Toast.makeText(context, "You have already voted for a restaurant this week!", Toast.LENGTH_SHORT).show()
+                    showToast("You have already voted this week!")
                 } else {
-                    // User hasn't voted this week, allow voting
                     val voteData = hashMapOf(
                         "userId" to currentUserId,
                         "restaurantId" to restaurant.id,
@@ -217,115 +188,52 @@ class RestaurantsFragment : Fragment() {
 
                     db.collection("votes").add(voteData)
                         .addOnSuccessListener {
-                            // Update the vote count for the restaurant
                             db.collection("restaurants").document(restaurant.id)
                                 .update("votes", FieldValue.increment(1))
                                 .addOnSuccessListener {
-                                    Toast.makeText(context, "Vote submitted successfully!", Toast.LENGTH_SHORT).show()
-
-                                    // Add a listener to track the vote count in real-time
-                                    db.collection("restaurants").document(restaurant.id)
-                                        .addSnapshotListener { snapshot, error ->
-                                            if (error != null) {
-                                                Log.e("HandleVote", "Error fetching vote count: $error")
-                                                return@addSnapshotListener
-                                            }
-                                            snapshot?.let {
-                                                val updatedVotes = it.getLong("votes")?.toInt() ?: 0
-                                                updateVoteCountUI(restaurant, updatedVotes) // Update the UI for this restaurant
-                                            }
-                                        }
-
-                                    // Fetch the updated Restaurant of the Week
+                                    showToast("Vote submitted!")
                                     fetchRestaurantOfTheWeek()
                                 }
-                                .addOnFailureListener { e ->
-                                    Toast.makeText(context, "Failed to update restaurant votes.", Toast.LENGTH_SHORT).show()
-                                    Log.e("HandleVote", "Error updating votes: $e")
-                                }
-                        }
-                        .addOnFailureListener { e ->
-                            Toast.makeText(context, "Failed to register your vote.", Toast.LENGTH_SHORT).show()
-                            Log.e("HandleVote", "Error adding vote: $e")
                         }
                 }
             }
-            .addOnFailureListener { e ->
-                Toast.makeText(context, "Failed to check vote status.", Toast.LENGTH_SHORT).show()
-                Log.e("HandleVote", "Error fetching votes: $e")
+    }
+
+    private fun startCountdownTimer(timeInMillis: Long) {
+        object : CountDownTimer(timeInMillis, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                val days = TimeUnit.MILLISECONDS.toDays(millisUntilFinished)
+                val hours = TimeUnit.MILLISECONDS.toHours(millisUntilFinished) % 24
+                val minutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) % 60
+                val seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) % 60
+                daysTextView.text = String.format("%02d", days)
+                hoursTextView.text = String.format("%02d", hours)
+                minutesTextView.text = String.format("%02d", minutes)
+                secondsTextView.text = String.format("%02d", seconds)
             }
+
+            override fun onFinish() {
+                resetRestaurantVotes()
+                startCountdownTimer(calculateTimeUntilNextSundayMidnight())
+            }
+        }.start()
     }
-
-
-    private fun updateVoteCountUI(restaurant: Restaurant, newVoteCount: Int) {
-        // Find the index of the restaurant in the list
-        val index = restaurantList.indexOfFirst { it.id == restaurant.id }
-        if (index != -1) {
-            // Update the vote count in the adapter
-            adapter.updateVoteCount(index, newVoteCount)
-        }
-    }
-
-
-
-    private fun getStartOfCurrentWeekTimestamp(): Long {
-        val calendar = Calendar.getInstance()
-        calendar.set(Calendar.DAY_OF_WEEK, calendar.firstDayOfWeek)
-        calendar.set(Calendar.HOUR_OF_DAY, 0)
-        calendar.set(Calendar.MINUTE, 0)
-        calendar.set(Calendar.SECOND, 0)
-        calendar.set(Calendar.MILLISECOND, 0)
-        return calendar.timeInMillis
-    }
-
-private fun startCountdownTimer(timeInMillis: Long) {
-    object : CountDownTimer(timeInMillis, 1000) {
-        override fun onTick(millisUntilFinished: Long) {
-            val days = TimeUnit.MILLISECONDS.toDays(millisUntilFinished)
-            val hours = TimeUnit.MILLISECONDS.toHours(millisUntilFinished) % 24
-            val minutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) % 60
-            val seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) % 60
-            daysTextView.text = String.format("%02d", days)
-            hoursTextView.text = String.format("%02d", hours)
-            minutesTextView.text = String.format("%02d", minutes)
-            secondsTextView.text = String.format("%02d", seconds)
-        }
-
-        override fun onFinish() {
-            // Reset all restaurant votes to 0
-            resetRestaurantVotes()
-
-            // Restart the countdown timer for the next week
-            val timeUntilNextSunday = calculateTimeUntilNextSundayMidnight()
-            startCountdownTimer(timeUntilNextSunday)
-        }
-    }.start()
-}
 
     private fun resetRestaurantVotes() {
-        val batch = db.batch()
-
-        // Fetch all restaurants and update their vote counts
-        db.collection("restaurants")
-            .get()
+        db.collection("restaurants").get()
             .addOnSuccessListener { snapshot ->
-                for (document in snapshot.documents) {
+                val batch = db.batch()
+                snapshot.documents.forEach { document ->
                     val restaurantRef = db.collection("restaurants").document(document.id)
-                    batch.update(restaurantRef, "votes", 0) // Reset the votes to 0
+                    batch.update(restaurantRef, "votes", 0)
                 }
-
-                // Commit the batch operation to reset votes
                 batch.commit()
-                    .addOnSuccessListener {
-                        Log.d("RestaurantsFragment", "Votes have been reset successfully.")
-                    }
-                    .addOnFailureListener { e ->
-                        Log.e("RestaurantsFragment", "Error resetting votes: $e")
-                    }
-            }
-            .addOnFailureListener { e ->
-                Log.e("RestaurantsFragment", "Error fetching restaurants: $e")
             }
     }
 
+    private fun showToast(message: String) {
+        context?.let {
+            Toast.makeText(it, message, Toast.LENGTH_SHORT).show()
+        }
+    }
 }
