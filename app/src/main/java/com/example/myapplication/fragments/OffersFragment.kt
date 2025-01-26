@@ -113,7 +113,6 @@ class OffersFragment : Fragment() {
 
         if (lastScratchDate == currentDate) {
             scratchView.visibility = View.GONE
-            Toast.makeText(requireContext(), "You have already scratched today. Come back tomorrow!", Toast.LENGTH_LONG).show()
         } else {
             scratchView.setRevealListener(object : ScratchView.IRevealListener {
                 override fun onRevealed(scratchView: ScratchView) {
