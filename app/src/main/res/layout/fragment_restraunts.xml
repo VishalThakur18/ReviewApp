@@ -59,8 +59,8 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            android:scaleType="fitXY"
-                            tools:src="@drawable/japanese_restraunt"/>
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/japanese_restraunt"/>
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/cardView2"
@@ -82,13 +82,13 @@
 
                                 <ImageView
                                     android:id="@+id/profilePic"
-                                    android:layout_width="42dp"
-                                    android:layout_marginTop="5dp"
-                                    android:layout_marginBottom="5dp"
-                                    android:layout_height="42dp"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
                                     android:layout_marginStart="12dp"
-                                    android:layout_gravity="center"
-                                    android:src="@drawable/location_feedcard" />
+                                    android:layout_marginTop="12dp"
+                                    android:transitionName="photu"
+                                    android:scaleType="fitCenter"
+                                    tools:src="@drawable/icons8_google_maps" />
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -98,14 +98,23 @@
                                     android:orientation="vertical">
 
                                     <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/manropesemibold"
+                                        android:maxLines="1"
+                                        android:text="Ramen@"
+                                        android:textColor="@color/black"
+                                        android:textSize="12sp" />
+
+                                    <TextView
                                         android:id="@+id/restaurantOfTheWeekName"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:fontFamily="@font/manropesemibold"
-                                        android:maxLines="2"
+                                        android:maxLines="1"
                                         android:text="Albinos Kitchen"
                                         android:textColor="@color/black"
-                                        android:textSize="15sp" />
+                                        android:textSize="14sp" />
                                 </LinearLayout>
 
                                 <View
@@ -123,7 +132,6 @@
                                     android:layout_marginTop="12dp"
                                     android:layout_marginEnd="12dp"
                                     android:layout_marginBottom="12dp"
-                                    android:layout_gravity="center"
                                     android:layout_weight="2"
                                     android:orientation="vertical">
 
@@ -132,11 +140,23 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:fontFamily="@font/manropesemibold"
-                                        android:gravity="center"
                                         android:maxLines="1"
+                                        android:layout_marginTop="3dp"
                                         android:text="431 Votes"
                                         android:textColor="@color/black"
                                         android:textSize="10sp" />
+
+                                    <TextView
+                                        android:id="@+id/mapLocation"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/manropesemibold"
+                                        android:layout_marginTop="3dp"
+                                        android:text="Menu"
+                                        android:textSize="10sp"
+                                        android:textColor="@color/link" />
+
+
                                 </LinearLayout>
                             </LinearLayout>
                         </androidx.cardview.widget.CardView>

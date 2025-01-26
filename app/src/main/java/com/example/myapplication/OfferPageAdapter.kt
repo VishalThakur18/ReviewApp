@@ -9,8 +9,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import model.Offer
 
-class OfferPageAdapter(private val offerList: MutableList<Offer>) :
-    RecyclerView.Adapter<OfferPageAdapter.OfferViewHolder>() {
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter
+import com.firebase.ui.firestore.FirestoreRecyclerOptions
+
+class OfferPageAdapter(
+    private val offerList: MutableList<Offer>,
+    private val onItemClick : (Offer)-> Unit
+    ) : RecyclerView.Adapter<OfferPageAdapter.OfferViewHolder>() {
 
     class OfferViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val cardTitle: TextView = itemView.findViewById(R.id.OfferTitle)
@@ -25,7 +30,9 @@ class OfferPageAdapter(private val offerList: MutableList<Offer>) :
         return OfferViewHolder(itemView)
     }
 
-    override fun getItemCount(): Int = offerList.size
+    override fun getItemCount(): Int {
+        return offerList.size
+    }
 
     override fun onBindViewHolder(holder: OfferViewHolder, position: Int) {
         val currentOffer = offerList[position]
@@ -37,6 +44,11 @@ class OfferPageAdapter(private val offerList: MutableList<Offer>) :
         Glide.with(holder.itemView.context)
             .load(currentOffer.imageUrl)
             .into(holder.cardImage)
+
+        // Set click listener for the entire card
+        holder.itemView.setOnClickListener {
+            onItemClick(currentOffer) // Pass the clicked offer to the listener
+        }
     }
 
     private fun createBoldText(prefix: String, boldText: String): CharSequence {
@@ -44,10 +56,5 @@ class OfferPageAdapter(private val offerList: MutableList<Offer>) :
         return android.text.Html.fromHtml(formattedText, android.text.Html.FROM_HTML_MODE_LEGACY)
     }
 
-    // Add a method to update the list dynamically
-    fun updateOffers(newOffers: List<Offer>) {
-        offerList.clear()
-        offerList.addAll(newOffers)
-        notifyDataSetChanged()
-    }
+
 }

@@ -8,4 +8,6 @@
     <color name="yellow">#FFFF00</color>
     <color name="green">#008000</color>
     <color name="primary">#F9EDDF</color>
+    <color name="grey">#DADADA</color>
+    <color name="primary_light">#F1EBE4</color>
 </resources>

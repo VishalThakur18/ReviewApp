@@ -1,11 +1,13 @@
 package com.example.myapplication.fragments
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -14,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.anupkumarpanwar.scratchview.ScratchView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.example.myapplication.OfferDetailActivity
 import com.example.myapplication.OfferPageAdapter
 import com.example.myapplication.R
 import com.example.myapplication.databinding.OffersFragmentBinding
@@ -48,7 +51,16 @@ class OffersFragment : Fragment() {
         newRecyclerView.layoutManager = LinearLayoutManager(context)
         newRecyclerView.setHasFixedSize(true)
 
-        adapter = OfferPageAdapter(offerList)
+        adapter = OfferPageAdapter(offerList) { clickedOffer ->
+            // Create an intent to open the OfferDetailActivity
+            val intent = Intent(requireContext(), OfferDetailActivity::class.java)
+            intent.putExtra("title", clickedOffer.restaurantName)
+            intent.putExtra("desc", clickedOffer.offerDescription)
+            intent.putExtra("image", clickedOffer.imageUrl) // Assuming it's a drawable resource ID or URL
+            //intent.putExtra("dist", clickedOffer.)
+            intent.putExtra("name", clickedOffer.expireDate)
+            startActivity(intent)
+        }
         newRecyclerView.adapter = adapter
 
         // Load offers from Firestore
@@ -61,6 +73,16 @@ class OffersFragment : Fragment() {
     }
 
     private fun fetchOffersFromFirestore() {
+        // Start shimmer animation
+        val shimmerContainer = binding.shimmerContainer
+        val recyclerView = binding.recyclerReview
+
+        val shimmerAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.shimmer_animation)
+        shimmerContainer.visibility = View.VISIBLE
+        recyclerView.visibility = View.GONE
+
+        // Apply the shimmer animation to the entire container
+        shimmerContainer.startAnimation(shimmerAnimation)
         firestore.collection("offers")
             .get()
             .addOnSuccessListener { querySnapshot ->
@@ -94,10 +116,20 @@ class OffersFragment : Fragment() {
 
                 // Notify adapter of data change
                 adapter.notifyDataSetChanged() // Update RecyclerView
+
+                // Stop shimmer animation and show RecyclerView
+                shimmerContainer.clearAnimation()
+                shimmerContainer.visibility = View.GONE
+                recyclerView.visibility = View.VISIBLE
             }
             .addOnFailureListener { exception ->
                 Log.e("Firestore", "Error fetching offers: ${exception.message}")
                 Toast.makeText(requireContext(), "Failed to load offers.", Toast.LENGTH_SHORT).show()
+
+                // Stop shimmer animation even if data fails to load
+                shimmerContainer.clearAnimation()
+                shimmerContainer.visibility = View.GONE
+                recyclerView.visibility = View.VISIBLE
             }
     }
 

@@ -38,7 +38,7 @@ class RestaurantAdapter(
         when (position) {
             0 -> holder.cardView.setBackgroundResource(R.drawable.gold_encircle_bg) // Gold outline for first place
             1 -> holder.cardView.setBackgroundResource(R.drawable.silver_encircle_bg) // Silver outline for second place
-
+            2 -> holder.cardView.setBackgroundResource(R.drawable.bronze_bg_voting)
         }
 
         // Handle vote-up button click

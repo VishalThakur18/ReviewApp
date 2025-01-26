@@ -1,6 +1,6 @@
 <!-- res/drawable/gold_outline.xml -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <corners android:radius="12dp"/>
-    <stroke android:color="#FFDD53" android:width="2dp" />
+    <stroke android:color="#FFDD53" android:width="4dp" />
     <solid android:color="@color/white"/>
 </shape>
