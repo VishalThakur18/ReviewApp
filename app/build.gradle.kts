@@ -58,6 +58,9 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
     //Signup with google
     implementation("com.google.android.gms:play-services-auth:21.3.0")
+    // Google map Dependency
+    implementation ("com.google.android.gms:play-services-maps:19.0.0")
+    implementation ("com.google.android.gms:play-services-location:21.3.0")
 
     //lottie animation
     implementation ("com.airbnb.android:lottie:6.3.0")

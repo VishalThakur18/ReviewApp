@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.firebase.firestore.GeoPoint
 import model.Offer
 
 
@@ -21,6 +22,8 @@ class OfferPageAdapter(
         val cardDesc: TextView = itemView.findViewById(R.id.offersDesc)
         val cardImage: ImageView = itemView.findViewById(R.id.imageOnCard)
         val cardName: TextView = itemView.findViewById(R.id.nameOfPlace)
+        val locationText: TextView = itemView.findViewById(R.id.locationText)
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OfferViewHolder {
@@ -39,10 +42,21 @@ class OfferPageAdapter(
         holder.cardDesc.text = createBoldText("Coupon expires : ", currentOffer.expireDate)
         holder.cardName.text = currentOffer.restaurantName
 
+
         // Use Glide to load the image URL
         Glide.with(holder.itemView.context)
             .load(currentOffer.imageUrl)
             .into(holder.cardImage)
+
+        // Display location from GeoPoint
+        val location = currentOffer.location
+        if (location != null) {
+            val latitude = location.latitude
+            val longitude = location.longitude
+            holder.locationText.text = "Lat: $latitude, Long: $longitude"
+        } else {
+            holder.locationText.text = "Location not available"
+        }
 
         // Set click listener for the entire card
         holder.itemView.setOnClickListener {
@@ -55,6 +69,7 @@ class OfferPageAdapter(
             //intent.putExtra("dist", currentOffer.restaurantDistance)
             intent.putExtra("name", currentOffer.restaurantName)
             intent.putExtra("date", currentOffer.expireDate)
+            intent.putExtra("location", "${location?.latitude},${location?.longitude}")
             context.startActivity(intent)
         }
     }

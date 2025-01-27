@@ -1,6 +1,7 @@
 buildscript {
     val agp_version by extra("8.2.2")
     dependencies {
+        classpath ("com.android.tools.build:gradle:8.0.0")
         classpath("com.google.gms:google-services:4.4.2")
     }
     repositories {

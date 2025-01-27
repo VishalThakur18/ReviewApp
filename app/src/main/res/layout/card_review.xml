@@ -43,17 +43,26 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical">
-
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="6dp"
+                android:orientation="horizontal">
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:padding="4dp"
+                android:src="@drawable/location_feedcard"/>
             <TextView
                 android:id="@+id/nameOfPlace"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:text="Kharar-Theka"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
                 android:fontFamily="@font/manropesemibold"
                 android:textColor="#FDB35D"/>
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/OfferTitle"
@@ -66,41 +75,27 @@
                 android:maxLines="2"
                 android:ellipsize="end"
                 android:textColor="@color/black" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/locationText"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:padding="4dp"
-                    android:src="@drawable/location_feedcard"/>
-                <TextView
-                    android:id="@+id/distanceOnCard"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:textColor="#17671A"
-                    android:text="300m"
-                    android:fontFamily="@font/manropesemibold"
-                    android:textSize="11sp"/>
-
-            </LinearLayout>
-
+                android:text="Location"
+                android:visibility="gone"
+                android:textColor="@android:color/black" />
             <TextView
                 android:id="@+id/offersDesc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
                 android:textColor="#7C7A7A"
                 android:fontFamily="@font/manropesemibold"
                 android:text="Coupon expires on 01-12-2025"
                 android:maxLines="2"
                 android:layout_marginBottom="10dp"/>
+
         </LinearLayout>
 
 

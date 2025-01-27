@@ -57,8 +57,9 @@ class OffersFragment : Fragment() {
             intent.putExtra("title", clickedOffer.restaurantName)
             intent.putExtra("desc", clickedOffer.offerDescription)
             intent.putExtra("image", clickedOffer.imageUrl) // Assuming it's a drawable resource ID or URL
-            //intent.putExtra("dist", clickedOffer.)
+//            intent.putExtra("location", clickedOffer.location) // Pass the location
             intent.putExtra("name", clickedOffer.expireDate)
+
             startActivity(intent)
         }
         newRecyclerView.adapter = adapter
