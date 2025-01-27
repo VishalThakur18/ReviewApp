@@ -86,7 +86,7 @@ dependencies {
 
     implementation("jp.wasabeef:picasso-transformations:2.4.0")
 
-    implementation ("com.firebaseui:firebase-ui-firestore:8.0.1")
+    //implementation ("com.firebaseui:firebase-ui-firestore:8.0.1")
 
 //    implementation ("com.facebook.shimmer:shimmer:0.5.0")
 

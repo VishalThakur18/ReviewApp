@@ -170,14 +170,12 @@ class RestaurantsFragment : Fragment() {
             return
         }
 
-        val currentWeekStart = calculateTimeUntilNextSundayMidnight()
-
         db.collection("votes")
             .whereEqualTo("userId", currentUserId)
-            .whereGreaterThanOrEqualTo("timestamp", currentWeekStart)
+            .whereGreaterThanOrEqualTo("timestamp", calculateStartOfWeek())
             .get()
             .addOnSuccessListener { snapshot ->
-                if (!snapshot.isEmpty) {
+                if (snapshot.documents.isNotEmpty()) {
                     showToast("You have already voted this week!")
                 } else {
                     val voteData = hashMapOf(
@@ -199,6 +197,16 @@ class RestaurantsFragment : Fragment() {
             }
     }
 
+    private fun calculateStartOfWeek(): Long {
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
+        return calendar.timeInMillis
+    }
+
     private fun startCountdownTimer(timeInMillis: Long) {
         object : CountDownTimer(timeInMillis, 1000) {
             override fun onTick(millisUntilFinished: Long) {
@@ -214,6 +222,7 @@ class RestaurantsFragment : Fragment() {
 
             override fun onFinish() {
                 resetRestaurantVotes()
+                clearUserVotes()
                 startCountdownTimer(calculateTimeUntilNextSundayMidnight())
             }
         }.start()
@@ -228,6 +237,21 @@ class RestaurantsFragment : Fragment() {
                     batch.update(restaurantRef, "votes", 0)
                 }
                 batch.commit()
+            }
+    }
+
+    private fun clearUserVotes() {
+        db.collection("votes")
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                val batch = db.batch()
+                querySnapshot.documents.forEach { document ->
+                    batch.delete(document.reference)
+                }
+                batch.commit().addOnSuccessListener {
+                    Log.d("VotesReset", "All user vote records cleared.")
+                    showToast("Votes have been reset. You can vote again now!")
+                }
             }
     }
 
