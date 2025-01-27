@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,7 +36,7 @@ class OfferPageAdapter(
     override fun onBindViewHolder(holder: OfferViewHolder, position: Int) {
         val currentOffer = offerList[position]
         holder.cardTitle.text = currentOffer.offerDescription
-        holder.cardDesc.text = createBoldText("Coupon expires on ", currentOffer.expireDate)
+        holder.cardDesc.text = createBoldText("Coupon expires : ", currentOffer.expireDate)
         holder.cardName.text = currentOffer.restaurantName
 
         // Use Glide to load the image URL
@@ -45,7 +46,16 @@ class OfferPageAdapter(
 
         // Set click listener for the entire card
         holder.itemView.setOnClickListener {
-            onItemClick(currentOffer) // Pass the clicked offer to the listener
+            // Navigate to OfferDetailActivity with Intent
+            val context = holder.itemView.context
+            val intent = Intent(context, OfferDetailActivity::class.java)
+            intent.putExtra("title", currentOffer.offerDescription)
+            //intent.putExtra("desc", currentOffer.offerDetails) // Include details
+            intent.putExtra("image", currentOffer.imageUrl)
+            //intent.putExtra("dist", currentOffer.restaurantDistance)
+            intent.putExtra("name", currentOffer.restaurantName)
+            intent.putExtra("date", currentOffer.expireDate)
+            context.startActivity(intent)
         }
     }
 
