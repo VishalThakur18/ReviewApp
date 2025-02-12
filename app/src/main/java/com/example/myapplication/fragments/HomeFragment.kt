@@ -334,7 +334,7 @@ class HomeFragment : Fragment() {
         bottomSheet?.setBackgroundColor(Color.TRANSPARENT)
 
         if (bottomSheet != null) {
-            photos = bottomSheet.findViewById(R.id.photoOnHold)
+            photos = bottomSheet.findViewById(R.id.imagePreview)
         }
 
         bottomSheetView.background = ContextCompat.getDrawable(context, R.drawable.dialog_home_bg_newitem)
@@ -489,7 +489,7 @@ class HomeFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-//        val bottomSheetView = layoutInflater.inflate(R.layout.bottomsheethome, null)
+
         if (resultCode == AppCompatActivity.RESULT_OK) {
             when (requestCode) {
                 REQUEST_IMAGE_GALLERY -> {
@@ -509,12 +509,17 @@ class HomeFragment : Fragment() {
                 CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
                     val result = CropImage.getActivityResult(data)
                     if (result.isSuccessful) {
-                        selectedImageUri = result.uri  // Store cropped image URI
+                        selectedImageUri = result.uri
                         Log.d("ActivityResult", "Image cropped successfully: $selectedImageUri")
 
-                        // Reference the existing ImageView in the BottomSheet
-                        val photos: ImageView? = view?.findViewById(R.id.photoOnHold)
-                        photos?.setImageURI(selectedImageUri)  // Display the cropped image
+                        // ✅ Ensure bottomSheetDialog is initialized before accessing it
+                        if (::bottomSheetDialog.isInitialized) {
+                            val photos: ImageView? = bottomSheetDialog.findViewById(R.id.imagePreview)
+                            photos?.setImageURI(selectedImageUri)
+                        } else {
+                            Log.e("ActivityResult", "Error: bottomSheetDialog is not initialized")
+                            Toast.makeText(requireContext(), "Error: Bottom Sheet is not opened", Toast.LENGTH_SHORT).show()
+                        }
                     } else {
                         val error = result.error
                         Log.e("ActivityResult", "Crop failed: ${error.message}")
@@ -526,6 +531,7 @@ class HomeFragment : Fragment() {
             Log.d("ActivityResult", "Result not OK, resultCode: $resultCode")
         }
     }
+
 
 
 
