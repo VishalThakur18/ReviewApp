@@ -3,13 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:gravity="center"
+    android:gravity="top"
     android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/imageOnboarding"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:layout_height="250dp"
         android:adjustViewBounds="true"
         android:contentDescription="@string/app_name"/>
 
@@ -19,22 +20,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:fontFamily="@font/realway_bold"
+        android:fontFamily="@font/manropebold"
         android:gravity="center"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="30sp"
         android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/textDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/realway_bold"
+        android:fontFamily="@font/manropesemibold"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
         android:layout_marginEnd="30dp"
         android:gravity="center"
         android:textColor="#626565"
-        android:textSize="16sp"/>
+        android:textSize="13sp"/>
 
 </LinearLayout>

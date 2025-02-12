@@ -39,6 +39,7 @@ class GetStarted : AppCompatActivity() {
                     Handler(Looper.getMainLooper()).postDelayed({
                         val intent = Intent(this@GetStarted,Login::class.java)
                         startActivity(intent)
+                        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left)
 
                     },50)
                 }
@@ -54,6 +55,11 @@ class GetStarted : AppCompatActivity() {
         onboardingItemsAdapter = OnboardingItemsAdapter(
             listOf(
                 OnboardingItem(
+                    onboardingImage = R.drawable.discount_gs,
+                    title = "Hot Offers",
+                    description = "Unleash a world of exclusive offers tailored just for you. As a valued member of FoodieMoodie, enjoy access to special promotions, discounts, and limited-time deals."
+                ),
+                OnboardingItem(
                     onboardingImage = R.drawable.community_gs,
                     title = "Dependable Community",
                     description = "Be a part of the conversation! Engage with the community by commenting on reviews and sharing your thoughts."
@@ -67,12 +73,8 @@ class GetStarted : AppCompatActivity() {
                     onboardingImage = R.drawable.ratings_gs,
                     title = "Profound Searches",
                     description = "Find what you're looking for effortlessly. Our advanced search and filtering capabilities help you pinpoint reviews for specific products, categories, or topics."
-                ) ,
-                OnboardingItem(
-                    onboardingImage = R.drawable.discount_gs,
-                    title = "Hot Offers",
-                    description = "Unleash a world of exclusive offers tailored just for you. As a valued member of FoodieMoodie, enjoy access to special promotions, discounts, and limited-time deals."
                 )
+
             )
         )
         val onboardingViewPager = findViewById<ViewPager2>(R.id.onboardingViewPager)

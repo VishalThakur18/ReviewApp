@@ -66,6 +66,7 @@ import android.widget.Button
 
 import android.animation.Animator
 import android.animation.ObjectAnimator
+import android.widget.ImageView
 
 
 class HomeFragment : Fragment() {
@@ -79,6 +80,10 @@ class HomeFragment : Fragment() {
     private var foodItem= mutableListOf<HomeCards>()
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var userLocation: GeoPoint? = null
+
+    private lateinit var bottomSheetDialog: BottomSheetDialog
+    private lateinit var bottomSheetView: View
+    private lateinit var photos: ImageView
 
     private lateinit var refreshButton: Button
     private val handler = Handler(Looper.getMainLooper())
@@ -191,17 +196,14 @@ class HomeFragment : Fragment() {
             if (result.resultCode == AppCompatActivity.RESULT_OK) {
                 val resultUri = result.data?.let { CropImage.getActivityResult(it).uri }
                 resultUri?.let {
-                    uploadImageToFirebase(it)
+                    selectedImageUri = it // Store globally
                 }
             } else if (result.resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 val error = result.data?.let { CropImage.getActivityResult(it).error }
-                Toast.makeText(
-                    requireContext(),
-                    "Crop failed: ${error?.message}",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(requireContext(), "Crop failed: ${error?.message}", Toast.LENGTH_SHORT).show()
             }
         }
+
 
 
 
@@ -321,8 +323,8 @@ class HomeFragment : Fragment() {
 
 
     private fun showBottomSheet(context: Context) {
-        val bottomSheetView = layoutInflater.inflate(R.layout.bottomsheethome, null)
-        val bottomSheetDialog = BottomSheetDialog(context, R.style.BottomSheetDialogTheme)
+        bottomSheetView = layoutInflater.inflate(R.layout.bottomsheethome, null)
+        bottomSheetDialog = BottomSheetDialog(context, R.style.BottomSheetDialogTheme)
         bottomSheetDialog.setContentView(bottomSheetView)
 
         val slideIn = AnimationUtils.loadAnimation(context, R.anim.slide_in_bottom)
@@ -330,6 +332,10 @@ class HomeFragment : Fragment() {
 
         val bottomSheet = bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
         bottomSheet?.setBackgroundColor(Color.TRANSPARENT)
+
+        if (bottomSheet != null) {
+            photos = bottomSheet.findViewById(R.id.photoOnHold)
+        }
 
         bottomSheetView.background = ContextCompat.getDrawable(context, R.drawable.dialog_home_bg_newitem)
 
@@ -355,6 +361,7 @@ class HomeFragment : Fragment() {
         val dishRatingsText = bottomSheetView.findViewById<MaterialTextView>(R.id.ratings)
         val toggleValue = bottomSheetView.findViewById<SeekBar>(R.id.ratingBar)
 
+
         dishRatingsText.text = Editable.Factory.getInstance().newEditable(toggleValue.progress.toString())
 
         toggleValue.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
@@ -362,19 +369,9 @@ class HomeFragment : Fragment() {
                 dishRatingsText.text = Editable.Factory.getInstance().newEditable(toggleValue.progress.toString())
             }
 
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-
-            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
-
-        bottomSheetView.findViewById<View>(R.id.cancelBtn).setOnClickListener {
-            bottomSheetView.startAnimation(slideOut)
-        }
-
         bottomSheetView.findViewById<View>(R.id.postBtn).setOnClickListener {
             val dishName = dishNameEditText.text.toString().trim()
             val restaurantName = restaurantNameEditText.text.toString().trim()
@@ -383,12 +380,24 @@ class HomeFragment : Fragment() {
             val dishRating = toggleValue.progress
 
             if (validateInputs(dishName, restaurantName, dishPrice, dishReview)) {
-
-                    postReview(dishName, restaurantName, dishPrice, dishReview,dishRating, imageUrl)
+                if (selectedImageUri != null) {
+                    // Upload the image before posting the review
+                    uploadImageToFirebase(selectedImageUri!!) { imageUrl ->
+                        postReview(dishName, restaurantName, dishPrice, dishReview, dishRating, imageUrl)
+                        bottomSheetDialog.dismiss() // Dismiss the dialog after posting
+                    }
+                } else {
+                    // No image selected, post review with empty imageUrl
+                    postReview(dishName, restaurantName, dishPrice, dishReview, dishRating, "")
                     bottomSheetDialog.dismiss() // Dismiss the dialog after posting
-
+                }
             }
         }
+
+        bottomSheetView.findViewById<View>(R.id.cancelBtn).setOnClickListener {
+            bottomSheetView.startAnimation(slideOut)
+        }
+
 
         bottomSheetView.findViewById<View>(R.id.uploadGallery).setOnClickListener {
             openGallery()
@@ -476,10 +485,11 @@ class HomeFragment : Fragment() {
             null
         }
     }
-
+    private var selectedImageUri: Uri? = null  // Store selected image temporarily
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+//        val bottomSheetView = layoutInflater.inflate(R.layout.bottomsheethome, null)
         if (resultCode == AppCompatActivity.RESULT_OK) {
             when (requestCode) {
                 REQUEST_IMAGE_GALLERY -> {
@@ -499,9 +509,12 @@ class HomeFragment : Fragment() {
                 CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
                     val result = CropImage.getActivityResult(data)
                     if (result.isSuccessful) {
-                        val croppedImageUri = result.uri
-                        Log.d("ActivityResult", "Image cropped successfully: $croppedImageUri")
-                        uploadImageToFirebase(croppedImageUri)
+                        selectedImageUri = result.uri  // Store cropped image URI
+                        Log.d("ActivityResult", "Image cropped successfully: $selectedImageUri")
+
+                        // Reference the existing ImageView in the BottomSheet
+                        val photos: ImageView? = view?.findViewById(R.id.photoOnHold)
+                        photos?.setImageURI(selectedImageUri)  // Display the cropped image
                     } else {
                         val error = result.error
                         Log.e("ActivityResult", "Crop failed: ${error.message}")
@@ -524,15 +537,14 @@ class HomeFragment : Fragment() {
             .start(requireContext(), this)
     }
 
-    private fun uploadImageToFirebase(uri: Uri) {
-        val storageRef = storage.reference.child("images/${UUID.randomUUID()}.jpg")
-        storageRef.putFile(uri)
+    private fun uploadImageToFirebase(imageUri: Uri, onSuccess: (String) -> Unit) {
+        val storageRef = FirebaseStorage.getInstance().reference.child("images/${System.currentTimeMillis()}.jpg")
+
+        storageRef.putFile(imageUri)
             .addOnSuccessListener { taskSnapshot ->
-                taskSnapshot.metadata?.reference?.downloadUrl?.addOnSuccessListener { downloadUri ->
-                    imageUrl = downloadUri.toString()
-                    imageUri = null // Reset imageUri after successful upload
-                }?.addOnFailureListener { e ->
-                    Toast.makeText(requireContext(), "Failed to retrieve download URL: ${e.message}", Toast.LENGTH_SHORT).show()
+                taskSnapshot.storage.downloadUrl.addOnSuccessListener { uri ->
+                    val imageUrl = uri.toString()
+                    onSuccess(imageUrl) // Pass the image URL to the callback
                 }
             }
             .addOnFailureListener { e ->

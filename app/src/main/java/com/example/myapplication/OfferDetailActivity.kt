@@ -2,6 +2,7 @@ package com.example.myapplication
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -28,6 +29,7 @@ class OfferDetailActivity : AppCompatActivity(), OnMapReadyCallback {
         val offerImage: ImageView = findViewById(R.id.restImage)
         val restaurantName: TextView = findViewById(R.id.restName)
         val expirationDate: TextView = findViewById(R.id.expirationText)
+        val redeemBtn: Button = findViewById(R.id.postBtn)
 
 
         // Initialize map
@@ -50,7 +52,9 @@ class OfferDetailActivity : AppCompatActivity(), OnMapReadyCallback {
         restaurantName.text = name
         expirationDate.text = expiry
 
-
+        redeemBtn.setOnClickListener {
+            goToLocationOnMap()
+        }
         Glide.with(this)
             .load(imageResId)
             .into(offerImage)
@@ -77,6 +81,33 @@ class OfferDetailActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         } else {
             Log.e(TAG, "Location string is null")
+        }
+    }
+
+    private fun goToLocationOnMap() {
+        if (::googleMap.isInitialized) { // Check if GoogleMap is ready
+            val locationParts = intent.getStringExtra("location")?.split(",")
+            if (locationParts != null && locationParts.size == 2) {
+                try {
+                    val latitude = locationParts[0].trim().toDouble()
+                    val longitude = locationParts[1].trim().toDouble()
+                    val location = LatLng(latitude, longitude)
+
+                    // Add marker and move camera
+                    googleMap.addMarker(
+                        MarkerOptions()
+                            .position(location)
+                            .title("Restaurant Location")
+                    )
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15f))
+                } catch (e: Exception) {
+                    Log.e(TAG, "Error parsing location or interacting with the map: ${e.message}")
+                }
+            } else {
+                Log.e(TAG, "Invalid location or location not found in intent.")
+            }
+        } else {
+            Log.e(TAG, "GoogleMap is not initialized yet.")
         }
     }
 
@@ -115,6 +146,7 @@ class OfferDetailActivity : AppCompatActivity(), OnMapReadyCallback {
         mapView.onDestroy()
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onLowMemory() {
         super.onLowMemory()
         mapView.onLowMemory()

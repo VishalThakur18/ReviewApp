@@ -67,7 +67,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.google.android.gms.maps.MapView
-                android:id="@+id/mapView"
+                android:id="@+id/mapView2"
                 android:layout_width="match_parent"
                 android:layout_height="250dp" />
 
@@ -175,11 +175,12 @@
                 android:text="Coupon Code :" />
 
             <androidx.appcompat.widget.AppCompatButton
+
                 android:id="@+id/postBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="30dp"
+                android:layout_marginBottom="20dp"
                 android:layout_marginEnd="40dp"
                 android:layout_marginStart="40dp"
                 android:background="@drawable/cancel_button_home"
