@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.MediaController
 import android.widget.Toast
 import android.widget.VideoView
@@ -40,16 +41,16 @@ class UserProfile : AppCompatActivity() {
         binding = ActivityUserProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val whatsappBtn = findViewById<ImageView>(R.id.whatsappBtn)
-        val facebookBtn = findViewById<ImageView>(R.id.facebookBtn)
-        val youtubeBtn = findViewById<ImageView>(R.id.youtubeBtn)
-        val instagramBtn = findViewById<ImageView>(R.id.instagramBtn)
+//        val whatsappBtn = findViewById<ImageView>(R.id.whatsappBtn)
+//        val facebookBtn = findViewById<LinearLayout>(R.id.facebookBtn)
+//        val youtubeBtn = findViewById<ImageView>(R.id.youtubeBtn)
+//        val instagramBtn = findViewById<LinearLayout>(R.id.instagramBtn)
 
         // Set click listeners
-        whatsappBtn.setOnClickListener { openSocialMedia("https://wa.me/<9828270431>") }  // Replace with actual WhatsApp link
-        facebookBtn.setOnClickListener { openSocialMedia("https://www.facebook.com/profile.php?id=100078137621512") }
-        youtubeBtn.setOnClickListener { openSocialMedia("https://youtube.com/shorts/-uENEW-qdOg?si=ImcHbovpYzndkc6P") }
-        instagramBtn.setOnClickListener { openSocialMedia("https://www.instagram.com/therock/?hl=en") }
+//        whatsappBtn.setOnClickListener { openSocialMedia("https://wa.me/<9828270431>") }  // Replace with actual WhatsApp link
+//        facebookBtn.setOnClickListener { openSocialMedia("https://www.facebook.com/profile.php?id=100078137621512") }
+//        youtubeBtn.setOnClickListener { openSocialMedia("https://youtube.com/shorts/-uENEW-qdOg?si=ImcHbovpYzndkc6P") }
+//        instagramBtn.setOnClickListener { openSocialMedia("https://www.instagram.com/therock/?hl=en") }
 
         // Fetch and display user's profile picture and name
         val currentUser = mAuth.currentUser

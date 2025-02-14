@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/primary_light"
     tools:context=".UserProfile">
 
     <LinearLayout
@@ -22,23 +22,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintVertical_bias="0.5">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/featureBtn"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/cancel_button_home"
-            android:fontFamily="@font/manropebold"
-            android:text="Suggestions"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="15sp" />
+<!--        <androidx.appcompat.widget.AppCompatButton-->
+<!--            android:id="@+id/featureBtn"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="1"-->
+<!--            android:background="@drawable/cancel_button_home"-->
+<!--            android:fontFamily="@font/manropebold"-->
+<!--            android:text="Suggestions"-->
+<!--            android:textAllCaps="false"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="15sp" />-->
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:layout_margin="2dp"/>
+<!--        -->
 
 
         <androidx.appcompat.widget.AppCompatButton
@@ -51,7 +47,7 @@
             android:text="Log Out"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="15sp" />
+            android:textSize="17sp" />
 
     </LinearLayout>
 
@@ -81,20 +77,51 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp">
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/textfield_bg_home_plus">
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Contact Us"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/manropebold"
+                    android:elevation="3dp"
+                    android:textSize="12sp"
+                    android:layout_margin="10dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
 
                 <ImageButton
                     android:id="@+id/backtobase"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@drawable/grey_rect_bg"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/textfield_bg_home_plus"
                     android:contentDescription="@string/app_name"
+                    android:elevation="3dp"
                     android:src="@drawable/back_rounded_arrow"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="TouchTargetSizeCheck" />
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:background="@drawable/textfield_bg_home_plus"
+                    android:clipToOutline="true"
+                    android:padding="1dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/background_profile_image"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -102,6 +129,8 @@
                     android:id="@+id/profileOnUser"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
+                    android:background="@drawable/cards_on_profile_3"
+                    android:padding="5dp"
                     android:src="@drawable/profile"
                     android:transitionName="photu"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -114,6 +143,7 @@
                     android:id="@+id/userNameProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
+                    android:layout_marginBottom="10dp"
                     android:fontFamily="@font/manropebold"
                     android:gravity="center"
                     android:maxLines="2"
@@ -121,245 +151,243 @@
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="25sp"
-                    app:layout_constraintTop_toBottomOf="@id/profileOnUser"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/profileOnUser"
-                    app:layout_constraintStart_toStartOf="@+id/profileOnUser" />
+                    app:layout_constraintStart_toStartOf="@+id/profileOnUser"
+                    app:layout_constraintTop_toBottomOf="@id/profileOnUser" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <LinearLayout
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginEnd="50dp"
-                android:layout_height="50dp">
 
-                <ImageView
-                    android:id="@+id/whatsappBtn"
-                    android:layout_width="50dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="10dp"
-                    android:src="@drawable/whatsapp_icon" />
-
-                <ImageView
-                    android:id="@+id/facebookBtn"
-                    android:layout_width="50dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:src="@drawable/facebook_icon" />
-
-                <ImageView
-                    android:id="@+id/youtubeBtn"
-                    android:layout_width="50dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:src="@drawable/youtube_icon" />
-
-                <ImageView
-                    android:id="@+id/instagramBtn"
-                    android:layout_width="50dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:src="@drawable/instagram_icon" />
-            </LinearLayout>
-
-
-
-            <TextView
-                android:id="@+id/textView10"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:background="@drawable/textfield_bg_home_plus"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="30dp"
-                android:fontFamily="@font/manropebold"
-                android:text="Details"
-                android:textColor="@color/black"
-                android:textSize="17sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
-                android:elevation="8dp"
-                android:orientation="horizontal">
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center"
-                    android:layout_weight="0"
-                    android:background="@drawable/grey_rect_bg">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="10dp"
-                        android:src="@drawable/phoneno_profile"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:fontFamily="@font/manropebold"
+                    android:text="Details"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent" />
 
                 <LinearLayout
+                    android:id="@+id/phoneNoContainer"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="50dp"
                     android:layout_marginStart="20dp"
-                    android:layout_weight="0"
-                    android:orientation="vertical">
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:elevation="8dp"
+                    app:layout_constraintBottom_toTopOf="@id/emialContainer"
+                    app:layout_constraintTop_toBottomOf="@id/textView10"
+                    android:orientation="horizontal"
 
-                    <TextView
-                        android:id="@+id/textPhoneNO"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/manropesemibold"
-                        android:text="Phone Number"
-                        android:textColor="#B2B3B7"
-                        android:textSize="12sp" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent">
 
-                    <TextView
-                        android:id="@+id/userPhoneProfile"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/manropebold"
-                        android:text="Phone Number"
-                        android:textColor="@color/black"
-                        android:textSize="15sp" />
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="0"
+                        android:background="@drawable/grey_rect_bg">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="10dp"
+                            android:src="@drawable/phoneno_profile"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="20dp"
+                        android:layout_weight="0"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textPhoneNO"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/manropesemibold"
+                            android:text="Phone Number"
+                            android:textColor="#B2B3B7"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/userPhoneProfile"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/manropebold"
+                            android:text="Phone Number"
+                            android:textColor="@color/black"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="50dp"-->
+<!--                    android:layout_marginStart="20dp"-->
+<!--                    android:layout_marginEnd="20dp"-->
+<!--                    android:elevation="8dp"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    android:visibility="gone"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintHorizontal_bias="0.5"-->
+<!--                    app:layout_constraintStart_toStartOf="parent">-->
+
+<!--                    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                        android:layout_width="50dp"-->
+<!--                        android:layout_height="50dp"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:layout_weight="0"-->
+<!--                        android:background="@drawable/grey_rect_bg">-->
+
+<!--                        <ImageView-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:padding="10dp"-->
+<!--                            android:src="@drawable/location_1_svgrepo_com"-->
+<!--                            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                            app:layout_constraintEnd_toEndOf="parent"-->
+<!--                            app:layout_constraintStart_toStartOf="parent"-->
+<!--                            app:layout_constraintTop_toTopOf="parent" />-->
+<!--                    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_marginStart="20dp"-->
+<!--                        android:layout_weight="0"-->
+<!--                        android:orientation="vertical">-->
+
+<!--                        <TextView-->
+<!--                            android:id="@+id/textLocation"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginStart="10dp"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:fontFamily="@font/manropesemibold"-->
+<!--                            android:text="Address"-->
+<!--                            android:textColor="#B2B3B7"-->
+<!--                            android:textSize="12sp" />-->
+
+<!--                        <TextView-->
+<!--                            android:id="@+id/userLocation"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginStart="10dp"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:fontFamily="@font/manropebold"-->
+<!--                            android:text="Kharar, PG- 619"-->
+<!--                            android:textColor="@color/black"-->
+<!--                            android:textSize="15sp" />-->
+<!--                    </LinearLayout>-->
+
+
+<!--                </LinearLayout>-->
+
+                <LinearLayout
+                    android:id="@+id/emialContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:elevation="8dp"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/phoneNoContainer"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="0"
+                        android:background="@drawable/grey_rect_bg">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="10dp"
+                            android:src="@drawable/email_icon_hp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="20dp"
+                        android:layout_weight="0"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textEmailAdd"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/manropesemibold"
+                            android:text="Mail "
+                            android:textColor="#B2B3B7"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/userEmailProfile"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/manropebold"
+                            android:text="Email"
+                            android:textColor="@color/black"
+                            android:textSize="15sp" />
+                    </LinearLayout>
                 </LinearLayout>
 
 
-            </LinearLayout>
-
+            </androidx.constraintlayout.widget.ConstraintLayout>
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginEnd="20dp"
-                android:elevation="8dp"
-                android:orientation="horizontal">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center"
-                    android:layout_weight="0"
-                    android:background="@drawable/grey_rect_bg">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="10dp"
-                        android:src="@drawable/location_1_svgrepo_com"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="20dp"
-                    android:layout_weight="0"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/textLocation"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/manropesemibold"
-                        android:text="Address"
-                        android:textColor="#B2B3B7"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:id="@+id/userLocation"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/manropebold"
-                        android:text="Kharar, PG- 619"
-                        android:textColor="@color/black"
-                        android:textSize="15sp" />
-                </LinearLayout>
-
+                android:background="@drawable/textfield_bg_home_plus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
-                android:elevation="8dp"
-                android:orientation="horizontal">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center"
-                    android:layout_weight="0"
-                    android:background="@drawable/grey_rect_bg">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="10dp"
-                        android:src="@drawable/email_icon_hp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="20dp"
-                    android:layout_weight="0"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/textEmailAdd"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/manropesemibold"
-                        android:text="Mail "
-                        android:textColor="#B2B3B7"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:id="@+id/userEmailProfile"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/manropebold"
-                        android:text="Email"
-                        android:textColor="@color/black"
-                        android:textSize="15sp" />
-                </LinearLayout>
-            </LinearLayout>
-
-
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

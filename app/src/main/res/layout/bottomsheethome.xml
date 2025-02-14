@@ -45,6 +45,7 @@
                     app:cardCornerRadius="90dp">
 
                     <ImageView
+                        android:id="@+id/profileOnBottom"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:src="@drawable/person1"
@@ -324,22 +325,45 @@
                     android:layout_marginEnd="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:clipChildren="false"
                     android:orientation="horizontal">
 
-                    <androidx.cardview.widget.CardView
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="120dp"
                         android:layout_height="120dp"
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
-                        android:layout_marginBottom="20dp"
-                        app:cardCornerRadius="12dp">
+                        android:layout_marginBottom="20dp">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            app:cardCornerRadius="12dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <ImageView
+                                android:id="@+id/imagePreview"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/photo_svgrepo_com"
+                                android:scaleType="centerCrop" />
+                        </androidx.cardview.widget.CardView>
+
                         <ImageView
-                            android:id="@+id/imagePreview"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="centerCrop"
-                            />
-                    </androidx.cardview.widget.CardView>
+                            android:visibility="gone"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:background="@drawable/grey_rect_bg"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
