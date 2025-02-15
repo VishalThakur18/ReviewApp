@@ -335,6 +335,15 @@ class HomeFragment : Fragment() {
 
         if (bottomSheet != null) {
             photos = bottomSheet.findViewById(R.id.imagePreview)
+            // Load user profile into profileOnSheet ImageView
+
+            val profileOnSheet = bottomSheet.findViewById<ImageView>(R.id.profileOnBottom)
+            val currentUser = FirebaseAuth.getInstance().currentUser
+            Glide.with(context)
+                .load(currentUser?.photoUrl)
+                .circleCrop()
+                .placeholder(R.drawable.circular_bg) // Placeholder while loading
+                .into(profileOnSheet)
         }
 
         bottomSheetView.background = ContextCompat.getDrawable(context, R.drawable.dialog_home_bg_newitem)
