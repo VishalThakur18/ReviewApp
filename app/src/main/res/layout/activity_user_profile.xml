@@ -54,16 +54,17 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/bottomBtn"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:textSize="11sp"
-        android:textAlignment="center"
-        android:text="Privacy Policy"
         android:clickable="true"
+        android:fontFamily="@font/manropebold"
+        android:text="Privacy Policy"
+        android:textAlignment="center"
         android:textColor="@color/black"
-        android:fontFamily="@font/manropebold"/>
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bottomBtn"
+        tools:ignore="TouchTargetSizeCheck" />
 
 
     <ScrollView
