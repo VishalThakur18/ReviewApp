@@ -19,7 +19,7 @@ FORK is an Android application designed for students and campus visitors to revi
 
 - **Language**: Kotlin
 - **Backend**: Firebase Firestore & Authentication
-- **UI Framework**: XML and Google MAterial Theme 3.0
+- **UI Framework**: XML and Google Material Theme 3.0
 - **Image Handling**: Glide
 - **Architecture**: MVVM
 - **Additional Tools**: RecyclerView, Google Maps Integration 
