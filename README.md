@@ -90,7 +90,7 @@ We welcome contributions! Please fork the repository, make changes, and submit a
 📎 [LinkedIn](https://www.linkedin.com/in/vishal-profile/) | 💻 [GitHub](https://github.com/VishalThakur18)
 
 **Ayush** — Android Developer  
-📎 [LinkedIn](https://www.linkedin.com/in/ayush-rajwanshi1/) | 💻 [GitHub](https://github.com/VishalThakur18)
+📎 [LinkedIn](https://www.linkedin.com/in/ayush-rajwanshi1/) | 💻 [GitHub](https://github.com/Mo-D-LUFFY)
 
 ---
 
