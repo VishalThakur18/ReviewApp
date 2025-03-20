@@ -59,7 +59,7 @@ FORK is an Android application designed for students and campus visitors to revi
 
 ### Clone the Repository
 ```bash
-git clone https://github.com/yourusername/fork-app.git
+https://github.com/VishalThakur18/ReviewApp.git
 ```
 
 ### Setup Instructions
